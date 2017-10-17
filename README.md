@@ -1,2 +1,2 @@
 # SQL-Practice-
-Coursework from Lynda class "Learning phpMyAdmin"
+Coursework from Lynda classes
