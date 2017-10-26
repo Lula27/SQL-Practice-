@@ -14,9 +14,19 @@ CREATE TABLE PersonInfo (
 );
 
 
-SELECT FirstName
+SELECT FirstName + ' ' + LastName AS FullName, Birthdate
 FROM PersonInfo; 
 
-INSERT INTO PersonInfo
-VALUES ('Loretta', 'Agyemang', 'Ghana', '1991-09-17');
+INSERT INTO PersonInfo (FirstName, LastName, Country, Birthdate) 
+VALUES ('Loretta', 'Agyemang', 'Ghana', '1991-09-17'), 
+	   ('Stephan', 'Agyemang', 'United States', '1999-06-03'),
+	   ('Nikki', 'Romanov', 'Russia', '1993-07-17'),
+	   ('Chen', 'Gong', 'China', '1872-04-19');  
+
+INSERT INTO PersonInfo (FirstName, LastName, Country, Birthdate) 
+VALUES ('Loretta', 'Agyemang', 'Ghana', '1991-09-17'); 
+
+
+
+
 
