@@ -4,7 +4,7 @@
 USE Test; 
 GO
 
-DROP TABLE Persons; 
+DROP TABLE PersonInfo; 
 
 CREATE TABLE PersonInfo (
 	FirstName varchar(100),
@@ -14,5 +14,9 @@ CREATE TABLE PersonInfo (
 );
 
 
-SELECT * 
-FROM Persons; 
+SELECT FirstName
+FROM PersonInfo; 
+
+INSERT INTO PersonInfo
+VALUES ('Loretta', 'Agyemang', 'Ghana', '1991-09-17');
+
