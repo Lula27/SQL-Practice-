@@ -39,4 +39,3 @@ CASE PersonType
 	ELSE 'Unknown Person Type'
 END AS [Type of Contact]
 FROM Person.Person;
-GO 
