@@ -95,3 +95,12 @@ SELECT CONCAT(FirstName, ' ', LastName)
 FROM peekperson; 
 
 EXEC fullname; 
+
+
+
+---Derived Table - 
+
+
+---Subquery: SQL query nested inside a larger query 
+
+
