@@ -19,3 +19,17 @@ GO
 SELECT hre.LoginID AS [login], hre.JobTitle AS [Title],hre.HireDate AS [Date Hired]
 FROM HumanResources.Employee AS hre;
 GO
+
+-- Column Alias My Example 1 
+SELECT emp.JobTitle, emp.LoginID, emp.SickLeaveHours
+FROM HumanResources.Employee AS emp; 
+GO 
+
+-- CA example 2 
+SELECT Name, GroupName
+FROM HumanResources.Department AS d; 
+GO 
+
+SELECT Ad.AddressLine1, Ad.City, Ad.PostalCode
+FROM Person.Address AS Ad;
+GO 
