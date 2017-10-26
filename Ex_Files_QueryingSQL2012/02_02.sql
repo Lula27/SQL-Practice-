@@ -33,3 +33,18 @@ GO
 SELECT Ad.AddressLine1, Ad.City, Ad.PostalCode
 FROM Person.Address AS Ad;
 GO 
+
+
+-- Column Allias Examples
+SELECT St.CountryRegionCode AS [Code], 
+St.IsOnlyStateProvinceFlag AS [Flag], St.Name 
+FROM Person.StateProvince AS St;
+GO  
+
+SELECT SP.Bonus, SP.BusinessEntityID AS [Entity_Id], SP.SalesQuota AS [Quota]
+FROM Sales.SalesPerson AS SP; 
+GO 
+
+SELECT SM.Name, SM.ShipBase AS [Base], SM.ShipMethodID AS M_Id
+FROM Purchasing.ShipMethod AS SM;
+GO 
