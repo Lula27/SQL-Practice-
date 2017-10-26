@@ -24,9 +24,17 @@ VALUES ('Loretta', 'Agyemang', 'Ghana', '1991-09-17'),
 	   ('Chen', 'Gong', 'China', '1872-04-19');  
 
 INSERT INTO PersonInfo (FirstName, LastName, Country, Birthdate) 
-VALUES ('Loretta', 'Agyemang', 'Ghana', '1991-09-17'); 
+VALUES ('Loretta', 'Agyemang2', 'Ghana', '1991-09-17'); 
+
+-- Fix birth year for Chen Gong to 1994
+UPDATE PersonInfo
+SET Birthdate = '1994-04-19'
+WHERE FirstName = 'Chen'; 
 
 
+-- Delete Loretta Agyemang2 from table 
+DELETE FROM PersonInfo
+WHERE LastName='Agyemang2'; 
 
 
 
