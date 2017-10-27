@@ -1,5 +1,4 @@
-USE AdventureWorks2012;
-GO
+j
 
 -- Tip: use [] to contain spaces 
 -- Also in the case of reserved SQL keyword names *use not advised
@@ -45,4 +44,8 @@ FROM Person.Person AS P;
 GO 
 
 
+-- Practice with concat 
+SELECT Name + ': ' + GroupName AS [Name & Details], ModifiedDate AS [Modified Date]
+FROM HumanResources.Department AS HR;
+GO 
 
