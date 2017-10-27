@@ -14,6 +14,7 @@ GO
 -- store in the DB, to more user
 -- friendly values in the output
 -- Keywords (CASE, WHEN, THEN, END AS [column alias])
+
 SELECT FirstName, LastName,
 CASE PersonType
 		WHEN 'SC' THEN 'Store Contact'
@@ -28,14 +29,16 @@ FROM Person.Person;
 GO
 
 -- Write out Case statement
-SELECT FirstName, LastName,
+SELECT AdditionalContactInfo, Demographics, 
 CASE PersonType 
 	WHEN 'SC' THEN 'Store Contact'
 	WHEN 'IN' THEN 'Individual Customer'
 	WHEN 'SP' THEN 'Sales Person'
 	WHEN 'EM' THEN 'Employee'
-	WHEN 'VC' THEN 'Vender Contact'
+	WHEN 'VC' THEN 'Vendor Contact'
 	WHEN 'GC' THEN 'General Contact'
 	ELSE 'Unknown Person Type'
 END AS [Type of Contact]
 FROM Person.Person;
+GO 
+
