@@ -48,3 +48,19 @@ GO
 SELECT SM.Name, SM.ShipBase AS [Base], SM.ShipMethodID AS M_Id
 FROM Purchasing.ShipMethod AS SM;
 GO 
+
+
+-- More examples with table and column aliases 
+SELECT p.BusinessEntityID AS [Id], p.PasswordHash AS [Hash], p.ModifiedDate AS [Date] 
+FROM Person.Password AS P; 
+GO 
+
+-- Example 2 working with Production.Document table
+SELECT PD.FileName AS Name, PD.DocumentSummary AS [Summary], PD.ModifiedDate AS [Date] 
+FROM Production.Document AS PD; 
+GO 
+
+-- Example 3
+SELECT PCH.StartDate AS [Start Date], PCH.StandardCost AS [Standard Cost], PCH.ProductID AS [Product Id]
+FROM Production.ProductCostHistory AS PCH;
+GO 
