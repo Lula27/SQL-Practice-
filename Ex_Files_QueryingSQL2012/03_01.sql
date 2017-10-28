@@ -43,6 +43,8 @@ SELECT DISTINCT PersonType
 FROM Person.Person; 
 GO 
 
+-- Use Case Statement to flesh out person types 
+
 -- Use the DISTINCT keyword to return only distinct
 -- values from the PersonType field
 SELECT DISTINCT PersonType
@@ -52,9 +54,15 @@ GO
 
 -- What if we add more fields to the query?
 -- Duplicate values will still be returned
+-- Retrieves 18 rows 
 SELECT DISTINCT PersonType, EmailPromotion
 FROM Person.Person;
 GO
+
+SELECT DISTINCT EmailPromotion AS [Email Promotion], PersonType AS [Person Type]
+FROM Person.Person;
+GO 
+
 
 -- This is because there are different combinations of Email Promotion for Person Type. 
 -- Try alternative form.
