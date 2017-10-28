@@ -24,6 +24,25 @@ SELECT DISTINCT PersonType
 FROM Person.Person; 
 GO
 
+-- Three more examples SELECT DISTINCT
+-- Without distinct keyword, yields 19972 rows 
+-- Contains many duplicates - ie: Karin, Michael, etc. 
+SELECT FirstName AS [First Name]
+FROM Person.Person; 
+GO 
+
+-- With distinct - notice differences 
+-- Retreives 1018 rows 
+-- Reduced to about 900 duplicates 
+SELECT DISTINCT FirstName AS [First Name]
+FROM Person.Person;
+GO 
+
+-- Retreive distinct values from PersonType 
+SELECT DISTINCT PersonType 
+FROM Person.Person; 
+GO 
+
 -- Use the DISTINCT keyword to return only distinct
 -- values from the PersonType field
 SELECT DISTINCT PersonType
@@ -49,3 +68,4 @@ GO
 SELECT DISTINCT Name, ModifiedDate AS [Date Modified] 
 FROM Person.CountryRegion;
 GO 
+
