@@ -33,6 +33,30 @@ FROM HumanResources.Employee
 WHERE Gender  ='F';
 GO
 
+-- Select from Employee table where employees are female 
+SELECT LoginID AS [Login Id], JobTitle [Job Title], Gender
+FROM HumanResources.Employee
+WHERE Gender = 'M'; 
+GO 
+
+-- Same query but with distinct Job Title 
+SELECT DISTINCT JobTitle, LoginID 
+FROM HumanResources.Employee
+WHERE Gender = 'M';
+GO 
+
+-- Select employees who only have the job title Database Admin
+-- This won't work. 
+SELECT LoginID, JobTitle, Gender
+FROM HumanResources.Employee
+WHERE JobTitle ='Database'
+GO 
+
+-- Correction: Use LIKE with modulous 
+SELECT LoginID, JobTitle, Gender
+FROM HumanResources.Employee
+WHERE JobTitle LIKE '%atabase%';
+GO 
 
 -- Use the WHERE clause to return only the records in 
 -- the Employee table where employees have 99 hours 
@@ -41,3 +65,31 @@ SELECT *
 FROM HumanResources.Employee
 WHERE VacationHours = 99;
 GO
+
+-- Where employees have 37 hrs of vacay time 
+SELECT *
+FROM HumanResources.Employee
+WHERE VacationHours = 37; 
+GO 
+
+SELECT * 
+FROM HumanResources.Employee; 
+GO
+
+-- Employees with Sick leave hours less than 50
+SELECT *
+FROM HumanResources.Employee
+WHERE SickLeaveHours < 50; 
+GO 
+
+-- Employees with no salaries? SalariedFlag = 0 
+SELECT *
+FROM HumanResources.Employee
+WHERE SalariedFlag = 0; 
+GO 
+
+-- Where Business Entity ID = 17
+SELECT * 
+FROM HumanResources.Employee
+WHERE BusinessEntityID = 17;
+GO 
