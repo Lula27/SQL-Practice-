@@ -39,13 +39,25 @@ GO
 -- Use the AND operator to return records from the Person table
 -- where the contact type is single contact (SC)
 -- and they are in category 2 for email promotions
-
+SELECT PersonType, FirstName, EmailPromotion
+FROM Person.Person
+WHERE PersonType = 'SC' 
+AND EmailPromotion = 2; 
+GO 
 
 
 -- Use the IN operator to return records from the Person table
 -- where the persons' first name is in a range of names supplied
-
+-- 'Fred', 'Mary', 'George'
+SELECT PersonType, FirstName + ' ' + LastName, ModifiedDate AS [Date Modified]
+FROM Person.Person
+WHERE FirstName IN ('Fred', 'Mary', 'George'); 
+GO 
 
 
 -- Use the BETWEEN operator to return records from the Employee table
--- where the employees' have sick leave time between 40 and 99 hours
+-- where the employees' have sick leave time between 40 and 60 hours
+SELECT LoginID, JobTitle, MaritalStatus, Gender, HireDate, SickLeaveHours
+FROM HumanResources.Employee 
+WHERE SickLeaveHours BETWEEN 40 AND 60; 
+GO 
