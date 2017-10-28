@@ -1,9 +1,11 @@
 USE AdventureWorks2012;
 GO
 
+-- Use WHERE predicate to specify query 
 -- Using specific fields in the SELECT clause to 
 -- filter the attributes to be returned
 -- normal query that doesn't use any predicates yet
+
 SELECT LoginID, JobTitle, MaritalStatus 
 FROM HumanResources.Employee;
 GO
@@ -18,6 +20,11 @@ FROM HumanResources.Employee
 WHERE MaritalStatus  ='M';
 GO
 
+-- Use where clause to retreive only the records where employees are single.
+SELECT LoginId AS [Login Id], JobTitle AS [Job Title], MaritalStatus AS [Marital Status]
+FROM HumanResources.Employee 
+WHERE MaritalStatus = 'S'; 
+GO 
 
 -- Use the WHERE clause to return only the records in 
 -- the Employee table where the employees are male
