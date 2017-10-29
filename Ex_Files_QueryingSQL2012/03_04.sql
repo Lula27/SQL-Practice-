@@ -9,44 +9,47 @@ GO
 -- in the Employee table where the employees are 
 -- a manager of some type this example uses 
 -- the % character for any number of characters
-SELECT LoginID, JobTitle
+SELECT JobTitle, Gender
 FROM HumanResources.Employee
-WHERE JobTitle LIKE '%manager%';
-GO
+WHERE JobTitle LIKE '%Manager%'; 
+
+
+
 
 -- Use the LIKE keyword to return records from the 
 -- Person table where users' first names end in 
 -- "ary". This example uses the _ character to 
 -- represent a single character
-SELECT *
+SELECT * 
 FROM Person.Person
-WHERE FirstName LIKE '_ary';
-GO
+WHERE FirstName 
+
+
+
+
+
 
 -- Use the LIKE keyword to return records from the 
 -- Person table where users' first names end in 
 -- "ary". This example uses the [] characters to 
 -- represent a single character found within the 
 -- list of characters in the []
-SELECT *
-FROM Person.Person
-WHERE FirstName LIKE '[g-m]ary';
-GO
+
+
+
+
+
 
 -- Use the LIKE keyword to return records from the 
 -- Person table where users' first names end in 
 -- "ary". This example uses the [^] characters to 
 -- represent a single character to exclude 
 -- characters in the name searched
-SELECT FirstName, LastName
-FROM Person.Person
-WHERE FirstName LIKE '[^g]ary';
-GO
+
+
+
+
 
 -- Use the NOT LIKE keywords to return records 
 -- from the Person table where users' first names 
 -- do NOT end in "ary".
-SELECT FirstName, LastName
-FROM Person.Person
-WHERE FirstName NOT LIKE '_ary';
-GO
