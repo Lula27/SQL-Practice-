@@ -32,8 +32,17 @@ WHERE FirstName LIKE '_ary';
 -- list of characters in the []
 SELECT FirstName + ' ' + LastName As [Full Name], EmailPromotion As [Email Promotion], ModifiedDate As [Date Modified] 
 FROM Person.Person
-WHERE FirstName LIKE [^ary]; 
+WHERE FirstName LIKE '[ary]'; 
 
+SELECT Name, GroupName AS [Group Name], ModifiedDate As [Date Modified]
+FROM HumanResources.Department
+WHERE Name LIKE '[oduction]'; 
+
+SELECT Name, ModifiedDate AS [Date Modified]
+FROM Person.ContactType
+WHERE Name LIKE '%ssistant%'; 
+
+-- Hmmm, this doesn't some to work anywhere [], maybe it's decrepit?
 
 
 
@@ -46,13 +55,13 @@ WHERE FirstName LIKE [^ary];
 -- characters in the name searched
 SELECT FirstName + ' ' + LastName As [Full Name], EmailPromotion As [Email Promotion], ModifiedDate As [Date Modified] 
 FROM Person.Person
-WHERE FirstName LIKE [%arry]; 
+WHERE FirstName LIKE '[^ary]'; 
 
 
 
 -- Use the NOT LIKE keywords to return records 
 -- from the Person table where users' first names 
 -- do NOT end in "ary".
-SELECT
-FROM 
-WHERE 
+SELECT FirstName, LastName, ModifiedDate AS [Date Modified]
+FROM Person.Person
+WHERE FirstName NOT LIKE 'ary'; 
