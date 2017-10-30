@@ -15,16 +15,13 @@ WHERE JobTitle LIKE '%Manager%';
 
 
 
-
 -- Use the LIKE keyword to return records from the 
 -- Person table where users' first names end in 
 -- "ary". This example uses the _ character to 
 -- represent a single character
-SELECT * 
+SELECT FirstName + ' ' + LastName As [Full Name], EmailPromotion As [Email Promotion], ModifiedDate As [Date Modified] 
 FROM Person.Person
-WHERE FirstName 
-
-
+WHERE FirstName LIKE '%ary'; 
 
 
 
@@ -34,6 +31,9 @@ WHERE FirstName
 -- "ary". This example uses the [] characters to 
 -- represent a single character found within the 
 -- list of characters in the []
+SELECT FirstName + ' ' + LastName As [Full Name], EmailPromotion As [Email Promotion], ModifiedDate As [Date Modified] 
+FROM Person.Person
+WHERE FirstName LIKE [^ary]; 
 
 
 
@@ -45,11 +45,15 @@ WHERE FirstName
 -- "ary". This example uses the [^] characters to 
 -- represent a single character to exclude 
 -- characters in the name searched
-
-
+SELECT FirstName + ' ' + LastName As [Full Name], EmailPromotion As [Email Promotion], ModifiedDate As [Date Modified] 
+FROM Person.Person
+WHERE FirstName LIKE [%arry]; 
 
 
 
 -- Use the NOT LIKE keywords to return records 
 -- from the Person table where users' first names 
 -- do NOT end in "ary".
+SELECT
+FROM 
+WHERE 

@@ -1,0 +1,75 @@
+ANSWER KEY - 3.3 
+
+SELECT LoginID, JobTitle, OrganizationLevel
+FROM HumanResources.Employee
+WHERE OrganizationLevel > 2;
+GO
+
+
+SELECT LoginID, JobTitle, OrganizationLevel
+FROM HumanResources.Employee
+WHERE OrganizationLevel  <= 2;
+GO
+
+ SELECT FirstName, LastName, PersonType
+FROM Person.Person
+WHERE PersonType = 'SC' 
+OR PersonType = 'VC';
+GO
+ 
+
+SELECT FirstName, LastName, PersonType, EmailPromotion
+FROM Person.Person
+WHERE PersonType = 'SC' 
+AND EmailPromotion = 2;
+GO
+
+
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName IN('Fred', 'Mary', 'George');
+GO
+
+
+
+SELECT LoginID, SickLeaveHours
+FROM HumanResources.Employee
+WHERE SickLeaveHours BETWEEN 40 AND 99;
+GO
+
+
+
+ANSWER KEY - 3.4
+SELECT LoginID, JobTitle
+FROM HumanResources.Employee
+WHERE JobTitle LIKE '%manager%';
+GO
+
+SELECT *
+FROM Person.Person
+WHERE FirstName LIKE '_ary';
+GO
+
+
+SELECT *
+FROM Person.Person
+WHERE FirstName LIKE '[g-m]ary';
+GO
+
+
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName LIKE '[^g]ary';
+GO
+
+
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName NOT LIKE '_ary';
+GO
+
+
+
+
+
+
