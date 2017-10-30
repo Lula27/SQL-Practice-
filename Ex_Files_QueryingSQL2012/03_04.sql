@@ -21,8 +21,7 @@ WHERE JobTitle LIKE '%Manager%';
 -- represent a single character
 SELECT FirstName + ' ' + LastName As [Full Name], EmailPromotion As [Email Promotion], ModifiedDate As [Date Modified] 
 FROM Person.Person
-WHERE FirstName LIKE '%ary'; 
-
+WHERE FirstName LIKE '_ary'; 
 
 
 
