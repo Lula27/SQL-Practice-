@@ -67,6 +67,12 @@ FROM Person.Person
 WHERE MiddleName IS NULL;
 GO
 
+SELECT AddressID, AddressLine1, City
+FROM Person.Address
+WHERE AddressLine2 IS NULL; 
+GO 
+
+
 
 -- We use NOT NULL to return all values that
 -- are not NULL values.
@@ -74,3 +80,8 @@ SELECT FirstName, MiddleName, LastName
 FROM Person.Person
 WHERE MiddleName IS NOT NULL;
 GO
+
+SELECT Resume, ModifiedDate AS [Date Modified]
+FROM HumanResources.JobCandidate
+WHERE Resume IS NOT NULL;  
+GO 
