@@ -1,6 +1,9 @@
 --********************************************
 -- 04_05_Working_with_NULL.sql
 --********************************************
+-- Note: unless you specifically search for Null 
+-- Values, SQL won't retreive those values
+-- Always manually check for Null values 
 
 USE AdventureWorks2012;
 GO

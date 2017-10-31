@@ -6,7 +6,7 @@ USE AdventureWorks2012;
 GO
 
 -- Select the product name from the 
--- Production.Product table
+-- Production.Prouct table
 -- combine that with the comments and product 
 -- review ID from the ProductReview table
 -- using the ProductID to establish the 
@@ -18,6 +18,19 @@ INNER JOIN Production.ProductReview pr
 ON p.ProductID = pr.ProductID;
 GO
 
+
+-- In the above, joining two separate tables
+-- Use Select and provided aliases to observe 
+-- Table contents: Production.Product 
+
+SELECT p.Name
+FROM Production.Product As p; 
+GO 
+
+-- Table contents: 
+
+
+
 -- Return the product name from the 
 -- Production.Product table
 -- just so we can see how many records are in 
@@ -26,6 +39,9 @@ SELECT p.Name
 FROM Production.Product AS p;
 GO
 
+SELECT *
+FROM Production.ProductReview AS pr; 
+GO 
 
 -- Using a left outer join, we will return all the 
 -- rows in one table regardless of whether there 
