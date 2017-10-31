@@ -24,24 +24,48 @@ GO
 -- Table contents: Production.Product 
 
 SELECT p.Name
-FROM Production.Product As p; 
+-- Indicate table alias w/o "AS" 
+FROM Production.Product p; 
 GO 
 
--- Table contents: 
+-- Table contents: Production.ProductReview 
 
-
-
--- Return the product name from the 
--- Production.Product table
--- just so we can see how many records are in 
--- that table
-SELECT p.Name
-FROM Production.Product AS p;
-GO
-
-SELECT *
-FROM Production.ProductReview AS pr; 
+SELECT ProductReviewID, Comments
+FROM Production.ProductReview pr; 
 GO 
+
+-- Inner Join
+-- Select the product name from the 
+-- Production.Prouct table
+-- combine that with the comments and product 
+-- review ID from the ProductReview table
+-- using the ProductID to establish the 
+-- relationship
+
+SELECT p.Name, pr.Comments, pr.ProductReviewID
+FROM Production.Product p 
+INNER JOIN Production.ProductReview pr 
+ON p.ProductID = pr.ProductReviewID; 
+GO 
+
+
+-- Retreive data from Sales. Customer & Sales.PersonCreditCard 
+SELECT sc.CustomerID, sc.AccountNumber As [Account Number]
+FROM Sales.Customer sc;  
+GO 
+
+SELECT pc.CreditCardID
+FROM Sales.PersonCreditCard pc;
+GO 
+
+-- Combine data using inner join
+
+SELECT sc.CustomerID, sc.AccountNumber, pc.CreditCardID
+FROM Sales.Customer sc
+INNER JOIN Sales.PersonCreditCard pc
+ON sc.CustomerID = pc.CreditCardID; 
+GO 
+
 
 -- Using a left outer join, we will return all the 
 -- rows in one table regardless of whether there 
@@ -68,6 +92,7 @@ FROM Production.ProductReview pr
 LEFT OUTER JOIN Production.Product p
 ON p.ProductID = pr.ProductID;
 GO
+
 
 
 -- Using a right outer join, we will return all 
