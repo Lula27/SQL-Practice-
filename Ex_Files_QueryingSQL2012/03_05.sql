@@ -24,6 +24,12 @@ FROM Person.Person
 WHERE MiddleName <> 'A';
 GO
 
+SELECT FirstName, MiddleName, LastName
+FROM Person.Person
+WHERE MiddleName <> 'E';
+GO
+
+
 -- Execute the same query, only this time, allow
 -- a check for NULL values in an OR portion of
 -- the WHERE clause.
@@ -32,6 +38,24 @@ FROM Person.Person
 WHERE MiddleName <> 'A'
 OR MiddleName IS NULL;
 GO
+
+SELECT FirstName, MiddleName, LastName
+FROM Person.Person
+WHERE MiddleName <> 'B'
+OR MiddleName IS NULL; 
+GO 
+
+SELECT FirstName, MiddleName, LastName
+FROM Person.Person
+WHERE MiddleName <> 'E'
+OR MiddleName IS NULL; 
+GO 
+
+SELECT FirstName, MiddleName, LastName
+FROM Person.Person
+WHERE MiddleName <> 'R.' 
+OR MiddleName IS NULL; 
+GO 
 
 -- Execute this query to see only the records
 -- returned where the middle name is NULL
@@ -42,6 +66,7 @@ SELECT FirstName, MiddleName, LastName
 FROM Person.Person
 WHERE MiddleName IS NULL;
 GO
+
 
 -- We use NOT NULL to return all values that
 -- are not NULL values.
