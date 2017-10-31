@@ -81,6 +81,12 @@ FROM Person.Person
 WHERE MiddleName IS NOT NULL;
 GO
 
+-- Useful for data cleaning 
+SELECT	FirstName, MiddleName, LastName
+FROM Person.Person
+WHERE MiddleName IS NULL; 
+GO 
+
 SELECT Resume, ModifiedDate AS [Date Modified]
 FROM HumanResources.JobCandidate
 WHERE Resume IS NOT NULL;  
