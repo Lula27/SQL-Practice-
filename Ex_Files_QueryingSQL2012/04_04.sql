@@ -100,7 +100,7 @@ ON emp.BusinessEntityID = p.BusinessEntityID;
 GO 
 
 -- Practice problems with inner joins
--- Both Person.Person & HR.Employee share BusinessEntityID as join key 
+-- # 1 - Both Person.Person & HR.Employee share BusinessEntityID as join key 
 SELECT p.FirstName + ' ' +  p.LastName AS Name
 FROM Person.Person p;
 GO 
@@ -117,7 +117,56 @@ INNER JOIN HumanResources.Employee e
 ON p.BusinessEntityID = e.BusinessEntityID;
 GO	
 
+-- problem #2 : key = ProductCategoryID 
+SELECT PS.Name AS [Product Subcategory Name]
+FROM Production.ProductSubcategory PS; 
+GO 
 
+SELECT Name AS [Product Category Name]
+FROM Production.ProductCategory PC;
+GO 
+
+-- Inner Join
+SELECT PC.Name AS [Product Category Name], PS.Name AS [Product Subcategory Name]
+FROM Production.ProductCategory PC
+INNER JOIN Production.ProductSubcategory PS
+ON PC.ProductCategoryID = PS.ProductCategoryID; 
+GO 
+
+
+-- problem #3 : inner join 3 tables - return name colum from 3 tables
+-- Hint: do two at a time since it isn't possible 
+-- to inner join all three at once
+-- keys = ProductID (P & PS); ProductCategoryID (PC & PS)
+-- (order based on general to specifics) PC -> PS -> P
+SELECT *
+FROM Production.Product P;
+GO 
+-- key = ProductSubcategoryID
+
+SELECT *
+FROM Production.ProductSubcategory PS;
+GO 
+-- Key = ProudctCategoryID
+
+SELECT *
+FROM Production.ProductCategory PC;
+GO 
+-- Key = ProductCategoryID
+
+-- Complete inner join #1
+SELECT PC.Name AS [Product Category Name], PS.Name AS [Product Subcategory Name]
+FROM Production.ProductCategory PC 
+INNER JOIN Production.ProductSubcategory PS
+ON PC.ProductCategoryID = PS.ProductCategoryID; 
+GO 
+
+-- Complete inner join #2 
+SELECT PS.Name AS [Product Subcategory Name], P.Name AS [Product Name]
+FROM Production.ProductSubcategory PS
+INNER JOIN Production.Product P
+ON P.ProductSubcategoryID = PS.ProductSubcategoryID;
+GO 
 
 
 
