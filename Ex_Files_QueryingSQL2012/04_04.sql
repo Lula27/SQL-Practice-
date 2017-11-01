@@ -99,7 +99,23 @@ INNER JOIN HumanResources.Employee emp
 ON emp.BusinessEntityID = p.BusinessEntityID; 
 GO 
 
+-- Practice problems with inner joins
+-- Both Person.Person & HR.Employee share BusinessEntityID as join key 
+SELECT p.FirstName + ' ' +  p.LastName AS Name
+FROM Person.Person p;
+GO 
 
+SELECT e.JobTitle AS [Job Title], e.NationalIDNumber AS [National ID Number]
+FROM HumanResources.Employee e; 
+GO 
+
+-- Use Inner Join
+SELECT p.FirstName + ' ' +  p.LastName AS Name, e.JobTitle AS [Job Title],
+ e.NationalIDNumber AS [National ID Number] 
+FROM Person.Person p
+INNER JOIN HumanResources.Employee e
+ON p.BusinessEntityID = e.BusinessEntityID;
+GO	
 
 
 
