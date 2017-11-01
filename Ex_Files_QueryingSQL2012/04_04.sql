@@ -83,9 +83,21 @@ INNER JOIN Production.ProductSubcategory PS
 ON P.ProductSubcategoryID = PS.ProductSubcategoryID; 
 GO 
 
+-- Inner join columns from HR.Employee & Person Tables
+SELECT emp.JobTitle AS [Job Title]
+FROM HumanResources.Employee emp; 
+GO 
 
+SELECT p.FirstName + ' ' + p.LastName As [Full Name]
+FROM Person.Person p; 
+GO
 
-
+-- Inner join tables using business entity Id
+SELECT p.FirstName + ' ' + p.LastName As [Full Name], emp.JobTitle AS [Job Title]
+FROM Person.Person p
+INNER JOIN HumanResources.Employee emp 
+ON emp.BusinessEntityID = p.BusinessEntityID; 
+GO 
 
 
 
