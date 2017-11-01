@@ -66,6 +66,35 @@ INNER JOIN Sales.PersonCreditCard pc
 ON sc.CustomerID = pc.CreditCardID; 
 GO 
 
+-- Practice with Inner Joins
+SELECT P.Name, P.ProductID
+FROM Production.Product P; 
+GO 
+
+SELECT PS.Name, PS.ProductSubcategoryID
+FROM Production.ProductSubcategory PS; 
+GO 
+
+-- Inner Join to produce intersection 
+-- using the joining key of subcategory Id
+SELECT P.Name AS [Product Name], PS.Name AS [Product Subcategory]
+FROM Production.Product P
+INNER JOIN Production.ProductSubcategory PS
+ON P.ProductSubcategoryID = PS.ProductSubcategoryID; 
+GO 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- Using a left outer join, we will return all the 
 -- rows in one table regardless of whether there 
@@ -78,6 +107,10 @@ SELECT  p.Name, pr.ProductReviewID, pr.Comments
 FROM Production.Product p
 LEFT OUTER JOIN Production.ProductReview pr
 ON p.ProductID = pr.ProductID;
+GO
+
+SELECT pr.ProductReviewID, pr.Comments
+FROM Production.ProductReview pr; 
 GO
 
 -- Using a left outer join, we will return all the 
