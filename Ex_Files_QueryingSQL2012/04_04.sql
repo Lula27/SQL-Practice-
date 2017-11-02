@@ -214,6 +214,32 @@ GO
 -- FROM and JOIN clauses determine which table 
 -- is the LEFT.  In this case, ProductReview is 
 -- the left table
+
+-- Inspect
+-- Table 2 (Right Table) 
+-- join key: pr.ProductReviewID
+SELECT pr.ProductReviewID, pr.ReviewerName,pr.Comments
+FROM Production.ProductReview pr;
+GO 
+
+-- Table 1 (Left Table)
+-- join key: p.ProductID
+SELECT p.ProductID, p.Name
+FROM Production.Product p;
+GO 
+
+SELECT p.Name, pr.ReviewerName AS [Reviewer Name], pr.Comments
+FROM Production.Product p
+LEFT OUTER JOIN Production.ProductReview pr
+ON p.ProductID = pr.ProductReviewID
+WHERE pr.ReviewerName IS NOT NULL; 
+GO 
+
+
+
+
+
+
 SELECT  p.Name, pr.ProductReviewID, pr.Comments
 FROM Production.ProductReview pr
 LEFT OUTER JOIN Production.Product p
