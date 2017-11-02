@@ -311,6 +311,26 @@ ON p.ProductID = pr.ProductID
 WHERE pr.ProductReviewID IS NOT NULL;
 GO
 
+-- My example: RIGHT OUTER JOIN
+-- Left Table 
+-- key = TerritoryID 
+SELECT ST.Name, ST.CountryRegionCode 
+FROM Sales.SalesTerritory ST;
+GO 
+
+-- Right table
+-- key = TerritoryID 
+SELECT STH.StartDate, STH.ModifiedDate
+FROM Sales.SalesTerritoryHistory STH;
+GO
+
+-- Right Outer Join
+SELECT ST.Name, ST.CountryRegionCode,STH.StartDate, STH.ModifiedDate
+FROM Sales.SalesTerritory ST 
+RIGHT OUTER JOIN Sales.SalesTerritoryHistory STH
+ON ST.TerritoryID = STH.TerritoryID; 
+GO 
+
 -- Using a full outer join, we will retain the 
 -- nonmatching rows regardless of whether there 
 -- is a match in the other table the results look 
