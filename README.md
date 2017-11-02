@@ -1,2 +1,1 @@
-# SQL-Practice-
-Coursework from Lynda classes
+# Building a stronger foundationa and command of SQL using different sources
