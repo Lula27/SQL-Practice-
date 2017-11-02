@@ -237,15 +237,37 @@ GO
 
 
 
-
-
-
 SELECT  p.Name, pr.ProductReviewID, pr.Comments
 FROM Production.ProductReview pr
 LEFT OUTER JOIN Production.Product p
 ON p.ProductID = pr.ProductID;
 GO
 
+-- Same output with Left Join
+SELECT  p.Name, pr.ProductReviewID, pr.Comments
+FROM Production.ProductReview pr
+LEFT JOIN Production.Product p
+ON p.ProductID = pr.ProductID;
+GO
+
+
+-- My example 2
+-- Key = AddressID 
+SELECT PA.AddressID, PA.AddressLine1, PA.City
+FROM Person.Address PA; 
+GO
+
+--Key = AddressTypeID  (Left Table)
+SELECT AT.AddressTypeID, AT.Name
+FROM Person.AddressType AT;
+GO 
+
+-- Left Outer Join 
+SELECT AT.Name, PA.AddressLine1, PA.City
+FROM Person.AddressType AT
+LEFT OUTER JOIN Person.Address PA 
+ON AT.AddressTypeID = PA.AddressID; 
+GO 
 
 
 -- Using a right outer join, we will return all 
