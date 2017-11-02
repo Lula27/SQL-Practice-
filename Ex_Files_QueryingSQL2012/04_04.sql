@@ -263,11 +263,30 @@ FROM Person.AddressType AT;
 GO 
 
 -- Left Outer Join 
-SELECT AT.Name, PA.AddressLine1, PA.City
+SELECT AT.Name, PA.AddressLine1 AS [Address Line 1], PA.City
 FROM Person.AddressType AT
 LEFT OUTER JOIN Person.Address PA 
 ON AT.AddressTypeID = PA.AddressID; 
 GO 
+
+-- My example 3
+-- Join key = BusinessEntityID (Left Table = Person.Person)
+SELECT P.FirstName + ' ' + P.LastName AS [Full Name] 
+FROM Person.Person P; 
+GO 
+
+-- Right Table = Person.PersonPhone
+SELECT PP.PhoneNumber
+FROM Person.PersonPhone PP;
+GO 
+
+-- Left outer join
+SELECT DISTINCT P.FirstName + ' ' + P.LastName AS [Full Name], PP.PhoneNumber
+FROM Person.Person P
+LEFT OUTER JOIN Person.PersonPhone PP
+ON P.BusinessEntityID = PP.BusinessEntityID; 
+GO 
+
 
 
 -- Using a right outer join, we will return all 
@@ -284,6 +303,13 @@ RIGHT OUTER JOIN Production.ProductReview pr
 ON p.ProductID = pr.ProductID;
 GO
 
+-- Hmmm, interesting. Retrieves same output as RIGHT OUTER JOIN
+SELECT p.Name, pr.ProductReviewID, pr.Comments
+FROM Production.Product p
+LEFT OUTER JOIN Production.ProductReview pr
+ON p.ProductID = pr.ProductID
+WHERE pr.ProductReviewID IS NOT NULL;
+GO
 
 -- Using a full outer join, we will retain the 
 -- nonmatching rows regardless of whether there 
