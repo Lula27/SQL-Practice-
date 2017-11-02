@@ -171,8 +171,6 @@ GO
 
 
 
-
-
 -- Using a left outer join, we will return all the 
 -- rows in one table regardless of whether there 
 -- is a match in the other table.
@@ -189,6 +187,25 @@ GO
 SELECT pr.ProductReviewID, pr.Comments
 FROM Production.ProductReview pr; 
 GO
+
+-- Inner Join one more example
+SELECT E.JobTitle AS [Job Title], E.HireDate AS [Hire Date]
+FROM HumanResources.Employee E;
+GO
+
+SELECT EDH.StartDate AS [Start Date]
+FROM HumanResources.EmployeeDepartmentHistory EDH; 
+GO 
+
+-- Join key = BusinessEntityID  
+-- Based on this table, hire date = start date 
+SELECT E.JobTitle AS [Job Title], E.HireDate AS [Hire Date], EDH.StartDate AS [Start Date]
+FROM HumanResources.Employee E
+INNER JOIN HumanResources.EmployeeDepartmentHistory EDH
+ON E.BusinessEntityID = EDH.BusinessEntityID
+GO 
+
+
 
 -- Using a left outer join, we will return all the 
 -- rows in one table regardless of whether there 
