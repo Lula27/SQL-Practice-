@@ -331,6 +331,9 @@ RIGHT OUTER JOIN Sales.SalesTerritoryHistory STH
 ON ST.TerritoryID = STH.TerritoryID; 
 GO 
 
+
+-- FULL OUTER JOIN
+-- Not often used because it can return very large datasets.
 -- Using a full outer join, we will retain the 
 -- nonmatching rows regardless of whether there 
 -- is a match in the other table the results look 
@@ -342,4 +345,13 @@ FROM Production.Product p
 FULL OUTER JOIN Production.ProductReview pr
 ON p.ProductID = pr.ProductID;
 GO
+
+-- My Example Full Outer Join
+-- key = PurchaseOrderID
+-- returns 8845 rows 
+SELECT POD.DueDate, POD.OrderQty AS [Order Quantity], POH.OrderDate, POH.ModifiedDate
+FROM Purchasing.PurchaseOrderDetail POD
+FULL OUTER JOIN Purchasing.PurchaseOrderHeader POH
+ON POD.PurchaseOrderID = POH.PurchaseOrderID; 
+GO 
 
