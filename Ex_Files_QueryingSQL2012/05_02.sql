@@ -82,9 +82,10 @@ GO
 -- It's also hard to tell how the order was 
 -- factored so this could cause confusion in the 
 -- results.
-
-
-
+SELECT P.FirstName, P.MiddleName, P.LastName 
+FROM Person.Person P
+ORDER BY P.BusinessEntityID; 
+GO 
 
 
 -- 8. Change the order of the records by ordering the 
@@ -93,3 +94,7 @@ GO
 -- NULL affects the results because it is unknown 
 -- and will show up in the results ahead of any 
 -- other value.
+SELECT P.FirstName, P.MiddleName, P.LastName 
+FROM Person.Person P
+ORDER BY P.MiddleName ASC; 
+GO 
