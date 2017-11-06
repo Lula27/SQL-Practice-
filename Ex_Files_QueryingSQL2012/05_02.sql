@@ -67,8 +67,10 @@ GO
 -- NOTE, this is not a good practice and is only 
 -- demonstrated for awareness
 -- FN(1), MN(2), LN(3)
-
-
+SELECT P.FirstName, P.MiddleName, P.LastName 
+FROM Person.Person P
+ORDER BY 1, 2, 3; 
+GO 
 
 
 
