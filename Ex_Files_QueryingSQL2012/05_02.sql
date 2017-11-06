@@ -18,21 +18,30 @@ GO
 -- Change the order of the records by ordering 
 -- the results on BusinessEntityID
 -- 2. Same as one but order using BE_ID from lowest to highest
-SELECT P.BusinessEntityID, P.FirstName,P.MiddleName, P.LastName 
+SELECT P.BusinessEntityID, P.FirstName, P.MiddleName, P.LastName 
 FROM Person.Person P
-ORDER BY P.BusinessEntityID; 
+ORDER BY P.BusinessEntityID ASC; 
 GO 
+
 
 -- 3. Change the order of the records by ordering the 
 -- results in reverse order based on the last 
 -- name field.
- 
+SELECT P.BusinessEntityID, P.FirstName, P.MiddleName, P.LastName 
+FROM Person.Person P
+ORDER BY P.LastName DESC; 
+GO 
 
 
 -- 4. Change the order of the records by ordering 
 -- the results alphabetically based on the first 
 -- name and the last name with the first name 
 -- taking precedence.
+SELECT P.BusinessEntityID, P.FirstName, P.MiddleName, P.LastName 
+FROM Person.Person P
+ORDER BY P.FirstName, P.LastName ASC; 
+GO 
+
 
 
 -- 5. Change the order of the records by ordering the 
@@ -42,6 +51,11 @@ GO
 -- then last.
 -- Note the order, or lack of order, for the 
 -- last names in this version
+SELECT P.BusinessEntityID, P.FirstName, P.MiddleName, P.LastName 
+FROM Person.Person P
+ORDER BY P.FirstName ASC; 
+GO 
+
 
 
 -- 6. Avoid using this method - gets messy! 
@@ -55,6 +69,9 @@ GO
 -- FN(1), MN(2), LN(3)
 
 
+
+
+
 -- 7. Change the order of the records by ordering the 
 -- results based on the BusinessEntityID that 
 -- isn't included in the output to show that the 
@@ -63,6 +80,9 @@ GO
 -- It's also hard to tell how the order was 
 -- factored so this could cause confusion in the 
 -- results.
+
+
+
 
 
 -- 8. Change the order of the records by ordering the 
