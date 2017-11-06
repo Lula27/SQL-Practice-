@@ -10,7 +10,7 @@ GO
 -- Records are returned in the order the 
 -- database engine determines
 -- 1. Select BE_ID, FN, MN, LN from Person.Person tbl
-SELECT P.BusinessEntityID, P.FirstName,P.MiddleName, P.LastName 
+SELECT P.BusinessEntityID, P.FirstName, P.MiddleName, P.LastName 
 FROM Person.Person P; 
 GO 
 
@@ -37,7 +37,8 @@ GO
 -- the results alphabetically based on the first 
 -- name and the last name with the first name 
 -- taking precedence.
-SELECT P.BusinessEntityID, P.FirstName, P.MiddleName, P.LastName 
+-- *** Select FN, MN, LN
+SELECT P.FirstName, P.MiddleName, P.LastName 
 FROM Person.Person P
 ORDER BY P.FirstName, P.LastName ASC; 
 GO 
@@ -51,11 +52,10 @@ GO
 -- then last.
 -- Note the order, or lack of order, for the 
 -- last names in this version
-SELECT P.BusinessEntityID, P.FirstName, P.MiddleName, P.LastName 
+SELECT P.FirstName, P.MiddleName, P.LastName 
 FROM Person.Person P
 ORDER BY P.FirstName ASC; 
 GO 
-
 
 
 -- 6. Avoid using this method - gets messy! 
@@ -67,9 +67,10 @@ GO
 -- NOTE, this is not a good practice and is only 
 -- demonstrated for awareness
 -- FN(1), MN(2), LN(3)
+ 
 SELECT P.FirstName, P.MiddleName, P.LastName 
 FROM Person.Person P
-ORDER BY 1, 2, 3; 
+ORDER BY 1, 3; 
 GO 
 
 
