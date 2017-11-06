@@ -89,6 +89,7 @@ ORDER BY P.BusinessEntityID;
 GO 
 
 
+
 -- 8. Change the order of the records by ordering the 
 -- results alphabetically based on the middle name 
 -- to show how the NULL impacts the results.
@@ -99,3 +100,4 @@ SELECT P.FirstName, P.MiddleName, P.LastName
 FROM Person.Person P
 ORDER BY P.MiddleName ASC; 
 GO 
+
