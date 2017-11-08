@@ -2,6 +2,8 @@
 -- 05_03_Grouping_with_GROUP_BY.sql
 --********************************************
 -- Group By is useful for consolidating records 
+-- Group By is executed before Select 
+-- This is why errors may occure if the query for group by has a mistake
 
 
 USE AdventureWorks2012;
