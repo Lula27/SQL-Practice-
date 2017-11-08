@@ -6,26 +6,30 @@ USE AdventureWorks2012;
 GO
 
 
+--9. Use COUNT(*)
 -- Return the city name and the number of 
 -- addresses in the table that are in each city.  
 -- Rename the number of cities column to Totals
+-- Use Person.Address table
 SELECT City, COUNT(*) AS Totals
 FROM Person.Address
-GROUP BY City;
-GO
+GROUP BY City; 
+GO 
 
--- Return all the records in the Address table 
+
+
+--10. Return all the records in the Address table 
 -- just to show the difference in the row count
 -- that takes place when using GROUP BY.  
 -- Use ORDER BY to show the number of times a city
 -- name repeats in the table as well.
-SELECT City 
+SELECT City
 FROM Person.Address
-ORDER BY City;
-GO
+ORDER BY City; 
+GO 
 
 
--- This query will generate an error because the 
+--11. This query will generate an error because the 
 -- AddressLine1 field is not part of an aggregate 
 -- function, like COUNT in the first query, 
 -- nor is it part of the GROUP BY clause
@@ -35,7 +39,7 @@ GROUP BY City;
 GO
 
 
--- This query fixes the error because the 
+--12. This query fixes the error because the 
 -- AddressLine1 field is now part of the 
 -- GROUP BY clause.  It doesn't make much sense 
 -- because the grouping isn't logical on the 
@@ -46,5 +50,5 @@ GO
 -- expanded rather than just one entry per city
 SELECT AddressLine1, City
 FROM Person.Address
-GROUP BY City, AddressLine1;
-GO
+GROUP BY City, AddressLine1; 
+GO 

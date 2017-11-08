@@ -48,3 +48,31 @@ SELECT FirstName, MiddleName, LastName
 FROM Person.Person
 ORDER BY MiddleName;
 GO
+
+---
+
+9.
+SELECT City, COUNT(*) AS Totals
+FROM Person.Address
+GROUP BY City;
+GO
+
+10.
+SELECT City 
+FROM Person.Address
+ORDER BY City;
+GO
+
+
+
+11.
+
+12.
+SELECT AddressLine1, City
+FROM Person.Address
+GROUP BY City, AddressLine1;
+GO
+
+13.
+
+
