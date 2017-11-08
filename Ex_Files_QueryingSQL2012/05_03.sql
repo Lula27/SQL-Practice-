@@ -1,6 +1,8 @@
 --********************************************
 -- 05_03_Grouping_with_GROUP_BY.sql
 --********************************************
+-- Group By is useful for consolidating records 
+
 
 USE AdventureWorks2012;
 GO
@@ -13,7 +15,7 @@ GO
 -- Use Person.Address table
 SELECT City, COUNT(*) AS Totals
 FROM Person.Address
-GROUP BY City; 
+GROUP BY City;
 GO 
 
 
@@ -23,20 +25,18 @@ GO
 -- that takes place when using GROUP BY.  
 -- Use ORDER BY to show the number of times a city
 -- name repeats in the table as well.
-SELECT City
-FROM Person.Address
-ORDER BY City; 
-GO 
 
-
---11. This query will generate an error because the 
+-- This query will generate an error because the 
 -- AddressLine1 field is not part of an aggregate 
 -- function, like COUNT in the first query, 
 -- nor is it part of the GROUP BY clause
+
 SELECT AddressLine1, City
 FROM Person.Address
-GROUP BY City;
-GO
+GROUP BY City; 
+GO 
+
+
 
 
 --12. This query fixes the error because the 
@@ -48,6 +48,8 @@ GO
 -- us to return multiple fields.
 -- Also notice that the city names are now 
 -- expanded rather than just one entry per city
+
+-- THE FIX 
 SELECT AddressLine1, City
 FROM Person.Address
 GROUP BY City, AddressLine1; 
