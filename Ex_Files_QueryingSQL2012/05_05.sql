@@ -82,3 +82,11 @@ SELECT MIN(VacationHours) AS [MIN Vacation],
 	MAX(HireDate) AS [Last Hire Date]
 FROM HumanResources.Employee;
 GO
+
+SELECT MIN(VacationHours) AS [Minimum Vaction Hours],
+	MAX(VacationHours) AS [Maximum Vaction Hours],
+	SUM(VacationHours) AS [Total Vacation Hours],
+	SUM(SickLeaveHours) AS [Total Sick Leave Hours],
+	MAX(HireDate) AS [Last Hire Date]
+FROM HumanResources.Employee
+GO 
