@@ -1,6 +1,7 @@
 --******************************************
 -- 06_02_ Queries_Using_Character_Data_Types.sql
 --******************************************
+-- Looking at queries with character (strings) data types
 
 USE AdventureWorks2012;
 GO
@@ -12,9 +13,20 @@ GO
 -- query to help increase performance of queries
 SELECT FirstName, LastName
 FROM Person.Person
-WHERE LastName = N'Adams';
+WHERE LastName = N'Adams'; -- N reps unicode values; helps avoid casting (conversion of data types in queries); makes query run faster
 GO
 
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE LastName = N'Brown'; 
+GO 
+
+
+-- Try withou N : maybe went slower...not sure
+SELECT LastName
+FROM Person.Person
+WHERE LastName = 'Adams';
+GO 
 
 -- Use the % symbol to apply filters with any 
 -- string as a wildcard in this case, we search 
