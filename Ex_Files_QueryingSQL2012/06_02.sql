@@ -88,6 +88,11 @@ FROM Person.Person
 WHERE FirstName LIKE N'%im%'; -- im somewhere in first name
 GO
 
+-- where on is within last name
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE LastName LIKE N'%so' OR FirstName LIKE N'%so%'; 
+GO 
 
 
 
@@ -97,8 +102,15 @@ GO
 -- letter 'd' in the second place in the name
 SELECT FirstName, LastName
 FROM Person.Person
-WHERE LastName LIKE N'_D%';
+WHERE LastName LIKE N'_D%'; -- _ = space for first place (single character before d)
 GO
+
+SELECT FirstName, LastName 
+FROM Person.Person
+WHERE FirstName LIKE N'_y%'; -- looking for character coming before y 
+GO 
+
+-- Multiple character values 
 
 -- Use a list of characters within [] brackets to 
 -- search for multiple possible character values. 
@@ -107,8 +119,18 @@ GO
 -- in the last name.
 SELECT FirstName, LastName
 FROM Person.Person
-WHERE LastName LIKE N'[ABC]%';
+WHERE LastName LIKE N'[ABC]%'; -- can start with A, B or C
 GO
+
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName LIKE N'[LOR]%'; 
+GO 
+
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE LastName LIKE N'[XYZ]%' -- How did a type conversion stop me from making an error? 
+GO 
 
 -- Use a list of characters within [] brackets to 
 -- search for multiple possible character values.  
@@ -116,14 +138,31 @@ GO
 -- characters within a range.
 SELECT FirstName, LastName
 FROM Person.Person
-WHERE LastName LIKE N'[A-F]%';
+WHERE LastName LIKE N'[A-F]%'; -- use hyphon to indicate anything inclusive 
 GO
 
+
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName LIKE 'N%[Ali]' -- not case sensitive 
+GO 
+
+-- NOT ^ 
 -- Use a list of characters within [] brackets to 
 -- search for multiple possible character values. 
 -- Here we search for last names that don't start 
 -- with characters specified in the range supplied
 SELECT FirstName, LastName
 FROM Person.Person
-WHERE LastName LIKE N'[^A-F]%';
+WHERE LastName LIKE N'[^A-F]%'; --logical nut or negation - any letter except A through F
 GO
+
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE LastName LIKE N'[^A-X]%'; 
+GO 
+
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE LastName LIKE N'[^A-Y]%'; 
+GO 
