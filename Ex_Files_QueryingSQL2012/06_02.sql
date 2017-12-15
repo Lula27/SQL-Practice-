@@ -22,19 +22,30 @@ WHERE LastName = N'Brown';
 GO 
 
 
--- Try withou N : maybe went slower...not sure
+-- Try withou N : maybe went slower...not sure...Yes! Considerably slower without N.
 SELECT LastName
 FROM Person.Person
 WHERE LastName = 'Adams';
 GO 
 
+-- Whenever you use wildcard (%), use LIKE 
 -- Use the % symbol to apply filters with any 
 -- string as a wildcard in this case, we search 
 -- for people with last names that start with A
 SELECT FirstName, LastName
 FROM Person.Person
-WHERE LastName LIKE N'A%';
+WHERE LastName LIKE N'A%'; -- last name starts with A
 GO
+
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName	LIKE N'H%'; 
+GO 
+
+SELECT FirstName, LastName 
+FROM Person.Person
+WHERE LastName LIKE N'%A'; 
+GO 
 
 -- Use the % symbol to apply filters with any 
 -- string as a wildcard in this case we expand 
@@ -46,6 +57,18 @@ FROM Person.Person
 WHERE LastName LIKE N'Ab%';
 GO
 
+-- Select names where first name starts with Ki
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName	LIKE N'Ki%'; 
+GO 
+
+-- Select names where last name ends with ez
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE LastName LIKE '%ez';
+GO 
+
 -- Use the % symbol to apply filters with any 
 -- string as a wildcard in this case, we search 
 -- for people with first names that end in 'im'
@@ -55,8 +78,18 @@ GO
 -- used in different locations
 SELECT FirstName, LastName
 FROM Person.Person
-WHERE FirstName LIKE N'%im' OR FirstName LIKE N'%im%';
+WHERE FirstName LIKE N'%im' OR FirstName LIKE N'%im%'; -- im somewhere in first name
 GO
+
+-- Wasn't expecting this to retrieve the exact same thing - thought Kim would disappear
+-- but 204 rows retrieved just like last time 
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE FirstName LIKE N'%im%'; -- im somewhere in first name
+GO
+
+
+
 
 -- Use the _ symbol to apply filters with any 
 -- string as a wildcard in this case, we search 
