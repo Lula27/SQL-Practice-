@@ -166,3 +166,17 @@ SELECT FirstName, LastName
 FROM Person.Person
 WHERE LastName LIKE N'[^A-Y]%'; 
 GO 
+
+
+-- First Name ends with L
+SELECT FirstName, LastName 
+FROM Person.Person 
+WHERE FirstName LIKE N'%L'; 
+GO 
+
+
+-- First Name starts with 
+SELECT FirstName, LastName 
+FROM Person.Person 
+WHERE FirstName LIKE N'L%'; 
+GO 
