@@ -17,6 +17,16 @@ SELECT FirstName + ' ' + LastName AS [Full Name]
 FROM Person.Person;
 GO
 
+SELECT FirstName + ' ' + LastName AS [Full Name]
+FROM Person.Person
+WHERE FirstName LIKE N'P%'; 
+GO 
+
+SELECT FirstName + ' ' + MiddleName + ' ' + LastName AS [Government Name]
+FROM Person.Person
+WHERE MiddleName IS NOT NULL; 
+GO 
+
 -- Combine character values together using string 
 -- concatenation. The + symbol, most commonly used 
 -- for mathematical addition, is the character
@@ -25,6 +35,8 @@ GO
 -- NOTE: We do not include a comma field separator in the field list
 -- as in a regular query
 -- What happens when a field contains a NULL?
+-- ...it will include the nulls 
+
 SELECT FirstName + ' ' + MiddleName + ' ' + 
 	LastName AS [Full Name]
 FROM Person.Person;
@@ -45,6 +57,12 @@ SELECT FirstName + ' ' + COALESCE(MiddleName,' ')
 FROM Person.Person;
 GO
 
+-- Practice using COALESCE to get rid of spaces
+SELECT FirstName + ' ' + COALESCE(MiddleName, ' ') 
+	+ ' ' + LastName AS [Full Name]
+FROM Person.Person; 
+GO 
+
 -- When it comes to character data, you sometimes 
 -- may want to know how long a value is.  This 
 -- might be necessary if your query is extracting 
@@ -57,6 +75,11 @@ SELECT LastName, LEN(LastName)
 FROM Person.Person;
 GO
 
+SELECT FirstName, LEN(FirstName)
+	AS [First Name Length]
+FROM Person.Person
+GO 
+
 -- Or perhaps we need to know how large the string 
 -- is in terms of bytes rather than characters.
 SELECT LastName, LEN(LastName) 
@@ -64,6 +87,19 @@ SELECT LastName, LEN(LastName)
 	AS [Last Name Bytes]
 FROM Person.Person;
 GO
+
+SELECT FirstName, LEN(FirstName)
+	AS [First Name Length], DATALENGTH(FirstName)
+	AS [First Name Bytes]
+FROM Person.Person;
+GO 
+
+SELECT FirstName + ' ' + MiddleName, LEN(FirstName), LEN(MiddleName)
+	AS [Middle Name Length], DATALENGTH(MiddleName)
+	AS [Middle Name Bytes]
+FROM Person.Person
+WHERE MiddleName IS NOT NULL;
+GO 
 
 -- We used CAST in a previous lesson but we can 
 -- also replace text in a string with the REPLACE 
@@ -79,6 +115,11 @@ SELECT LastName, REPLACE(LastName, '''', '')
 FROM Person.Person
 WHERE LastName LIKE '%''%';
 GO
+
+SELECT 
+FROM Person.Person
+WHERE LastName LIKE '%''%'; 
+GO 
 
 -- We can also repeat characters in a query.  
 -- Although is more suitable for data input rather 
