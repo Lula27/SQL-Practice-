@@ -176,10 +176,16 @@ GO
 -- Of course, you can't see that the spaces are 
 -- trimmed because, well, you can't always see 
 -- spaces at the beginning or end of text.
-SELECT RTRIM(LTRIM(FirstName))
+SELECT RTRIM(LTRIM(FirstName)) 
 FROM Person.Person;
 GO
 
+-- use RTRIM - right trim to get rid of spaces to right; LTRIM - left trim to remove spaces to the left
+SELECT LTRIM(LastName) AS [Last Name]
+FROM Person.Person;
+GO 
+
+-- Extract characters 
 -- And finally, we can use the SUBSTRING function 
 -- to deal with values within strings.
 -- Let's assume you want to extract the first 3 
@@ -191,6 +197,19 @@ GO
 SELECT SUBSTRING(FirstName,1,3)
 FROM Person.Person;
 GO
+
+-- SUBSTRING(FirstName,first character, # of characters you want to select)
+SELECT SUBSTRING(LastName, 2, 4)
+FROM Person.Person; 
+GO 
+
+SELECT SUBSTRING(FirstName, 1, 2)
+FROM Person.Person;
+GO 
+
+SELECT SUBSTRING(LastName, 1, 4) AS [Letters Extracted from Last Name]
+FROM Person.Person;
+GO 
 
 -- Use LEFT or RIGHT to return the number of 
 -- characters at the beginning or
