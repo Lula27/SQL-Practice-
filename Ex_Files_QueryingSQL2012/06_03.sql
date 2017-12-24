@@ -117,6 +117,12 @@ WHERE LastName LIKE '%''%';
 GO
 
 
+-- Sifting out special characters
+SELECT LastName, REPLACE(LastName, '''', '')
+FROM Person.Person
+WHERE LastName LIKE '%''%'; 
+GO 
+
 
 -- We can also repeat characters in a query.  
 -- Although is more suitable for data input rather 
@@ -218,3 +224,15 @@ SELECT FirstName, LEFT(FirstName,3),
 	RIGHT(FirstName,3)
 FROM Person.Person;
 GO
+
+-- Elaborate substring selection
+SELECT FirstName, LEFT(FirstName, 3),
+	RIGHT(FirstName, 3)
+FROM Person.Person;
+GO
+
+SELECT LastName, LEFT(LastName, 2),
+	RIGHT(LastName, 5)
+FROM Person.Person;
+GO
+
