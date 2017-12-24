@@ -82,7 +82,7 @@ GO
 
 -- Or perhaps we need to know how large the string 
 -- is in terms of bytes rather than characters.
-SELECT LastName, LEN(LastName) 
+SELECT LastName AS [Last Name], LEN(LastName) 
 	AS [Last Name Length], DATALENGTH(LastName) 
 	AS [Last Name Bytes]
 FROM Person.Person;
@@ -116,10 +116,7 @@ FROM Person.Person
 WHERE LastName LIKE '%''%';
 GO
 
-SELECT 
-FROM Person.Person
-WHERE LastName LIKE '%''%'; 
-GO 
+
 
 -- We can also repeat characters in a query.  
 -- Although is more suitable for data input rather 
@@ -132,6 +129,21 @@ GO
 -- parameters.
 SELECT REPLICATE('A', 10);
 GO
+
+SELECT REPLICATE('L', 10); 
+GO 
+
+SELECT REPLICATE('SHEVAN' + ' ', 100); 
+GO 
+
+SELECT REPLICATE('LOVE' + ' ', 7); 
+GO 
+
+SELECT REPLICATE('ME' + ' ', 10);
+GO 
+
+SELECT REPLICATE('NOT' + ' ', 3);
+GO 
 
 -- We can also format strings though the use of 
 -- functions for change to/from upper and lower 
