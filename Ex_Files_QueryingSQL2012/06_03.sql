@@ -153,6 +153,15 @@ SELECT LOWER(FirstName), UPPER(LastName)
 FROM Person.Person;
 GO
 
+-- Play with cases
+SELECT UPPER(FirstName), LOWER(LastName)
+FROM Person.Person; 
+GO
+
+SELECT UPPER(FirstName) + ' ' + UPPER(LastName) As [Full Name]
+FROM Person.Person;
+GO 
+
 -- Sometimes, when data is entered into a database 
 -- manually, values may have spaces at the 
 -- beginning or end.  This can cause issues with 
