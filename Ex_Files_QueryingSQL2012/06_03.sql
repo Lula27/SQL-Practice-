@@ -228,6 +228,14 @@ SELECT SUBSTRING(LastName, 1, 4) AS [Letters Extracted from Last Name]
 FROM Person.Person;
 GO 
 
+SELECT SUBSTRING(City, 1, 4) AS [First few letters of City Name]
+FROM Person.Address; 
+GO 
+
+SELECT City
+FROM Person.Address;
+GO 
+
 -- Use LEFT or RIGHT to return the number of 
 -- characters at the beginning or
 -- the end, repsectively, of a string
@@ -247,3 +255,17 @@ SELECT LastName, LEFT(LastName, 2),
 FROM Person.Person;
 GO
 
+SELECT City, LEFT(City, 2), 
+	RIGHT(City, 5)
+FROM Person.Address; 
+GO
+
+SELECT City, LEFT(City, 4), 
+	RIGHT(City, 6)
+FROM Person.Address; 
+GO  
+
+
+SELECT SUBSTRING(City, 1, 4) AS [First few letters of City Name]
+FROM Person.Address; 
+GO 
