@@ -63,6 +63,11 @@ SELECT FirstName + ' ' + COALESCE(MiddleName, ' ')
 FROM Person.Person; 
 GO 
 
+-- Use COALESCE to remove null values from middle names
+SELECT FirstName + ' ' + COALESCE(MiddleName, ' ') AS [First and Middle Name]
+FROM Person.Person; 
+GO 
+
 -- When it comes to character data, you sometimes 
 -- may want to know how long a value is.  This 
 -- might be necessary if your query is extracting 
@@ -78,6 +83,12 @@ GO
 SELECT FirstName, LEN(FirstName)
 	AS [First Name Length]
 FROM Person.Person
+GO 
+
+-- List character length for Job Title 
+SELECT JobTitle, LEN(JobTitle) 
+	AS [Characters for Job Titles]
+FROM HumanResources.Employee
 GO 
 
 -- Or perhaps we need to know how large the string 
