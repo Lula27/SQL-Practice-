@@ -75,4 +75,12 @@ WHERE UnitPrice =
 	WHERE s1.SalesOrderID = s2.SalesOrderID);
 GO
 
+SELECT OrderQty, LineTotal
+FROM Sales.SalesOrderDetail AS od
+WHERE UnitPrice = 
+	(SELECT MAX(UnitPrice)
+	FROM Sales.SalesOrderDetail sd
+	WHERE od.SalesOrderID = sd.SalesOrderID); 
+GO 
+
 
