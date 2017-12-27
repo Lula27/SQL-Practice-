@@ -23,6 +23,17 @@ WHERE UnitPrice =
 	FROM Sales.SalesOrderDetail);
 GO
 
+SELECT OrderQty, LineTotal
+FROM Sales.SalesOrderDetail
+-- Subquery starts hear 
+WHERE UnitPrice = 
+	(SELECT MIN(UnitPrice)
+	FROM Sales.SalesOrderDetail); 
+GO 
+
+SELECT *
+FROM Person.Person; 
+
 -- Use a subquery that returns multiple values
 -- In this case, we cannot use the = operator
 -- but instead will use the IN clause due to 
@@ -37,6 +48,15 @@ WHERE BusinessEntityID IN
 	FROM Sales.SalesPerson
 	WHERE SalesLastYear > 2000000);
 GO
+
+SELECT FirstName, LastName 
+FROM Person.Person
+WHERE BusinessEntityID IN 
+	(SELECT BusinessEntityID
+	FROM Sales.SalesPerson
+	WHERE SalesLastYear > 20000); 
+GO 
+
 
 -- Use a correlated subquery that references a 
 -- field in the SalesOrderDetail table and returns 
