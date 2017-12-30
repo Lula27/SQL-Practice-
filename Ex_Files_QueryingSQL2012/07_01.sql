@@ -31,6 +31,13 @@ WHERE UnitPrice =
 	FROM Sales.SalesOrderDetail); 
 GO 
 
+SELECT ToCurrencyCode, EndOfDayRate
+FROM Sales.CurrencyRate
+WHERE ToCurrencyCode LIKE '%AR%'
+	(SELECT MAX(EndOfDayRate)
+	FROM Sales.CurrencyRate); 
+GO 
+
 SELECT *
 FROM Person.Person; 
 
