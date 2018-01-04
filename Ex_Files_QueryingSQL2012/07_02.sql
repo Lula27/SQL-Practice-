@@ -8,12 +8,14 @@ GO
 
 -- Using EXISTS predicate to check for existence 
 -- of records in a subquery.
+
 -- In this instance, we are looking for customer 
 -- account numbers who place orders online.
 -- We do this by using EXISTS to check which 
 -- records in the subquery, in this case the 
 -- SalesOrderHeader table, match the customer IDs 
--- and that also have the online order flag set to 
+-- and that also have the online order flag set to
+ 
 -- 1. We might run such a query to determine which 
 -- customers place online orders so that we can 
 -- send them specials or other notification types.
@@ -26,6 +28,13 @@ WHERE EXISTS
 	AND OnlineOrderFlag = 1);
 GO
 
+SELECT *  
+FROM Sales.Customer;
+GO 
+
+SELECT *  
+FROM Sales.SalesOrderHeader;
+GO 
 
 
 -- We can also negate the results if we are 
