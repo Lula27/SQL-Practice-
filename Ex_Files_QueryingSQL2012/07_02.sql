@@ -46,9 +46,12 @@ WHERE EXISTS
 	AND OnlineOrderFlag = 1); 
 GO 
 
--- Select AccountNumber where exists 
-SELECT *  
-FROM Sales.Customer;
+-- Select AccountNumber where exists (territory ID = 4)
+SELECT AccountNumber AS [Account Number]
+FROM Sales.Customer AS sc
+WHERE EXISTS
+	(SELECT *
+	FROM Sales.S ;
 GO 
 
 SELECT *  
