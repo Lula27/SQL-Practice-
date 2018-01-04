@@ -25,9 +25,28 @@ WHERE EXISTS
 	(SELECT *
 	FROM Sales.SalesOrderHeader AS soh
 	WHERE c.CustomerID = soh.CustomerID
-	AND OnlineOrderFlag = 1);
+	AND OnlineOrderFlag = 1);  -- Why not == ?
 GO
 
+SELECT AccountNumber AS [Account Number]
+FROM Sales.Customer AS sc
+WHERE EXISTS 
+	(SELECT * 
+	FROM Sales.SalesOrderHeader AS soh
+	WHERE sc.CustomerID = soh.CustomerID
+	AND OnlineOrderFlag = 1); 
+GO 
+
+SELECT AccountNumber AS [Account Number]
+FROM Sales.Customer AS sc
+WHERE EXISTS 
+	(SELECT *
+	FROM Sales.SalesOrderHeader AS soh
+	WHERE sc.CustomerID = soh.CustomerID
+	AND OnlineOrderFlag = 1); 
+GO 
+
+-- Select AccountNumber where exists 
 SELECT *  
 FROM Sales.Customer;
 GO 
