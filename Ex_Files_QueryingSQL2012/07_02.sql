@@ -25,24 +25,34 @@ WHERE EXISTS
 	(SELECT *
 	FROM Sales.SalesOrderHeader AS soh
 	WHERE c.CustomerID = soh.CustomerID
-	AND OnlineOrderFlag = 1);  -- Why not == ?
+	AND OnlineOrderFlag = 1);  -- Why not == ? : b/c that is assignment 
 GO
 
-SELECT AccountNumber AS [Account Number]
-FROM Sales.Customer AS sc
+SELECT AccountNumber
+FROM Sales.Customer AS sc 
+WHERE EXISTS 
+	(SELECT *
+	FROM Sales.SalesOrderHeader AS soh 
+	WHERE sc.CustomerID = soh.CustomerID
+	AND OnlineOrderFlag = 1); 
+GO   
+
+SELECT AccountNumber 
+FROM Sales.Customer AS sc 
 WHERE EXISTS 
 	(SELECT * 
-	FROM Sales.SalesOrderHeader AS soh
+	FROM Sales.SalesOrderHeader AS soh 
 	WHERE sc.CustomerID = soh.CustomerID
 	AND OnlineOrderFlag = 1); 
 GO 
 
-SELECT AccountNumber AS [Account Number]
-FROM Sales.Customer AS sc
+SELECT AccountNumber
+FROM Sales.Customer AS sc 
 WHERE EXISTS 
 	(SELECT *
-	FROM Sales.SalesOrderHeader AS soh
+	FROM Sales.SalesOrderHeader AS soh 
 	WHERE sc.CustomerID = soh.CustomerID
+	AND sc.CustomerID = soh.CustomerID
 	AND OnlineOrderFlag = 1); 
 GO 
 
