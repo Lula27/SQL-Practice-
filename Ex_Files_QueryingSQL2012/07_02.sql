@@ -52,18 +52,22 @@ WHERE EXISTS
 	(SELECT *
 	FROM Sales.SalesOrderHeader AS soh 
 	WHERE sc.CustomerID = soh.CustomerID
-	AND sc.CustomerID = soh.CustomerID
 	AND OnlineOrderFlag = 1); 
 GO 
 
 -- Select AccountNumber where exists (territory ID = 4)
-SELECT AccountNumber AS [Account Number]
+-- StoreID, CustomerID
+SELECT StoreID
 FROM Sales.Customer AS sc
-WHERE EXISTS
+WHERE EXISTS 
 	(SELECT *
-	FROM Sales.S ;
+	FROM Sales.SalesOrderHeader AS soh
+	WHERE sc.AccountNumber = soh.AccountNumber
+	AND OnlineOrderFlag = 1);
 GO 
 
+
+-- where territoryID = 4 ; key is AccountNumber 
 SELECT *  
 FROM Sales.SalesOrderHeader;
 GO 
