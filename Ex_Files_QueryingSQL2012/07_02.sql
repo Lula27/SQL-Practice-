@@ -56,7 +56,7 @@ WHERE EXISTS
 GO 
 
 -- Select AccountNumber where exists (territory ID = 4)
--- StoreID, CustomerID
+-- Key: TerritoryID 
 
 SELECT StoreID, TerritoryID, AccountNumber
 FROM Sales.Customer; 
@@ -65,6 +65,15 @@ FROM Sales.Customer;
 -- where SubTotal > 2000 ; key is AccountNumber 
 SELECT AccountNumber, SalesOrderID, TerritoryID, SubTotal
 FROM Sales.SalesOrderHeader;
+GO 
+
+SELECT AccountNumber AS [Account Number]
+FROM Sales.Customer AS sc
+WHERE EXISTS 
+	(SELECT * 
+	FROM Sales.SalesOrderHeader AS soh 
+	WHERE sc.TerritoryID = soh.TerritoryID
+	AND SubTotal > 2000); 
 GO 
 
 
