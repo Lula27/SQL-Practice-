@@ -77,6 +77,19 @@ WHERE EXISTS
 GO 
 
 
+-- key: BusinessEntityID
+-- retreive DepartmentID, StartDate 
+SELECT DepartmentID AS [Department ID], StartDate AS [Start Date] 
+FROM HumanResources.EmployeeDepartmentHistory AS hredh 
+WHERE EXISTS 
+	(SELECT *
+	FROM HumanResources.EmployeePayHistory AS hreph
+	WHERE Rate > 13); 
+
+-- where rate > 13 
+SELECT *
+FROM HumanResources.EmployeePayHistory; 
+
 -- We can also negate the results if we are 
 -- looking for records that are NOT in the 
 -- subquery. In this instance, we are looking 
