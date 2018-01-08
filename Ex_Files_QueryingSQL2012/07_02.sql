@@ -79,6 +79,11 @@ GO
 
 -- key: BusinessEntityID
 -- retreive DepartmentID, StartDate 
+
+-- where rate > 13 
+SELECT *
+FROM HumanResources.EmployeePayHistory; 
+
 SELECT DepartmentID AS [Department ID], StartDate AS [Start Date] 
 FROM HumanResources.EmployeeDepartmentHistory AS hredh 
 WHERE EXISTS 
@@ -86,9 +91,14 @@ WHERE EXISTS
 	FROM HumanResources.EmployeePayHistory AS hreph
 	WHERE Rate > 13); 
 
--- where rate > 13 
+
+-- ket: BusinessEntityID 
+
 SELECT *
-FROM HumanResources.EmployeePayHistory; 
+FROM Sales.SalesPerson; 
+
+SELECT *
+FROM Sales.SalesPersonQuotaHistory; 
 
 -- We can also negate the results if we are 
 -- looking for records that are NOT in the 
@@ -105,3 +115,21 @@ WHERE NOT EXISTS
 	WHERE c.CustomerID = soh.CustomerID
 	AND OnlineOrderFlag = 1);
 GO
+
+SELECT AccountNumber AS [Account Number]
+FROM Sales.Customer AS sc
+WHERE NOT EXISTS 
+	(SELECT *
+	FROM Sales.SalesOrderHeader AS soh
+	WHERE sc.CustomerID = soh.CustomerID
+	AND OnlineOrderFlag = 1); 
+GO 
+
+SELECT AccountNumber AS [Account Number]
+FROM Sales.Customer AS sc 
+WHERE NOT EXISTS 
+	(SELECT * 
+	FROM Sales.SalesOrderHeader AS soh
+	WHERE sc.CustomerID = soh.CustomerID
+	AND OnlineOrderFlag = 1);
+GO 
