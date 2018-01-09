@@ -100,13 +100,41 @@ FROM Sales.SalesPerson;
 SELECT *
 FROM Sales.SalesPersonQuotaHistory; 
 
+-- key: BusinessEntityID
+
+SELECT BusinessEntityID, FirstName + ' ' + LastName AS [Full Name]
+FROM Person.Person; 
+
+SELECT * 
+FROM Person.PersonPhone;
+
+-- rows: 736
+SELECT FirstName + ' ' + LastName AS [Full Name] 
+FROM Person.Person AS p
+WHERE EXISTS 
+	(SELECT pp.PhoneNumber 
+	FROM Person.PersonPhone AS pp
+	WHERE p.BusinessEntityID = pp.BusinessEntityID
+	AND PhoneNumberTypeID = 3); 
+
+
+-- rows: 736
+SELECT pp.PhoneNumber, pp.PhoneNumberTypeID
+FROM Person.PersonPhone AS pp 
+WHERE pp.PhoneNumberTypeID = 3; 
+
+-- Do the opposite! 
 -- We can also negate the results if we are 
 -- looking for records that are NOT in the 
--- subquery. In this instance, we are looking 
+-- subquery. 
+
+-- In this instance, we are looking 
 -- for customer account numbers who do NOT place 
 -- orders online.
+
 -- We do this by using NOT EXISTS to check which 
 -- records in the subquery.
+
 SELECT AccountNumber
 FROM Sales.Customer AS c
 WHERE NOT EXISTS
@@ -133,3 +161,7 @@ WHERE NOT EXISTS
 	WHERE sc.CustomerID = soh.CustomerID
 	AND OnlineOrderFlag = 1);
 GO 
+
+
+
+
