@@ -162,6 +162,19 @@ WHERE NOT EXISTS
 	AND OnlineOrderFlag = 1);
 GO 
 
+-- rows: 19236 
+SELECT p.FirstName + ' ' + p.LastName AS [Full Name]
+FROM Person.Person AS p
+WHERE NOT EXISTS 
+	 (SELECT * 
+	 FROM Person.PersonPhone AS pp
+	 WHERE pp.BusinessEntityID = p.BusinessEntityID
+	 AND pp.PhoneNumberTypeID = 3);
+
+
+-- key: BusinessEntityID
+SELECT pp.PhoneNumber, PhoneNumberTypeID
+FROM Person.PersonPhone AS pp; 
 
 
 
