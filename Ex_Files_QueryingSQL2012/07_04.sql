@@ -5,7 +5,7 @@
 USE AdventureWorks2012;
 GO
 
--- Define the CTE expression name and column 
+-- Define the CTE (Common Table Expression) expression name and column 
 -- list.
 -- Here we are naming our CTE as Sales_CTE 
 -- and we are defining the column names it 
@@ -41,3 +41,25 @@ FROM Sales_CTE
 GROUP BY SalesYear, SalesPersonID
 ORDER BY SalesPersonID, SalesYear;
 GO
+
+
+-- hmmmm...above doesn't seem to be working
+
+-- Try my own CTE example
+-- source: https://docs.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql
+
+-- step 1: Define the CTE expression name & colum list
+WITH Sales_CTE (SalesPersonID, SalesOrderID, SalesYear)
+AS 
+-- Define the CTE query.
+(
+	SELECT SalesPersonID, SalesOrderID, YEAR(OrderDate) AS SalesYEar
+	FROM Sales.SalesOrderHeader
+	WHERE SalesPersonID IS NOT NULL 
+) 
+-- Define the outer query referencing the CTE name. 
+SELECT SalesPersonID, COUNT(SalesOrderID) AS TotalSales, SalesYear
+FROM Sales_CTE 
+GROUP BY SalesYear, SalesPersonID
+ORDER BY SalesPersonID, SalesYear; 
+GO 
