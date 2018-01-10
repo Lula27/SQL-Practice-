@@ -43,6 +43,16 @@ ORDER BY SalesPersonID, SalesYear;
 GO
 
 
+-- Using a CTE to retreive multiple types of data 
+WITH Sales_CTE(SalesPersonID, SalesOrderID, SalesYear)
+	AS 
+	( 
+		SELECT SalesPersonID, SalesOrderID, 
+			YEAR(OrderDate) AS SalesYear 
+			FROM Sales.SalesOrderHeader
+			WHERE SalesPersonID IS NOT NULL 
+	) 
+
 -- hmmmm...above doesn't seem to be working
 
 -- Try my own CTE example
