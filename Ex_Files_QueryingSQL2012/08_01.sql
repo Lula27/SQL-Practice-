@@ -17,7 +17,7 @@ GO
 -- that will be used to store the last and 
 -- first names passed in from a caller to the 
 -- stored procedure
-CREATE PROCEDURE HumanResources.uspGetEmployeesByName 
+CREATE PROCEDURE HumanResources.uspGetEmployeesByName
     @LastName nvarchar(50), 
     @FirstName nvarchar(50) 
 AS 
@@ -60,6 +60,15 @@ AS
 	SELECT FirstName, LastName, Department
 	FROM HumanResources.vEmployeeDepartmentHistory
 	WHERE FirstName = @FirstName
-		AND LastName = @LastName -- parameters being used
-		AND EndDate IS NULL; 
+			AND LastName = @LastName -- parameters being used
+			AND EndDate IS NULL; 
 	GO 
+
+-- Execute stored proceedure 
+EXECUTE HumanResources.uspGetEmployeesByName N'Ackerman', 
+	N'Pilar'; 
+
+
+-- Or shorthand EXECUTE with EXEC 
+
+
