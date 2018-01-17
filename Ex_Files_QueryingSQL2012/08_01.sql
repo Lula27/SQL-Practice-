@@ -7,6 +7,7 @@ GO
 
 -- Here we will create the stored procedure 
 -- by providing a name for the procedure.  
+
 -- Note the use of usp as the prefix to 
 -- indicate this is a user defined stored 
 -- procedure.  Never use sp_ as that is the 
@@ -47,3 +48,18 @@ EXECUTE HumanResources.uspGetEmployeesByName N'Ackerman',
 EXEC HumanResources.uspGetEmployeesByName 
 	@LastName = N'Ackerman', @FirstName = N'Pilar';
 GO
+
+
+-- Step 1: Create Stored Proceedure
+CREATE PROCEDURE HumanResources.uspGetEmployeesByName
+	@LastName nvarchar(50),
+	@FirstName nvarchar(50) 
+AS 
+
+	SET NOCOUNT ON;  -- don't return row count 
+	SELECT FirstName, LastName, Department
+	FROM HumanResources.vEmployeeDepartmentHistory
+	WHERE FirstName = @FirstName
+		AND LastName = @LastName -- parameters being used
+		AND EndDate IS NULL; 
+	GO 
