@@ -80,6 +80,26 @@ BEGIN
 -- This END keyword marks the end of the statement block that was started with BEGIN
 END
 
+
+-- Using BEGIN and END can help us control groups of statements. 
+-- This is similar to batching
+DECLARE @AvgWeight decimal(8,2), @BikeCount int 
+-- if statement 
+IF 
+(SELECT COUNT(*) FROM Production.Product
+	WHERE Name LIKE 'Touring-3000%') > 5
+BEGIN 
+-- Set value for @BikeCount variable based on query for count
+SET @BikeCount = 
+	(SELECT COUNT(*) 
+	FROM Production.Product
+	WHERE Name LIKE 'Touring-3000%'); 
+-- print out messages based on results
+PRINT 'There are ' + CAST(@BikeCount AS varchar(3))
+	+ ' Touring-3000 bikes.'
+PRINT 'The average weight of the top 5 Touring-3000 bikes is ' + CAST(@Avg@weight AS varchar(8)) + '.'; 
+END 
+
 -- Setup the messages for the case of a false return from IF
 ELSE 
 BEGIN
