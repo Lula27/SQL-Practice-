@@ -70,5 +70,26 @@ EXECUTE HumanResources.uspGetEmployeesByName N'Ackerman',
 
 
 -- Or shorthand EXECUTE with EXEC 
+EXEC HumanResources.uspGetEmployeesByName
+	@LastName = N'Ackerman', @FirstName = N'Pilar';
+GO 
+
+
+-- Create another stored procedure 
+SELECT FirstName, LastName, Department
+FROM HumanResources.vEmployeeDepartmentHistory
+WHERE FirstName = @FirstName AND LastName = @LastName 
+	AND EndDate IS NULL; 
+GO
+
+SELECT * 
+FROM HumanResources.vEmployeeDepartmentHistory; 
+
+
+-- Another one...
+SELECT FirstName, LastName, Department
+FROM HumanResources.vEmployeeDepartmentHistory
+WHERE FirstName = @FirstName AND LastName = @LastName	
+	AND EndDate IS NULL; 
 
 

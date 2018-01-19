@@ -26,6 +26,23 @@ PRINT 'There are more than 5 Touring-3000 bicycles.'
 ELSE PRINT 'There are 5 or less Touring-3000 bicycles.' ;
 GO
 
+IF 
+(SELECT COUNT(*) FROM Production.Product
+	WHERE Name LIKE 'Toulring-3000%') > 5
+PRINT 'There are more than 5 Touring-3000 bicycles.'
+ELSE PRINT 'There are 5 or less Touring-3000 bicycles.'; 
+GO 
+
+SELECT COUNT(*) FROM Production.Product
+	WHERE Color LIKE N'black'; 
+
+-- If/else statement 
+IF 
+(SELECT COUNT(*) FROM Production.Product
+	WHERE Color LIKE N'black') < 100
+PRINT 'There are less than 100 products that are black'
+ELSE PRINT 'There are more than 100 products in black.'; 
+GO 
 
 -- Using BEGIN and END can help us control groups of statements. 
 -- This is similar to batching
