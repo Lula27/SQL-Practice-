@@ -1,13 +1,15 @@
 --******************************************
--- 08_03_Implement_Transactions.sql
+-- 08_03_Implement_Transactions.sql : prevent data corruption 
 --******************************************
 
 
 -- Transactions are used to wrap statements that should be 
--- executed successfully to prevent data corruption. They are 
--- mostly used with INSERT, UPDATE, and DELETE statements that 
+-- executed successfully to prevent data corruption. 
+
+-- They are mostly used with INSERT, UPDATE, and DELETE statements that 
 -- modify data as opposed to SELECT statements where we just 
 -- return information.
+
 -- In this example we will attempt to delete a job candidate 
 -- from the JobCandidate table with the ID of 13.
 -- We want this delete statement to complete successfully or be 
@@ -27,11 +29,17 @@ USE AdventureWorks2012;
 DELETE FROM AdventureWorks2012.HumanResources.JobCandidate
     WHERE JobCandidateID = 13;
 
+DELETE FROM AdventureWorks2012.HumanResources.JobCandidate
+	WHERE JobCandidateID = 13; 
+
 -- if we reach this point, then we assume the statement 
 -- executed succesfully and we update the transaction log 
 -- appropriately and commit the changes to the database.
 COMMIT TRANSACTION;
 GO
+
+COMMIT TRANSACTION;
+GO 
 
 
 -- We can also mark a transaction by using a name.
