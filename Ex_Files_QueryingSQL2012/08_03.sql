@@ -48,6 +48,7 @@ GO
 -- indicates what the transaction was doing.
 -- We have also given this transaction a name called 
 -- CandidateDelete
+
 BEGIN TRANSACTION CandidateDelete
     WITH MARK N'Deleting a Job Candidate';
 GO
@@ -58,3 +59,15 @@ DELETE FROM AdventureWorks2012.HumanResources.JobCandidate
 GO
 COMMIT TRANSACTION CandidateDelete;
 GO
+
+-- Named transaction
+BEGIN TRANSACTION CandidateDelete
+	WITH MARK N'Deleting a Job Candidate'; 
+GO 
+USE AdventureWorks2012; 
+GO 
+DELETE FROM AdventureWorks2012.HumanResources.JobCandidate
+	WHERE JobCandidateID = 14; 
+GO 
+COMMIT TRANSACTION CandidateDelete;
+GO 
