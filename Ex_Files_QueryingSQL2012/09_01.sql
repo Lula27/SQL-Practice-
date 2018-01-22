@@ -14,6 +14,7 @@ GO
 -- Sub-query that returns a single value
 -- These are the simplest sub-queries to work with as they 
 -- return a single value for use in the outer query.
+
 -- Here we ask for the quantity ordered and the total sale 
 -- value for the item in the SalesOrderDetail table that has 
 -- the lowest unit price.
@@ -29,6 +30,13 @@ WHERE UnitPrice =
 	(SELECT MIN(UnitPrice)
 	FROM Sales.SalesOrderDetail);
 GO
+
+SELECT OrderQty, LineTotal
+FROM Sales.SalesOrderDetail
+WHERE UnitPrice = 
+	(SELECT MIN(UnitPrice)
+	FROM Sales.SalesOrderDetail);
+GO 
 
 -- Use a subquery that returns multiple values
 -- In this case, we cannot use the = operator
