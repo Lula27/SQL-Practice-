@@ -44,6 +44,7 @@ GO
 -- values being returned.
 -- Here we look for the first and last name of sales people
 -- who have had sales last year that exceeded $2M 
+
 SELECT FirstName, LastName
 FROM Person.Person
 WHERE BusinessEntityID IN
@@ -52,5 +53,12 @@ WHERE BusinessEntityID IN
 	WHERE SalesLastYear > 2000000);
 GO
 
+SELECT FirstName, LastName
+FROM Person.Person
+WHERE BusinessEntityID IN 
+	(SELECT BusinessEntityID
+	FROM Sales.SalesPerson
+	WHERE SalesLastYear < 100000);
+GO 
 
 
