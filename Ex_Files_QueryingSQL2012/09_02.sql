@@ -1,5 +1,6 @@
 --******************************************
 -- 09_02_Viewing_Statistics.sql
+-- Getting metadata 
 --******************************************
 
 USE AdventureWorks2012;
@@ -56,4 +57,9 @@ INNER JOIN Production.ProductReview pr
 ON p.ProductID = pr.ProductID;
 GO
 
+SELECT p.Name, pr.ProductReviewID, pr.Comments
+FROM Production.Product p 
+INNER JOIN Production.ProductReview pr
+ON p.ProductID = pr.ProductID;
+GO 
 
