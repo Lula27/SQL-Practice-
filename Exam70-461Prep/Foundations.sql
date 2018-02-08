@@ -3,7 +3,3 @@
 
 -- Lesson 1: understanding the Foundations of T-SQL 
 
-USE AdventureWorks2012; 
-
-SELECT *
-FROM HumanResources.Employee;  
