@@ -75,6 +75,8 @@ FROM HR.Employees;
 SELECT shipperid, phone, companyname
 FROM Sales.Shippers;
 
+SELECT shipperid, phone, companyname 
+FROM Sales.Shippers; 
 ---------------------------------------------------------------------
 -- Logical Query Processing Phases
 ---------------------------------------------------------------------
@@ -86,10 +88,18 @@ GROUP BY country, YEAR(hiredate)
 HAVING COUNT(*) > 1
 ORDER BY country, yearhired DESC;
 
--- fails
+SELECT country, YEAR(hiredate) AS yearhired, COUNT(*) AS numemployees
+FROM HR.Employees
+WHERE hiredate >= '20030101'
+GROUP BY country, YEAR(hiredate)
+HAVING COUNT(*) > 1
+ORDER BY country, yearhired DESC; 
+
+-- fails - error message: invalid column name 'yearhired'
 SELECT country, YEAR(hiredate) AS yearhired
 FROM HR.Employees
 WHERE yearhired >= 2003;
+
 
 -- fails
 SELECT empid, country, YEAR(hiredate) AS yearhired, yearhired - 1 AS prevyear
