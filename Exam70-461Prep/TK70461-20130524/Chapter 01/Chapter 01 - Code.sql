@@ -26,22 +26,43 @@ FROM HR.Employees;
 SELECT DISTINCT country 
 FROM HR.Employees; 
 
+-- assume empid is employee id 
 SELECT empid, lastname
 FROM HR.Employees;
+
+SELECT empid, lastname 
+FROM HR.Employees; 
 
 SELECT empid, lastname
 FROM HR.Employees
 ORDER BY empid;
 
+SELECT empid, lastname 
+FROM HR.Employees 
+ORDER BY empid; 
+
+-- Numerical order of id 
 SELECT empid, lastname
 FROM HR.Employees
 ORDER BY 1;
 
+SELECT empid, lastname 
+FROM HR.Employees
+ORDER BY 1; 
+
+-- Select employee id & first + lastname 
 SELECT empid, firstname + ' ' + lastname
 FROM HR.Employees;
 
+SELECT empid, firstname + ' ' + lastname 
+FROM HR.Employees; 
+
+-- do same as above but save column name as fullname 
 SELECT empid, firstname + ' ' + lastname AS fullname
 FROM HR.Employees;
+
+SELECT empid, firstname + ' ' + lastname AS [Full Name] 
+FROM HR.Employees; 
 
 ---------------------------------------------------------------------
 -- Lesson 02 - Logical Query Processing
