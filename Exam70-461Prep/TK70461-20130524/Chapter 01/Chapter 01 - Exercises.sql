@@ -90,3 +90,7 @@ ORDER BY 1;
 SELECT custid AS [Customer Id], YEAR(orderdate) AS Year 
 FROM Sales.Orders
 ORDER BY 1, 2; 
+
+SELECT custid, YEAR(orderdate)
+FROM Sales.Orders
+ORDER BY 1, 2; 
