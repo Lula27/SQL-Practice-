@@ -82,3 +82,11 @@ SELECT shipperid, SUM(freight) AS totalfreight
 FROM Sales.Orders
 GROUP BY shipperid
 HAVING SUM(freight) > 20000.00;
+
+SELECT empid, lastname
+FROM HR.Employees 
+ORDER BY 1; 
+
+SELECT custid AS [Customer Id], YEAR(orderdate) AS Year 
+FROM Sales.Orders
+ORDER BY 1, 2; 
