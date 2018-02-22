@@ -94,3 +94,22 @@ ORDER BY 1, 2;
 SELECT custid, YEAR(orderdate)
 FROM Sales.Orders
 ORDER BY 1, 2; 
+
+
+
+-- Using T-SQL in a Relational Way
+-- WRONG!!!! - EXPLAIN WHY THE FOLLOWING IS INCORRECT 
+SELECT custid, YEAR (orderdate)
+FROM Sales.Orders
+ORDER BY 1, 2; 
+
+-- Relational = predicate logic, set theory (no order, no duplicates)
+-- duplicates in years; use distinct 
+
+-- What's wrong: no alias for YEAR, returns duplicates
+-- Query forces certain presentation ordering to result and uses ordinal positions in ORDER BY clause 
+
+-- CORRECTION
+SELECT DISTINCT custid AS [Customer Id], YEAR (orderdate) AS [Order Date]
+FROM Sales.Orders
+ORDER BY 1; 
