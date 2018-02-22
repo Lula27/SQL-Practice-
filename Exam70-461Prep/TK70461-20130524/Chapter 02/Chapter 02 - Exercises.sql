@@ -17,6 +17,7 @@
 
 -- 2.
 
+
 USE TSQL2012;
 
 SELECT shipperid, companyname, phone
@@ -26,6 +27,9 @@ FROM Sales.Shippers;
 
 SELECT S.shipperid, companyname, phone
 FROM Sales.Shippers AS S;
+
+SELECT SS.shipperid, SS.phone, SS.companyname
+FROM Sales.Shippers AS SS; 
 
 ---------------------------------------------------------------------
 -- Exercise 2: Using Column Aliases and Delimited Identifiers
@@ -41,6 +45,9 @@ FROM Sales.Shippers AS S;
 
 SELECT S.shipperid, companyname, phone AS [phone number]
 FROM Sales.Shippers AS S;
+
+SELECT SS.shipperid, SS.companyname, SS.phone AS [phone number]
+FROM Sales.Shippers AS SS; 
 
 ---------------------------------------------------------------------
 -- Lesson 02 - Working with Data Types and Built-In Functions
