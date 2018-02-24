@@ -17,10 +17,16 @@ USE TSQL2012;
 SELECT empid, firstname, lastname
 FROM HR.Employees;
 
+SELECT empid, firstname, lastname
+FROM HR.Employees; 
+
 -- assigning a table alias
 SELECT E.empid, firstname, lastname
 FROM HR.Employees AS E;
 
+
+SELECT E.empid, firstname, lastname 
+FROM HR.Employees AS E; 
 ---------------------------------------------------------------------
 -- The SELECT Clause
 ---------------------------------------------------------------------
@@ -29,17 +35,30 @@ FROM HR.Employees AS E;
 SELECT empid, firstname, lastname
 FROM HR.Employees;
 
+SELECT empid, firstname, lastname
+FROM HR.Employees; 
+
 -- bug due to missing comma
 SELECT empid, firstname lastname
+FROM HR.Employees;
+
+SELECT empid, firstname + ' ' + lastname AS [Full Name] 
 FROM HR.Employees;
 
 -- aliasing for renaming
 SELECT empid AS employeeid, firstname, lastname
 FROM HR.Employees;
 
+SELECT empid AS employeeid, firstname, lastname
+FROM HR.Employees; 
+
 -- expression without an alias
+-- Recall, N' allows you to retrieve things much faster
 SELECT empid, firstname + N' ' + lastname
 FROM HR.Employees;
+
+SELECT empid, firstname + N' ' + lastname 
+FROM HR.Employees; 
 
 -- aliasing expressions
 SELECT empid, firstname + N' ' + lastname AS fullname
@@ -49,9 +68,13 @@ FROM HR.Employees;
 SELECT DISTINCT country, region, city
 FROM HR.Employees;
 
+SELECT DISTINCT country, region, city 
+FROM HR.Employees; 
+
 -- SELECT without FROM
 SELECT 10 AS col1, 'ABC' AS col2;
 
+SELECT 10 AS col1, 'ABC' AS col2; 
 ---------------------------------------------------------------------
 -- Lesson 02 - Working with Data Types and Built-In Functions
 ---------------------------------------------------------------------
