@@ -144,7 +144,17 @@ SELECT
   MONTH('20120212') AS themonth,
   YEAR('20120212') AS theyear;
 
+-- Date Part 
+SELECT DATEPART(month, '20170222');
+
+-- Day, month, year 
+SELECT 
+	DAY('20170222') AS theday,
+	MONTH('20170222') AS themonth, 
+	YEAR('20170222') AS theyear; 
+
 -- DATENAME
+SELECT DATENAME(month, '20090212');
 SELECT DATENAME(month, '20090212');
 
 -- fromparts
@@ -156,8 +166,17 @@ SELECT
   SMALLDATETIMEFROMPARTS(2012, 02, 12, 13, 30),
   TIMEFROMPARTS(13, 30, 5, 1, 7);
 
+SELECT
+	DATEFROMPARTS(2012, 02, 12),
+	DATETIME2FROMPARTS(2012, 02, 12, 13, 30, 5, 1, 7),
+	DATETIMEFROMPARTS(2012, 02, 12, 13, 30, 5, 997), 
+	DATETIMEOFFSETFROMPARTS(2012, 02, 12, 13, 30, 5, 1, -8, 0, 7), 
+	SMALLDATETIMEFROMPARTS(2012, 02, 12, 13, 30),
+	TIMEFROMPARTS(13, 30, 5, 1, 7); 
+
 -- EOMONTH
 SELECT EOMONTH(SYSDATETIME());
+SELECT EOMONTH(SYSDATETIME()); 
 
 ---------------------------------------------------------------------
 -- Add and Diff Functions
