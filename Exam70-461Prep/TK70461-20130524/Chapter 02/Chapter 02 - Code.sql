@@ -274,9 +274,19 @@ SELECT DATALENGTH(N'xyz'); -- data length - returns 6
 
 SELECT REPLACE('.1.2.3.', '.', '/'); -- '/1/2/3/'
 
+SELECT REPLACE('.1.2.3.', '.', '/'); 
+
+SELECT REPLACE('.1.2.3', '.', '|'); 
+
 SELECT REPLICATE('0', 10); -- '0000000000'
 
+SELECT REPLICATE('0', 10); 
+
+SELECT REPLICATE('7', 3); 
+
 SELECT STUFF(',x,y,z', 1, 1, ''); -- 'x,y,z'
+
+SELECT STUFF(',x,y,z', 1, 1, ''); 
 
 ---------------------------------------------------------------------
 -- String Formating
