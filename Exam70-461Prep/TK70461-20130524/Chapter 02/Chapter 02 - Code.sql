@@ -250,6 +250,12 @@ SELECT CHARINDEX(' ','Itzik Ben-Gan'); -- 6
 
 SELECT PATINDEX('%[0-9]%', 'abcd123efgh'); -- 5
 
+-- Substring Extraction and Position
+SELECT SUBSTRING('abcde', 1, 3); -- selects 1 - 3 (abc) 
+SELECT LEFT('abcde', 3);  -- selects left 3 (abc)
+SELECT RIGHT('abcde', 3) -- selects cde
+SELECT CHARINDEX(' ', 'Itzik Ben-Gan');   -- tells you the index of the space 
+
 ---------------------------------------------------------------------
 -- String Length
 ---------------------------------------------------------------------
