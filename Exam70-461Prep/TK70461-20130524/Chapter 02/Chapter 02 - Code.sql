@@ -255,6 +255,7 @@ SELECT SUBSTRING('abcde', 1, 3); -- selects 1 - 3 (abc)
 SELECT LEFT('abcde', 3);  -- selects left 3 (abc)
 SELECT RIGHT('abcde', 3) -- selects cde
 SELECT CHARINDEX(' ', 'Itzik Ben-Gan');   -- tells you the index of the space 
+SELECT PATINDEX('%[0-9]%', 'abcd123efgh'); 
 
 ---------------------------------------------------------------------
 -- String Length
@@ -262,7 +263,10 @@ SELECT CHARINDEX(' ', 'Itzik Ben-Gan');   -- tells you the index of the space
 
 SELECT LEN(N'xyz'); -- 3
 
+SELECT LEN(N'xyz'); -- character length - returns 3
+
 SELECT DATALENGTH(N'xyz'); -- 6
+SELECT DATALENGTH(N'xyz'); -- data length - returns 6 
 
 ---------------------------------------------------------------------
 -- String Alteration
