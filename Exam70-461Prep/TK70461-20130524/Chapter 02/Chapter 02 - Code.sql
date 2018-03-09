@@ -341,7 +341,14 @@ SELECT productid, productname, unitprice,
   END AS pricerange
 FROM Production.Products;
 
-SELECT 
+SELECT productid, productname, unitprice,
+	CASE
+		WHEN unitprice < 20.00 THEN 'Low'
+		WHEN unitprice < 40.00 THEN 'Medium'
+		WHEN unitprice >= 40.00 THEN 'High'
+		ELSE 'Unknown'
+	END AS pricerange 
+FROM Production.Products; 
 
 -- COALESCE vs. ISNULL
 DECLARE
@@ -349,3 +356,9 @@ DECLARE
   @y AS VARCHAR(10) = '1234567890';
 
 SELECT COALESCE(@x, @y) AS [COALESCE], ISNULL(@x, @y) AS [ISNULL];
+
+
+DECLARE 
+	@x AS VARCHAR(3) = NULL,
+	@y AS VARCHAR(10) = '1234567890'; 
+SELECT COALESCE(@x, @y) AS [COALESCE], ISNULL(@x, @y) AS [ISNULL]; 
