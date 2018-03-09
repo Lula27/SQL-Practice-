@@ -288,18 +288,23 @@ SELECT STUFF(',x,y,z', 1, 1, ''); -- 'x,y,z'
 
 SELECT STUFF(',x,y,z', 1, 1, ''); 
 
+
+
 ---------------------------------------------------------------------
 -- String Formating
 ---------------------------------------------------------------------
 
 SELECT UPPER('aBcD'); -- 'ABCD'
+SELECT UPPER('LOretta'); -- makes all upper case 
 
 SELECT LOWER('aBcD'); -- 'abcd'
+SELECT LOWER('xyZABC'); 
 
 SELECT RTRIM(LTRIM('   xyz   ')); -- 'xyz'
+SELECT RTRIM(LTRIM(' 23445 ')); 
 
 SELECT FORMAT(1759, '000000000'); -- '0000001759'
-
+SELECT FORMAT(1759, '0000000000'); 
 ---------------------------------------------------------------------
 -- CASE Expression and Related Functions
 ---------------------------------------------------------------------
@@ -313,6 +318,19 @@ SELECT productid, productname, unitprice, discontinued,
   END AS discontinued_desc
 FROM Production.Products;
 
+-- kind of like if/else statement 
+-- steps: first goes to production schema in products table 
+-- selects productid, productname, unitprice, discontinued 
+-- specifies in case of discontinued column - when 0, type no; when 1, type yes 
+SELECT productid, productname, unitprice, discontinued, 
+	CASE discontinued
+		WHEN 0 THEN 'No'
+		WHEN 1 THEN 'Yes'
+		ELSE 'Unknown'
+	END AS discontinued_desc
+FROM Production.Products; 
+
+
 -- searched CASE expression
 SELECT productid, productname, unitprice,
   CASE
@@ -322,6 +340,8 @@ SELECT productid, productname, unitprice,
     ELSE 'Unknown'
   END AS pricerange
 FROM Production.Products;
+
+SELECT 
 
 -- COALESCE vs. ISNULL
 DECLARE
