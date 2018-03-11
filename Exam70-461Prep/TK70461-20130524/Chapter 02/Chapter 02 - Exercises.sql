@@ -174,3 +174,13 @@ SELECT
 	TODATETIMEOFFSET('20130212 14:00:00.0000000', '-08:00') AS [TODATETIMEOFFSET]; 
 
 -- Character Functions 
+-- returns nulls
+SELECT empid, country, region , city, 
+	country + N',' + region + N',' + city AS location 
+FROM HR.Employees;
+
+-- In location section, nulls replaced with empty strings 
+-- use COALESE to replace Null with empty string
+SELECT empid, country, region, city,
+	country + COALESCE(N',' + region, N'') + N',' + city AS location 
+FROM HR.Employees; 
