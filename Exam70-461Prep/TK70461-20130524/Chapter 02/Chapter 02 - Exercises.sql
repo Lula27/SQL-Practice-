@@ -119,3 +119,48 @@ SELECT productid,
 FROM Production.Products; 
 
 -- Book practice 
+-- Using Select clause, project the following attributes from the Sales.Shippers table
+-- attributes: shipperid, companyname, phone 
+SELECT S.shipperid, S.companyname, S.phone
+FROM Sales.Shippers AS S; 
+
+-- Use Column Aliases and Delimited Identifiers 
+SELECT S.shipperid, S.companyname, S.phone AS [Phone Number] 
+FROM Sales.Shippers AS S; 
+
+
+
+--Generating surrogate keys 
+-- Nonsequential GUIDs: nonsequential global unique identifiers stored in an attribute of a UNIQUEIDENTIFIER type 
+-- GUIDS can be generated anywhere and not conflict across time & space 
+
+
+-- Date & Time Functions: https://msdn.microsoft.com/en-us/library/ms186724(v=SQL.110).aspx
+ 
+-- Remember, to retrieve the attribute, always begin statements with SELECT!
+-- Return system date & time 
+SELECT SYSDATETIME(); 
+
+-- include time zone offset
+SELECT SYSDATETIMEOFFSET(); 
+
+-- Lower-precision system date and time functions 
+SELECT CURRENT_TIMESTAMP; 
+
+SELECT GETDATE(); 
+
+-- Get Date and Time Parts 
+SELECT DATEPART(month, '20180310'); -- returns month as integer 3
+SELECT DATENAME(month, '20180310'); -- returns month attribute as character 
+
+-- Add and Diff 
+-- use DATEADD to add # of units to date 
+SELECT DATEADD(year,1,'20180310'); 
+SELECT DATEADD(month, 5,'20180310'); 
+SELECT DATEADD(day, 7, '20180310');
+
+-- use DATEDIFF
+-- returns difference in terms of requested part vtw 2 date and time values 
+SELECT DATEDIFF(day, '20110212', '20120212'); -- difference btw Feb 12 2012 & Feb 12 2011
+SELECT DATEDIFF(month,'20110212', '20110512'); 
+SELECT DATEDIFF(year, '20170310', '18700310');
