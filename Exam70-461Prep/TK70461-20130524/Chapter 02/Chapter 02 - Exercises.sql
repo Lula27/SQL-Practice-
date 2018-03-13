@@ -190,3 +190,6 @@ SELECT LEFT(fullname, CHARINDEX('', fullname)-1);
 
 -- String Length 
 SELECT LEN(N'xyz'); 
+
+-- Remove first character from input string
+SELECT STUFF(',x,y,z', 1,1, "); 
