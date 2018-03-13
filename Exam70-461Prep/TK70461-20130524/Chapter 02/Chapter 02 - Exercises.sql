@@ -184,3 +184,9 @@ FROM HR.Employees;
 SELECT empid, country, region, city,
 	country + COALESCE(N',' + region, N'') + N',' + city AS location 
 FROM HR.Employees; 
+
+-- Use CHARINDEX to combine or nest functions in the same expression 
+SELECT LEFT(fullname, CHARINDEX('', fullname)-1);  
+
+-- String Length 
+SELECT LEN(N'xyz'); 
