@@ -192,4 +192,26 @@ SELECT LEFT(fullname, CHARINDEX('', fullname)-1);
 SELECT LEN(N'xyz'); 
 
 -- Remove first character from input string
-SELECT STUFF(',x,y,z', 1,1, "); 
+--SELECT STUFF(',x,y,z', 1,1,"); NOT WORKING...
+
+
+-- CASE epxressions and Related Functions 
+-- simple form of CASE expression: compares expressions 
+SELECT productid, productname, unitprice, discontinued,   
+	CASE discontinued  
+		WHEN 0 THEN 'No'
+		WHEN 1 THEN 'Yes'
+		ELSE 'Unknown'
+	END AS discounted_desc
+FROM Production.Products; 
+
+-- searched form (more flexible than simple form)
+SELECT productid, productname, unitprice,
+	CASE 
+		WHEN unitprice < 20.00 THEN 'Low'
+		when unitprice < 40.00 THEN 'Medium'
+		WHEN unitprice >= 40.00 THEN 'High'
+		ELSE 'Unknown'
+	END AS pricerange 
+FROM Production.Products; 
+	
