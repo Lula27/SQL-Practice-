@@ -214,4 +214,19 @@ SELECT productid, productname, unitprice,
 		ELSE 'Unknown'
 	END AS pricerange 
 FROM Production.Products; 
-	
+
+SELECT empid, country, region, city, 
+	country + COALESCE( N',' + region, N'') + N',' + city AS location 
+FROM HR.Employees;
+
+SELECT SUBSTRING('abcde', 1, 3);  
+
+-- Example with Coalesce 
+DECLARE 
+	@x AS VARCHAR(3) = NULL, 
+	@y AS VARCHAR(10) = '123456789'; 
+
+SELECT COALESCE(@x, @y) AS [COALESCE], ISNULL(@x, @y) AS [ISNULL]; 
+
+SELECT CHOOSE(2, 'x', 'y', 'z'); 
+SELECT CHOOSE(3, 'A', 'B', 'C', 'D');
