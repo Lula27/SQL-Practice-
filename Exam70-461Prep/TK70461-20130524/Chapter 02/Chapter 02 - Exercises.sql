@@ -230,3 +230,30 @@ SELECT COALESCE(@x, @y) AS [COALESCE], ISNULL(@x, @y) AS [ISNULL];
 
 SELECT CHOOSE(2, 'x', 'y', 'z'); 
 SELECT CHOOSE(3, 'A', 'B', 'C', 'D');
+
+
+-- pp. 54 - Excersise 1 : Apply String Concatenation and Use a Date and Time Function 
+SELECT empid, 
+	firstname + N' ' + lastname AS fullname, 
+	YEAR(birthdate) AS birthyear 
+FROM HR.Employees; 
+
+-- write query to return the following attributes: employee ID, full name (concatenate attributes firstname, space, & lastname) & birth year 
+SELECT * 
+FROM HR.Employees; 
+
+SELECT E.empid,
+	firstname + N' ' + lastname AS [Full Name], 
+	E.birthdate
+FROM HR.Employees AS E; 
+
+
+
+
+
+
+
+
+
+
+
