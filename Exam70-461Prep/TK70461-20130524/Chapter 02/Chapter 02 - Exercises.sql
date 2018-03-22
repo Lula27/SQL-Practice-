@@ -249,10 +249,12 @@ FROM HR.Employees AS E;
 
 
 
+-- Exercise 2: Use Additional Date and Time Functions 
 
+-- expression to compute end of current month: expression to compute date of last day of current month
+SELECT EOMONTH(SYSDATETIME()) AS end_of_current_month; 
 
-
-
+-- expression that computes the last day of the current year
 
 
 
