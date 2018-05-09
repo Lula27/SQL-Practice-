@@ -23,6 +23,10 @@ SELECT custid, YEAR(orderdate)
 FROM Sales.Orders
 ORDER BY 1, 2;
 
+
+SELECT custid, YEAR(orderdate) AS [Year]
+FROM Sales.Orders
+ORDER BY 1, 2; 
 ---------------------------------------------------------------------
 -- Exercise 2: Make the Nonrelational Query Relational
 ---------------------------------------------------------------------
@@ -31,6 +35,9 @@ ORDER BY 1, 2;
 
 SELECT DISTINCT custid, YEAR(orderdate) AS orderyear
 FROM Sales.Orders;
+
+SELECT DISTINCT custid, YEAR(orderdate) AS orderyear 
+FROM Sales.Orders; 
 
 ---------------------------------------------------------------------
 -- Lesson 02 - Logical Query Processing
@@ -57,6 +64,9 @@ SELECT custid, MAX(orderid) AS maxorderid
 FROM Sales.Orders
 GROUP BY custid;
 
+SELECT custid, MAX(orderid) AS maxorderid
+FROM Sales.Orders
+GROUP BY custid; 
 ---------------------------------------------------------------------
 -- Exercise 2: Fix Problem with Aliasing
 ---------------------------------------------------------------------
@@ -67,6 +77,11 @@ SELECT shipperid, SUM(freight) AS totalfreight
 FROM Sales.Orders
 WHERE freight > 20000.00
 GROUP BY shipperid;
+
+SELECT shipperid, SUM(freight) AS totalfreight 
+FROM Sales.Orders
+WHERE freight > 20000.00
+GROUP BY shipperid; 
 
 -- 2.
 
@@ -83,15 +98,20 @@ FROM Sales.Orders
 GROUP BY shipperid
 HAVING SUM(freight) > 20000.00;
 
+SELECT shipperid, SUM(freight) AS totalfrieght 
+FROM Sales.Orders
+GROUP BY shipperid
+HAVING SUM(freight) > 20000.00; 
+
 SELECT empid, lastname
 FROM HR.Employees 
 ORDER BY 1; 
 
-SELECT custid AS [Customer Id], YEAR(orderdate) AS Year 
-FROM Sales.Orders
-ORDER BY 1, 2; 
+SELECT empid, lastname 
+FROM HR.Employees
+ORDER BY 1; 
 
-SELECT custid, YEAR(orderdate)
+SELECT custid AS [Customer Id], YEAR(orderdate) AS Year 
 FROM Sales.Orders
 ORDER BY 1, 2; 
 
@@ -111,5 +131,9 @@ ORDER BY 1, 2;
 
 -- CORRECTION
 SELECT DISTINCT custid AS [Customer Id], YEAR (orderdate) AS [Order Date]
+FROM Sales.Orders
+ORDER BY 1; 
+
+SELECT DISTINCT custid AS [Customer Id], YEAR(orderdate) AS [Order Date]
 FROM Sales.Orders
 ORDER BY 1; 
