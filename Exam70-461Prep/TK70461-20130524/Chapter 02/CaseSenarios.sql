@@ -1,4 +1,31 @@
+-- Examples 
+SELECT shipperid, phone, companyname 
+FROM Sales.Shippers; 
+
+-- Main query clauses: SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY 
 -- Case Senarios 
+SELECT * 
+FROM HR.Employees; 
+
+SELECT * 
+FROM HR.Employees; 
+
+SELECT firstname + ' ' + lastname  AS fullname, country, YEAR(hiredate) AS yearhired 
+FROM HR.Employees
+WHERE hiredate >= 2003; -- Why is stuff from 2002 showing up? 
+
+-- convert date format 
+SELECT CONVERT(varchar, '2017-08-25', 101); 
+
+SELECT YEAR(hiredate) AS yearhired 
+WHERE 
+
+SELECT country, YEAR(hiredate) AS yearhired, COUNT(*) AS number_of_employees 
+FROM HR.Employees
+WHERE hiredate >= '200030101'
+GROUP BY country, YEAR(hiredate) 
+HAVING COUNT(*) > 1 
+ORDER BY country, yearhired DESC; 
 
 -- 1. write rates: 
 -- read performance: 

@@ -128,12 +128,17 @@ ORDER BY 1, 2;
 
 -- What's wrong: no alias for YEAR, returns duplicates
 -- Query forces certain presentation ordering to result and uses ordinal positions in ORDER BY clause 
+-- Don't use ordinal positions (ORDER BY) 
 
 -- CORRECTION
 SELECT DISTINCT custid AS [Customer Id], YEAR (orderdate) AS [Order Date]
 FROM Sales.Orders
-ORDER BY 1; 
 
-SELECT DISTINCT custid AS [Customer Id], YEAR(orderdate) AS [Order Date]
-FROM Sales.Orders
-ORDER BY 1; 
+
+
+
+
+
+
+SELECT DISTINCT custid, YEAR(orderdate) AS orderYear 
+FROM Sales.Orders; 
