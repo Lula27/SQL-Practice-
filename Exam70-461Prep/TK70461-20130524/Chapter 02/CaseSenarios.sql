@@ -18,14 +18,25 @@ WHERE hiredate >= 2003; -- Why is stuff from 2002 showing up?
 SELECT CONVERT(varchar, '2017-08-25', 101); 
 
 SELECT YEAR(hiredate) AS yearhired 
-WHERE 
+FROM HR.Employees; 
+
 
 SELECT country, YEAR(hiredate) AS yearhired, COUNT(*) AS number_of_employees 
 FROM HR.Employees
-WHERE hiredate >= '200030101'
+WHERE hiredate >= '20030101'
 GROUP BY country, YEAR(hiredate) 
 HAVING COUNT(*) > 1 
 ORDER BY country, yearhired DESC; 
+
+SELECT shipperid, SUM(freight) AS totalfreight 
+FROM Sales.Orders
+GROUP BY shipperid 
+HAVING SUM(freight) > 200.00; 
+
+
+SELECT freight 
+FROM Sales.Orders; 
+
 
 -- 1. write rates: 
 -- read performance: 
