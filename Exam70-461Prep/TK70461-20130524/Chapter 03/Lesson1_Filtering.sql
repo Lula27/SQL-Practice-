@@ -142,3 +142,19 @@ WHERE orderdate >= '20070201' AND orderdate < '20070301';
 SELECT orderid, orderdate, empid, custid 
 FROM Sales.Orders 
 WHERE orderdate >= '20070201' AND orderdate < '20070301'; 
+
+
+-- Filtering Data with Predicates 
+-- Exercise 1: Write query that returns orders that were not shipped yet 
+
+SELECT orderid, orderdate, custid, empid 
+FROM Sales.Orders
+WHERE shippeddate IS Null; 
+
+-- Excersize 2: Return all orders that were placed between February 11, 2008 and February 12, 2008 
+SELECT orderid, orderdate, custid, empid
+FROM Sales.Orders
+WHERE orderdate >= '20080211' AND orderdate < '20180213'; 
+
+
+
