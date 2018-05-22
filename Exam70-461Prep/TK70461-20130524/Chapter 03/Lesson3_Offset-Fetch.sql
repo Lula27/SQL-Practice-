@@ -88,11 +88,23 @@ FROM Sales.Orders
 ORDER BY orderdate DESC, orderid DESC
 OFFSET 50 ROWS FETCH NEXT 25 ROWS ONLY;
 
+SELECT orderid, orderdate, custid, empid 
+FROM Sales.Orders 
+ORDER BY orderdate DESC, orderid DESC 
+OFFSET 50 ROWS FETCH NEXT 25 ROWS ONLY; 
+
+
+
 -- fetch first 25 rows
 SELECT orderid, orderdate, custid, empid
 FROM Sales.Orders
 ORDER BY orderdate DESC, orderid DESC
 OFFSET 0 ROWS FETCH FIRST 25 ROWS ONLY;
+
+SELECT orderid, orderdate, custid, empid 
+FROM Sales.Orders
+ORDER BY orderdate DESC, orderid DESC 
+OFFSET 0 ROWS FETCH FIRST 25 ROWS ONLY; 
 
 -- skip 50 rows, return all the rest
 SELECT orderid, orderdate, custid, empid
@@ -100,12 +112,23 @@ FROM Sales.Orders
 ORDER BY orderdate DESC, orderid DESC
 OFFSET 50 ROWS;
 
+SELECT orderid, orderdate, custid, empid
+FROM Sales.Orders 
+ORDER BY orderdate DESC, orderid DESC 
+OFFSET 50 ROWS; 
+
 -- ORDER BY is mandatory; return some 3 rows
 SELECT orderid, orderdate, custid, empid
 FROM Sales.Orders
 ORDER BY (SELECT NULL)
 OFFSET 0 ROWS FETCH FIRST 3 ROWS ONLY;
 GO
+
+SELECT orderid, orderdate, custid, empid
+FROM Sales.Orders
+ORDER BY (SELECT NULL) 
+OFFSET 0 ROWS FETCH FIRST 3 ROWS ONLY; 
+GO 
 
 -- can use expressions as input
 DECLARE @pagesize AS BIGINT = 25, @pagenum AS BIGINT = 3;
@@ -115,3 +138,12 @@ FROM Sales.Orders
 ORDER BY orderdate DESC, orderid DESC
 OFFSET (@pagenum - 1) * @pagesize ROWS FETCH NEXT @pagesize ROWS ONLY;
 GO
+
+
+DECLARE @pagesize AS BIGINT = 25, @pagenum AS BIGINT = 3; 
+
+SELECT orderid, orderdate, custid, empid 
+FROM Sales.Orders 
+ORDER BY orderdate DESC, orderid DESC 
+OFFSET (@pagenum - 1) * @pagesize ROWS FETCH NEXT @pagesize ROWS ONLY; 
+GO 
