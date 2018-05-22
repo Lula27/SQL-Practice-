@@ -105,4 +105,23 @@ END);
 
 
 -- Excercises pg 81 
--- #1. Write a query that 
+-- #1. Write a query that returns the orders for customer 77 & sort by shippeddate.
+-- Note: this ordering isn't deterministic: differs from book & can change although my version of SQL has optimized
+SELECT orderid, empid, shipperid, shippeddate 
+FROM Sales.Orders 
+WHERE custid = 77
+ORDER BY shippeddate; 
+
+-- attempt to make previous code deterministic by including another column and using DESC
+-- despite attempt, still not deterministic b/c combination of shipperid & shippddate isn't unique  
+SELECT orderid, empid, shipperid, shippeddate 
+FROM Sales.Orders
+WHERE custid = 77
+ORDER BY shipperid, shippeddate DESC;
+
+-- add tie breaker 
+-- row with greater orderid will be sorted first 
+SELECT orderid, empid, shipperid, shippeddate 
+FROM Sales.Orders 
+WHERE custid = 77
+ORDER BY shipperid, shippeddate DESC, orderid DESC; 
