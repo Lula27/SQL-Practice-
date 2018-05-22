@@ -163,4 +163,31 @@ FROM Production.Products
 WHERE categoryid = 1 
 ORDER BY unitprice DESC; 
 
+-- break tie 
+-- retreives 5 rows 
+SELECT TOP (5) productid, unitprice 
+FROM Production.Products
+WHERE categoryid = 1
+ORDER BY unitprice DESC, productid DESC; 
 
+
+ -- OFFSET-FETCH exercises 
+ -- 1. Write a set of queries that page through products, five at a time,
+-- in unit price ordering, using the product ID as the tie breaker. 
+
+SELECT productid, categoryid, unitprice
+FROM Production.Products
+ORDER BY unitprice DESC, productid DESC
+OFFSET 0 ROWS FETCH FIRST 5 ROWS ONLY; 
+
+-- 2. Write query that returns the next five rows (rows 6 through 10)
+SELECT productid, categoryid, unitprice 
+FROM Production.Products
+ORDER BY unitprice, productid 
+OFFSET 5 ROWS FETCH NEXT 5 ROWS ONLY; 
+
+-- 3. Write the following query to return rows 11 through 15
+SELECT productid, categoryid, unitprice
+FROM Production.Products
+ORDER BY unitprice, productid 
+OFFSET 10 ROWS FETCH NEXT 5 ROWS ONLY; 
