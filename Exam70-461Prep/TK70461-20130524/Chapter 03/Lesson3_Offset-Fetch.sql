@@ -140,10 +140,27 @@ OFFSET (@pagenum - 1) * @pagesize ROWS FETCH NEXT @pagesize ROWS ONLY;
 GO
 
 
-DECLARE @pagesize AS BIGINT = 25, @pagenum AS BIGINT = 3; 
+DECLARE @pagesize AS BIGINT = 50, @pagenum AS BIGINT = 10; 
 
 SELECT orderid, orderdate, custid, empid 
 FROM Sales.Orders 
 ORDER BY orderdate DESC, orderid DESC 
 OFFSET (@pagenum - 1) * @pagesize ROWS FETCH NEXT @pagesize ROWS ONLY; 
 GO 
+
+-- Exerises 
+-- 1. Write query against Production.Products table; return 5 most expensive products from category 1 
+-- retreives 5 rows 
+SELECT TOP (5) productid, unitprice
+FROM Production.Products
+WHERE categoryid = 1 
+ORDER BY unitprice DESC; 
+
+-- make deterministic with ties 
+-- retreives 7 rows 
+SELECT TOP (5) WITH TIES productid, unitprice 
+FROM Production.Products
+WHERE categoryid = 1 
+ORDER BY unitprice DESC; 
+
+
