@@ -49,6 +49,14 @@ FROM Production.Suppliers AS S
     ON S.supplierid = P.supplierid
 WHERE S.country = N'Japan';
 
+SELECT 
+	S.companyname AS supplier, S.country,
+	P.productid, P.productname, P.unitprice
+FROM Production.Suppliers AS S 
+	INNER JOIN Production.Products AS P
+		ON S.supplierid = P.supplierid
+WHERE S.country = N'Japan'; 
+
 -- same meaning
 SELECT
   S.companyname AS supplier, S.country,
@@ -58,6 +66,14 @@ FROM Production.Suppliers AS S
     ON S.supplierid = P.supplierid
     AND S.country = N'Japan';
 
+SELECT 
+	S.companyname AS supplier, S.country, 
+	P.productid, P.productname, P.unitprice
+FROM Production.Suppliers AS S
+	INNER JOIN Production.Products AS P
+		ON S.supplierid = P.supplierid
+		AND S.country = N'Japan'; 
+
 -- employees and their managers
 -- employee without manager (CEO) not included
 SELECT E.empid,
@@ -66,6 +82,13 @@ SELECT E.empid,
 FROM HR.Employees AS E
   INNER JOIN HR.Employees AS M
     ON E.mgrid = M.empid;
+
+SELECT E.empid,
+	E.firstname + N' ' + E.lastname AS emp,
+	M.firstname + N' ' + M.lastname AS mgr
+FROM HR.Employees AS E 
+	INNER JOIN HR.Employees AS M 
+	ON E.mgrid = M.empid; 
 
 ---------------------------------------------------------------------
 -- Outer Joins
