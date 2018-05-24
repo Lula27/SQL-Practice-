@@ -9,6 +9,9 @@ USE TSQL2012;
 INSERT INTO Production.Suppliers(companyname, contactname, contacttitle, address, city, postalcode, country, phone)
   VALUES(N'Supplier XYZ', N'Jiru', N'Head of Security', N'42 Sekimai Musashino-shi', N'Tokyo', N'01759', N'Japan', N'(02) 4311-2609');
 
+INSERT INTO Production.Suppliers(companyname, contactname, contacttitle, address, city, postalcode, country, phone)
+	VALUES(N'Supplier XYZ', N'Jiru', N'Head of Security', N'42 Sekimai Musashino-shi', N'Tokyo', N'01759', N'Japan', N'(02) 4311-2609'); 
+
 ---------------------------------------------------------------------
 -- Lesson 01 - Using Joins
 ---------------------------------------------------------------------
@@ -26,6 +29,12 @@ WHERE D.n <= 7
   AND S.N <= 3
 ORDER BY theday, shiftno;
 
+SELECT D.n AS theday, S.n AS shiftno
+FROM dbo.Nums AS D
+	CROSS JOIN dbo.Nums AS S
+WHERE D.n <= 7
+	AND S.N <= 3
+ORDER BY theday, shiftno; 
 ---------------------------------------------------------------------
 -- Inner Joins
 ---------------------------------------------------------------------
