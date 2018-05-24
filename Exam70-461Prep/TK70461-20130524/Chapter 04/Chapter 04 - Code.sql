@@ -104,6 +104,15 @@ FROM Production.Suppliers AS S
     ON S.supplierid = P.supplierid
 WHERE S.country = N'Japan';
 
+SELECT
+	S.companyname AS supplier, S.country,
+	P.productid, P.productname, P.unitprice
+FROM Production.Suppliers AS S
+	LEFT OUTER JOIN Production.Products AS P
+		ON S.supplierid = P.supplierid
+WHERE S.country = N'Japan'; 
+
+
 -- return all suppliers
 -- show products for only suppliers from Japan
 SELECT
@@ -114,6 +123,14 @@ FROM Production.Suppliers AS S
     ON S.supplierid = P.supplierid
    AND S.country = N'Japan';
 
+SELECT 
+	S.companyname AS supplier, S.country,
+	P.productid, P.productname, P.unitprice
+FROM Production.Suppliers AS S
+	LEFT OUTER JOIN Production.Products AS P
+		ON S.supplierid = P.supplierid
+		AND S.country = N'Japan'; 
+
 -- employees and their managers
 -- employee without manager (CEO) included
 SELECT E.empid,
@@ -122,6 +139,13 @@ SELECT E.empid,
 FROM HR.Employees AS E
   LEFT OUTER JOIN HR.Employees AS M
     ON E.mgrid = M.empid;
+
+SELECT E.empid,
+	E.firstname + N' ' + E.lastname AS emp,
+	M.firstname + N' ' + M.lastname AS mrg
+FROM HR.Employees AS E
+	LEFT OUTER JOIN HR.Employees AS M 
+	ON E.mgrid = M.empid; 
 
 -- attempt to include product category from Production.Categories table
 -- inner join nullifies outer part of outer join
@@ -136,6 +160,17 @@ FROM Production.Suppliers AS S
     ON C.categoryid = P.categoryid
 WHERE S.country = N'Japan';
 
+SELECT
+	S.companyname AS supplier, S.country, 
+	P.productid, P.productname, P.unitprice,
+	C.categoryname 
+FROM Production.Suppliers AS S
+	LEFT OUTER JOIN Production.Products AS P 
+	ON S.supplierid = P.supplierid
+INNER JOIN Production.Categories AS C
+	ON C.categoryid = P.categoryid
+WHERE S.country = N'Japan'; 
+
 -- fix using parentheses
 SELECT
   S.companyname AS supplier, S.country,
@@ -148,6 +183,18 @@ FROM Production.Suppliers AS S
          ON C.categoryid = P.categoryid)
     ON S.supplierid = P.supplierid
 WHERE S.country = N'Japan';
+
+SELECT 
+	S.companyname AS supplier, S.country,
+	P.productid, P.productname, P.unitprice,
+	C.categoryname 
+FROM Production.Suppliers AS S 
+	LEFT OUTER JOIN 
+		(Production.Products AS P 
+			INNER JOIN Production.Categories AS C
+				ON C.categoryid = P.categoryid) 
+		ON S.supplierid = P.supplierid
+WHERE S.country = N'Japan'; 
 
 ---------------------------------------------------------------------
 -- Lesson 02 - Using Subqueries, Table Expressions and the APPLY Operator
