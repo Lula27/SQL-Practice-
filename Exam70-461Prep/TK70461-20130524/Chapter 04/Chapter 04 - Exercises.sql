@@ -24,6 +24,11 @@ FROM Sales.Customers AS C
   INNER JOIN Sales.Orders AS O
     ON C.custid = O.custid;
 
+SELECT C.custid, C.companyname, O.orderid, O.orderdate
+FROM Sales.Customers AS C
+	INNER JOIN Sales.Orders AS O
+	  ON C.custid = O.custid; 
+
 ---------------------------------------------------------------------
 -- Exercise 2 - Match Customers and Orders with Outer Joins
 ---------------------------------------------------------------------
@@ -35,6 +40,11 @@ FROM Sales.Customers AS C
   LEFT OUTER JOIN Sales.Orders AS O
     ON C.custid = O.custid;
 
+SELECT C.custid, C.companyname, O.orderid, O.orderdate 
+FROM Sales.Customers AS C
+ LEFT OUTER JOIN Sales.Orders AS O
+   ON C.custid = O.custid; 
+
 -- 2.
 -- customers without orders
 SELECT C.custid, C.companyname, O.orderid, O.orderdate
@@ -42,6 +52,12 @@ FROM Sales.Customers AS C
   LEFT OUTER JOIN Sales.Orders AS O
     ON C.custid = O.custid
 WHERE O.orderid IS NULL;
+
+SELECT C.custid, C.companyname, O.orderid, O.orderdate 
+FROM Sales.Customers AS C
+ LEFT OUTER JOIN Sales.Orders AS O
+   ON C.custid = O.custid
+WHERE O.orderid IS NULL; 
 
 -- 3.
 -- all customers; orders from February 2008
