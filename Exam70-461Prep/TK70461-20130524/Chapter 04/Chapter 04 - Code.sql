@@ -3,7 +3,7 @@
 -- Code
 ---------------------------------------------------------------------
 
--- add row to Production.Suppliers
+
 USE TSQL2012;
 
 
@@ -12,87 +12,12 @@ USE TSQL2012;
 ---------------------------------------------------------------------
 
 ---------------------------------------------------------------------
--- Using Subqueries
----------------------------------------------------------------------
-
-
--- Self-Contained Subqueries
-
--- scalar subqueries
--- products with minimum price
-SELECT productid, productname, unitprice
-FROM Production.Products
-WHERE unitprice =
-  (SELECT MIN(unitprice)
-   FROM Production.Products);
-
-SELECT productid, productname, unitprice
-FROM Production.Products
-WHERE unitprice = 
-	(SELECT MIN(unitprice)
-	FROM Production.Products); 
-   
--- multi-valued subqieries
--- products supplied by suppliers from Japan
-SELECT productid, productname, unitprice
-FROM Production.Products
-WHERE supplierid IN
-  (SELECT supplierid
-   FROM Production.Suppliers
-   WHERE country = N'Japan');
-
-SELECT productid, productname, unitprice 
-FROM Production.Products
-WHERE supplierid IN 
-	(SELECT supplierid 
-	FROM Production.Suppliers
-	WHERE country = N'Japan'); 
-
--- negate query
-SELECT productid, productname, unitprice 
-FROM Production.Products
-WHERE supplierid NOT IN 
-	(SELECT supplierid 
-	FROM Production.Suppliers
-	WHERE country = N'Japan'); 
-
--- Correlated Subqueries
-
--- products with minimum unitprice per category
-SELECT categoryid, productid, productname, unitprice
-FROM Production.Products AS P1
-WHERE unitprice =
-  (SELECT MIN(unitprice)
-   FROM Production.Products AS P2
-   WHERE P2.categoryid = P1.categoryid);
-
-
-
--- customers who placed an order on February 12, 2007
-SELECT custid, companyname
-FROM Sales.Customers AS C
-WHERE EXISTS
-  (SELECT *
-   FROM Sales.Orders AS O
-   WHERE O.custid = C.custid
-     AND O.orderdate = '20070212');
-
--- customers who did not place an order on February 12, 2007
-SELECT custid, companyname
-FROM Sales.Customers AS C
-WHERE NOT EXISTS
-  (SELECT *
-   FROM Sales.Orders AS O
-   WHERE O.custid = C.custid
-     AND O.orderdate = '20070212');
-
----------------------------------------------------------------------
 -- Table Expressions
 ---------------------------------------------------------------------
 
 -- Derived Tables
 
--- row numbers for products
+-- computes row numbers for products
 -- partitioned by categoryid, ordered by unitprice, productid
 SELECT
   ROW_NUMBER() OVER(PARTITION BY categoryid
@@ -100,7 +25,19 @@ SELECT
   categoryid, productid, productname, unitprice
 FROM Production.Products;
 
--- two products with lowest prices per category
+SELECT 
+	ROW_NUMBER() OVER(PARTITION BY categoryid 
+						ORDER BY unitprice, productid) AS rownum,
+	categoryid, productid, productname, unitprice 
+FROM Production.Products; 
+
+
+-- circumvent restriction of logical query processing by using table expression 
+-- (not being allowed to refer to a column alias that was assigned in the SELECT list 
+--in the WHERE clause b/c WHERE clause is conceptually evaluated before the SELECT clause)
+-- derived table defined in the FROM caluse / derived table name = D 
+
+-- two products with lowest prices per category 
 SELECT categoryid, productid, productname, unitprice
 FROM (SELECT
         ROW_NUMBER() OVER(PARTITION BY categoryid
@@ -108,6 +45,15 @@ FROM (SELECT
         categoryid, productid, productname, unitprice
       FROM Production.Products) AS D
 WHERE rownum <= 2;
+
+
+SELECT categoryid, productid, productname, unitprice 
+FROM (SELECT 
+		ROW_NUMBER() OVER(PARTITION BY categoryid	
+						  ORDER BY unitprice, productid) AS rownum,
+		categoryid, productid, productname, unitprice 
+	FROM Production.Products) AS D 
+WHERE rownum <= 2; 
 
 -- CTEs
 
