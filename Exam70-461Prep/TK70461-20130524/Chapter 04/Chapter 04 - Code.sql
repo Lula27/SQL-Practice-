@@ -70,6 +70,19 @@ SELECT categoryid, productid, productname, unitprice
 FROM C
 WHERE rownum <= 2;
 
+WITH C AS 
+(
+	SELECT 
+		ROW_NUMBER() OVER(PARTITION BY categoryid 
+							ORDER BY unitprice, productid) AS rownum,
+		categoryid, productid, productname, unitprice 
+	FROM Production.Products
+) 
+SELECT categoryid, productid, productname, unitprice 
+FROM C 
+WHERE rownum <=2; 
+
+
 -- Recursive CTE
 -- management chain leading to given employee
 WITH EmpsCTE AS
@@ -88,6 +101,24 @@ WITH EmpsCTE AS
 SELECT empid, mgrid, firstname, lastname, distance
 FROM EmpsCTE;
 GO
+
+
+WITH EmpsCTE AS 
+(
+SELECT empid, mgrid, firstname, lastname, 0 AS distance 
+FROM HR.Employees
+WHERE empid = 9 
+
+UNION ALL 
+
+SELECT M.empid, M.mgrid, M.firstname, M.lastname, S.distance + 1 AS distance 
+FROM EmpsCTE AS S
+	JOIN HR.Employees AS M 
+	 ON S.mgrid = M.empid 
+) 
+SELECT empid, mgrid, firstname, lastname, distance 
+FROM EmpsCTE; 
+GO 
 
 -- Views
 
