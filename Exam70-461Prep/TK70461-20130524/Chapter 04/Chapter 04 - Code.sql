@@ -139,6 +139,7 @@ SELECT categoryid, productid, productname, unitprice
 FROM Sales.RankedProducts
 WHERE rownum <= 2;
 
+
 -- Inline Table-Valued Functions
 
 -- management chain leading to given employee
