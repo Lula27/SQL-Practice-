@@ -78,6 +78,15 @@ UNION
 SELECT country, region, city
 FROM Sales.Customers;
 
+SELECT country, region, city 
+FROM HR.Employees
+
+UNION 
+
+SELECT country, region, city 
+FROM Sales.Customers; 
+
+
 -- with UNION ALL duplicates are not discarded
 SELECT country, region, city
 FROM HR.Employees
@@ -86,6 +95,14 @@ UNION ALL
 
 SELECT country, region, city
 FROM Sales.Customers;
+
+SELECT country, region, city 
+FROM HR.Employees 
+
+UNION ALL 
+
+SELECT country, region, city 
+FROM Sales.Customers; 
 
 ---------------------------------------------------------------------
 -- INTERSECT
