@@ -121,7 +121,7 @@ FROM Sales.Customers;
 -- EXCEPT
 ---------------------------------------------------------------------
 
--- locations that are employee locations but not customer locations
+-- return locations that are employee locations but not customer locations
 SELECT country, region, city
 FROM HR.Employees
 
@@ -129,6 +129,14 @@ EXCEPT
 
 SELECT country, region, city
 FROM Sales.Customers;
+
+SELECT country, region, city 
+FROM HR.Employees
+
+EXCEPT 
+
+SELECT country, region, city 
+FROM Sales.Customers; 
 
 -- cleanup
 DELETE FROM Production.Suppliers WHERE supplierid > 29;
