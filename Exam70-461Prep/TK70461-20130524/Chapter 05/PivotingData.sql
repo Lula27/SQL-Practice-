@@ -6,6 +6,7 @@
 ---------------------------------------------------------------------
 -- Pivoting Data
 ---------------------------------------------------------------------
+USE TSQL2012; 
 
 -- show customer IDs on rows, shipper IDs on columns, total freight in intersection
 WITH PivotData AS
@@ -25,6 +26,22 @@ SELECT custid, [1], [2], [3]
 FROM Sales.Orders
   PIVOT(SUM(freight) FOR shipperid IN ([1],[2],[3]) ) AS P;
 
+WITH PivotData AS 
+(
+SELECT 
+	custid, 
+	shipperid, 
+	freight 
+FROM Sales.Orders
+) 
+SELECT custid, [1], [2], [3] 
+FROM PivotData
+	PIVOT(SUM(freight) FOR shipperid IN ([1],[2,],[3])) AS P; 
+
+-- apply Pivot 
+SELECT custid, [1],[2],[3]
+FROM Sales.Orders
+	PIVOT(SUM(freight) FOR shipperid IN ([1],[2],[3])) AS P; 
 ---------------------------------------------------------------------
 -- Unpivoting Data
 ---------------------------------------------------------------------
@@ -54,7 +71,12 @@ SELECT custid, shipperid, freight
 FROM Sales.FreightTotals
   UNPIVOT( freight FOR shipperid IN([1],[2],[3]) ) AS U;
 
+SELECT custid, shipperid, freight 
+FROM Sales.FreightTotals
+	UNPIVOT( freight FOR shipperid IN([1],[2],[3]) ) AS U; 
+
 -- cleanup
 IF OBJECT_ID(N'Sales.FreightTotals', N'U') IS NOT NULL DROP TABLE Sales.FreightTotals;
+
 
 ---------------------------------------------------------------------
