@@ -37,8 +37,14 @@ FROM Sales.Customers AS C
 	GROUP BY C.custid;  
 
 -- Find a solution to allow returning the city as well. 
+SELECT C.custid, C.city, 
+COUNT(*) AS numorders 
+FROM Sales.Customers AS C 
+	INNER JOIN Sales.Orders AS O
+		ON C.custid = O.custid 
+	WHERE C.country = N'Spain'
+	GROUP BY C.custid, C.city; 
 
 
-SELECT C.city
-FROM Sales.Customers AS C; 
+-- 
 	
