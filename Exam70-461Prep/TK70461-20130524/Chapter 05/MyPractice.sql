@@ -120,3 +120,21 @@ SELECT custid, orderid, orderdate, val,
 						  AND CURRENT ROW) AS movingavg
 FROM Sales.OrderValues;
 
+
+
+-- Exercise 2: Use Window Ranking & Offset Functions 
+-- 1. Write query against Sales.Orders table and filter three orders with 
+-- highest freight values per each shipper using orderid as the tiebreaker.
+
+-- Solution: define table expression based on query that invokes ROW_NUMBER function & assigns expression with a column alias 
+WITH C AS 
+(
+	SELECT shipperid, orderid, freight, 
+	ROW_NUMBER() OVER(PARTITION BY shipperid
+					  ORDER BY freight DESC, orderid) AS rownum 
+	FROM Sales.Orders
+) 
+SELECT shipperid, orderid, freight 
+FROM C 
+WHERE rownum <= 3
+ORDER BY shipperid, rownum; 
