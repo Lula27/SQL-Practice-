@@ -108,3 +108,15 @@ SELECT custid, [1], [2], [3]
 FROM PivotData
 	PIVOT( COUNT(aggcol) FOR shipperid IN ([1], [2], [3])) AS P; 
 
+
+-- Using Window Functions (p. 180) 
+-- Exercise 1 : Use Window Aggregate Functions 
+--1. Write query against Sales.OrderValues (FROM Sales.OrderValues) view that returns per each customer 
+-- and order (SELECT custid, orderid) the moving average value of the customer's last three orders. 
+SELECT custid, orderid, orderdate, val,
+	AVG(val) OVER(PARTITION BY custid 
+				  ORDER BY orderdate, orderid 
+				  ROWS BETWEEN 2 PRECEDING 
+						  AND CURRENT ROW) AS movingavg
+FROM Sales.OrderValues;
+
