@@ -4,6 +4,7 @@
 ---------------------------------------------------------------------
 -- Window Aggregate Functions
 ---------------------------------------------------------------------
+USE TSQL2012;
 
 -- partitioning
 
@@ -14,12 +15,25 @@ SELECT custid, orderid,
   SUM(val) OVER() AS grandtotal
 FROM Sales.OrderValues;
 
+SELECT custid, orderid, 
+	val, 
+	SUM(val) OVER (PARTITION BY custid) AS custtotal,
+	SUM(val) OVER() AS grandtotal 
+FROM Sales.OrderValues;
+
+
 -- computing percents of detail out of aggregates
 SELECT custid, orderid, 
   val,
   CAST(100.0 * val / SUM(val) OVER(PARTITION BY custid) AS NUMERIC(5, 2)) AS pctcust,
   CAST(100.0 * val / SUM(val) OVER()                    AS NUMERIC(5, 2)) AS pcttotal
 FROM Sales.OrderValues;
+
+SELECT custid, orderid, 
+	val, 
+	CAST(100.0 * val / SUM(val) OVER(PARTITION BY custid) AS NUMERIC(5, 2)) AS pctust,
+	CAST(100.0 * val / SUM(val) OVER()					  AS NUMERIC(5,2)) AS pcttotal
+FROM Sales.OrderValues; 
 
 -- framing
 
@@ -55,6 +69,13 @@ SELECT custid, orderid, val,
   DENSE_RANK() OVER(ORDER BY val) AS densernk,
   NTILE(100)   OVER(ORDER BY val) AS ntile100
 FROM Sales.OrderValues;
+
+SELECT custid, orderid, val,
+	ROW_NUMBER() OVER(ORDER BY val) AS rownum,
+	RANK()		 OVER(ORDER BY val) AS rnk,
+	DENSE_RANK() OVER(ORDER BY val) AS densernk, 
+	NTILE(100)	 OVER(ORDER BY val) AS ntile100
+FROM Sales.OrderValues; 
 
 ---------------------------------------------------------------------
 -- Window Offset Functions
