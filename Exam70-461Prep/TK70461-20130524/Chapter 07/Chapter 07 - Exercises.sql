@@ -258,3 +258,25 @@ SELECT @x.value('(/CustomersOrders/Customer/companyname)[1]',
        AS [First Customer New Name];
 GO
 
+
+-- p. 261. Query XML Data 
+USE AdventureWorks2012; 
+
+  <ns:Name>
+    <ns:Name.Prefix>Mr.</ns:Name.Prefix>
+    <ns:Name.First>Stephen</ns:Name.First>
+    <ns:Name.Middle>Y </ns:Name.Middle>
+    <ns:Name.Last>Jiang</ns:Name.Last>
+    <ns:Name.Suffix></ns:Name.Suffix>
+  </ns:Name>
+
+
+SELECT * 
+FROM HumanResources.JobCandidate; 
+
+-- Practice 1: Find all first and last names in this column.
+SELECT 
+	p.value('(./First)[1]', 'VARCHAR(8000)') AS firstName, 
+	p.value('(./Last)[1]', 'VARCHAR(8000)') AS lastName
+FROM HumanResources.JobCandidate
+	CROSS APPLY field.nodes('/Name') t(p) 
