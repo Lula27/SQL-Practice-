@@ -20,15 +20,27 @@ GO
 EXEC sys.sp_help_fulltext_system_components 'filter'; 
 GO
 
+EXEC sys.sp_help_fulltext_system_components 'filter'; 
+GO 
+
 -- Check the filters through sys.fulltext_document_types
 SELECT document_type, path
 FROM sys.fulltext_document_types;
 GO
 
+SELECT document_type, path 
+FROM sys.fulltext_document_types; 
+GO 
+
 -- Download and install Office 2010 filter pack
 -- Next, load them
 EXEC sys.sp_fulltext_service 'load_os_resources', 1;
 GO
+
+EXEC sys.sp_fulltext_service 'load_os_resources', 1; 
+GO 
+
+
 -- Restart SQL Server
 -- Check the filters again
 EXEC sys.sp_help_fulltext_system_components 'filter'; 

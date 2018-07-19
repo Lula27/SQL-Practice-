@@ -23,6 +23,17 @@ WHERE Customer.custid <= 2
 ORDER BY Customer.custid, [Order].orderid
 FOR XML AUTO, ROOT('CustomersOrders');
 
+
+SELECT Customer.custid, Customer.companyname, 
+	[Order].orderid, [Order].orderdate 
+FROM Sales.Customers AS Customer 
+	INNER JOIN Sales.Orders AS [Order] 
+	ON Customer.custid = [Order].custid
+WHERE Customer.custid <= 2 
+	AND [Order].orderid %2 = 0 
+ORDER BY Customer.custid, [Order].orderid
+FOR XML AUTO, ROOT('CustomersOrders'); 
+
 -- XML with AUTO option, element-centric, with namespace
 WITH XMLNAMESPACES('TK461-CustomersOrders' AS co)
 SELECT [co:Customer].custid AS [co:custid], 
@@ -113,6 +124,14 @@ ORDER BY Customer.custid
 FOR XML PATH ('Customer'), ROOT('Customers');
 GO
 
+SELECT Customer.custid AS [@custid], 
+	Customer.companyname AS [companyname]
+FROM Sales.Customers AS Cusomter 
+WHERE Customer.custid <= 2 
+ORDER BY Customer.custid 
+FOR XML PATH ('Customer'), ROOT('Customers'); 
+GO 
+
 
 -- OPENXML
 -- Rowset description in WITH clause, different mappings
@@ -182,6 +201,17 @@ SELECT
  @x.query('data(root/a/c)') AS Element_c_Data;
 GO
 
+DECLARE @x AS XML; 
+SET @x=N'
+<root> 
+	<a>1<c>3</c><d>4</d></a> 
+	<b>2</b>
+</root>'; 
+SELECT 
+	@x.query('*') AS Complete_Sequence, 
+	@x.query('data(*)') AS Complete_Data, 
+	@x.query('data(root/a/c)') AS Element_c_Data; 
+GO 
 -- Namespace declaration
 DECLARE @x AS XML;
 SET @x='
@@ -437,3 +467,12 @@ DROP FUNCTION dbo.GetNamespace;
 DROP FUNCTION dbo.GetCategoryName;
 GO
 
+-- Clean up 
+ALTER TABLE Production.Products
+	DROP CONSTRAINT ck_Namespace; 
+ALTER TABLE Production.Products 
+	DROP COLUMN additionalattributes; 
+DROP XML SCHEMA COLLECTION dbo.ProductsAdditionalAttributes; 
+DROP FUNCTION dbo.GetNamespace; 
+DROP FUNCTION dbo.GetCategoryName; 
+GO 

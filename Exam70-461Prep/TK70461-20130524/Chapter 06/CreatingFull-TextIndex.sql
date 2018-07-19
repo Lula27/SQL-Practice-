@@ -63,3 +63,5 @@ SELECT N'Additivity of Measures',
  bulkcolumn
 FROM OPENROWSET(BULK 'C:\Users\loret\Desktop\DataSciencePrep\SQL\SQL-Practice-\Exam70-461Prep\TK70461-20130524\Chapter 06\AdditivityOfMeasures.docx', 
                 SINGLE_BLOB) AS doc;
+
+-- 4. Create a search property list called WordSearchPropertyList 

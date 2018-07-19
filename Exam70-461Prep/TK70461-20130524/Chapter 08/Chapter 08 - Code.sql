@@ -27,6 +27,14 @@ CREATE TABLE Production.Categories(
 GO
 SELECT TOP (10) categoryname FROM Production.Categories;
 
+CREATE TABLE Production.Categories(
+	categoryid INT IDENTITY(1,1) NOT NULL,
+	categoryname NVARCHAR(15) NOT NULL,
+	description NVARCHAR(200) NOT NULL) 
+GO 
+
+SELECT TOP(10) categoryname FROM Production.Categories; 
+
 -- Creating a schema
 CREATE SCHEMA Production AUTHORIZATION dbo;
 GO
@@ -82,6 +90,8 @@ CREATE TABLE Sales.OrderDetails
 ALTER TABLE Sales.OrderDetails
 REBUILD WITH (DATA_COMPRESSION = PAGE);
 
+
+
 -- -------------------------------------------------------------------
 -- Lesson 2: Using Constraints
 -- -------------------------------------------------------------------
@@ -95,11 +105,25 @@ CREATE TABLE Production.Categories
   CONSTRAINT PK_Categories PRIMARY KEY(categoryid)
 );
 
+CREATE TABLE Production.Categories 
+(
+	categoryid		INT				NOT NULL IDENTITY, 
+	categoryname	NVARCHAR(15)	NOT NULL, 
+	description		NVARCHAR(200)	NOT NULL, 
+	CONSTRAINT PK_Categories	PRIMARY KEY(categoryid) 
+);  
+
+
+
 --Another way of declaring a column as a primary key is to use the ALTER TABLE statement, which you could write as follows:
 USE TSQL2012;
 ALTER TABLE Production.Categories 
 	ADD CONSTRAINT PK_Categories PRIMARY KEY(categoryid);
 GO
+
+USE TSQL2012
+	ADD CONSTRAINT PK_Categories PRIMARY KEY(categoryid); 
+GO 
 
 -- To list the primary key constraints in a database, you can query the sys.key_constraints table filtering on a type of PK:
 SELECT * 
@@ -109,6 +133,11 @@ WHERE type = 'PK';
 SELECT * 
 FROM sys.indexes
 WHERE object_id = OBJECT_ID(N'Production.Categories', 'U') AND name = 'PK_Categories';
+
+SELECT * 
+FROM sys.key_constraints
+WHERE type = 'PK'; 
+
 
 -- Unique Constraints
 USE TSQL2012;
