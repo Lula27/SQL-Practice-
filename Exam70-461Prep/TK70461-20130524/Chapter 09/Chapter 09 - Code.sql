@@ -1,10 +1,27 @@
 -- Chapter 09 - Designing and Creating Views, Inline Functions and Synonyms 
+-- Example 
+USE TSQL2012; 
+GO 
+CREATE VIEW Sales.OrderTotalsByYear -- always use 2 part name (includes schema name)
+	WITH SCHEMABINDING -- guarantees that underlying table structures can't be altered w/o dropping view 
+AS SELECT -- body of view = select statement 
+	YEAR(O.orderdate) AS orderyear, 
+	SUM(OD.qty) AS qty 
+	FROM Sales.Orders AS O
+		JOIN Sales.OrderDetails AS OD
+			ON OD.orderid = O.orderid 
+	GROUP BY YEAR(orderdate); 
+	GO 
+
+-- delete view 
+DROP VIEW Sales.OrderTotalsByYear; 
+
 
 -- Lesson 1: Designing and Implementing Views and Inline Functions
-CREATE VIEW Sales.OrderTotalsByYear
-  WITH SCHEMABINDING
+CREATE VIEW Sales.OrderTotalsByYear -- always use 2 part name (includes schema name)
+  WITH SCHEMABINDING -- guarantees that underlying table structures can't be altered w/o dropping view 
 AS
-SELECT
+SELECT -- body of view = select statement 
   YEAR(O.orderdate) AS orderyear,
   SUM(OD.qty) AS qty
 FROM Sales.Orders AS O
@@ -15,6 +32,9 @@ GO
 
 --You can read from a view just as you would a table. So you can SELECT from it as follows:
 SELECT orderyear, qty
+FROM Sales.OrderTotalsByYear; 
+
+SELECT orderyear, qty 
 FROM Sales.OrderTotalsByYear; 
 --Now let's put this example in the context of the basic syntax for the CREATE VIEW statement:
 
@@ -36,6 +56,24 @@ FROM Sales.Orders AS O
 GROUP BY YEAR(orderdate);
 GO
 
+DROP VIEW Sales.OrderTotalsByYear; 
+
+CREATE VIEW Sales.OrderTotalsByYear(orderyear, qty)
+	WITH SCHEMABINDING 
+AS 
+SELECT 
+	YEAR(O.orderdate),
+	SUM(OD.qty)
+FROM Sales.Orders AS O
+	JOIN Sales.OrderDetails AS OD 
+		ON OD.orderid = O.orderid 
+GROUP BY YEAR(orderdate); 
+GO 
+
+-- select from view 
+SELECT orderyear, qty 
+FROM Sales.OrderTotalsByYear; 
+
 --After you have created a view, you can use the ALTER VIEW command to change the view's structure and add or remove the view properties. An ALTER VIEW simply redefines how the view works by re-issuing the entire view definition. For example, you could redefine the Sales.OrderTotalsByYear view to add a new column for the region the order was shipped to, the shipregion column: 
 ALTER VIEW Sales.OrderTotalsByYear
   WITH SCHEMABINDING 
@@ -49,6 +87,22 @@ FROM Sales.Orders AS O
     ON OD.orderid = O.orderid
 GROUP BY YEAR(orderdate), O.shipregion;
 GO
+
+ALTER VIEW Sales.OrderTotalsByYear 
+	WITH SCHEMABINDING 
+AS 
+SELECT 
+	O.shipregion, 
+	YEAR(O.orderdate) AS orderyear,
+	SUM(OD.qty) AS qty 
+FROM Sales.Orders AS O 
+	JOIN Sales.OrderDetails AS OD 
+		ON OD.orderid = O.orderid
+GROUP BY YEAR(orderdate), O.shipregion; 
+GO 
+
+SELECT orderyear, qty 
+FROM Sales.OrderTotalsByYear; 
 
 --Now you can change the way you SELECT from the view, just as you would a table to include the new column; and you can optionally order the results with an ORDER BY:
 SELECT shipregion, orderyear, qty
@@ -124,6 +178,7 @@ SELECT orderyear, qty
 FROM Sales.OrderTotalsByYear
 WHERE orderyear = @orderyear;
 
+-- Inline function 
 --Keeping this in mind, it is now just a quick step to an inline function. Instead of declaring a variable @orderyear, define the parameter @orderyear in the function while filtering the SELECT statement in the same way as previously:
 USE TSQL2012;
 GO
@@ -140,6 +195,21 @@ RETURN
 	);
 GO
 
+IF OBJECT_ID(N'Sales.fn_OrderTotalsByYear', N'IF') IS NOT NULL 
+	DROP FUNCTION Sales.fn_OrderTotalsByYear; 
+GO 
+CREATE FUNCTION Sales.fn_OrderTotalsByYear (@orderyear INT) 
+RETURNS TABLE 
+AS 
+RETURN 
+	(
+	SELECT orderyear, qty FROM Sales.OrderTotalsByYear 
+	WHERE orderyear = @orderyear
+	); 
+GO 
+
+SELECT orderyear, qty FROM Sales.fn_OrderTotalsByYear(2007); 
+
 --You can query the function but pass the year you want to see:
 SELECT orderyear, qty FROM Sales.fn_OrderTotalsByYear(2007);
 
@@ -151,9 +221,18 @@ GO
 CREATE SYNONYM dbo.Categories FOR Production.Categories;
 GO
 
+CREATE SYNONYM dbo.Categories FOR Production.Categories; 
+GO 
+
+DROP SYNONYM dbo.Categories; 
+
+CREATE SYNONYM dbo.Categories FOR Production.Categories; 
+GO 
+
 --Then the end user can select from Categories without needing to specify a schema:
 SELECT categoryid, categoryname, description *  
 FROM Categories;
+
 
 --The basic syntax for creating a synonym is quite simple:
 CREATE SYNONYM schema_name.synonym_name FOR object_name
@@ -166,6 +245,8 @@ DROP SYNONYM dbo.Categories
 SELECT report_id, report_name FROM ReportsDB.Sales.Reports
 
 --Now suppose you add a synonym, called simply Sales.Reports:
+CREATE SYNONYM Sales.Reports FOR ReportsDB.Sales.Reports 
+
 CREATE SYNONYM Sales.Reports FOR ReportsDB.Sales.Reports 
 
 --The query is now simplified to:
