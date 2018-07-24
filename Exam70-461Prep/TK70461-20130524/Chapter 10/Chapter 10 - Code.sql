@@ -131,6 +131,33 @@ SET IDENTITY_INSERT Sales.MyOrders OFF;
 SELECT *
 FROM Sales.MyOrders;
 
+
+-- My try: INSERT EXEC 
+IF OBJECT_ID(N'Sales.OrdersForCountry', N'P') IS NOT NULL 
+	DROP PROC Sales.OrdersForCountry;
+GO 
+
+-- create procedure called Sales.OrdersForCountry 
+CREATE PROC Sales.OrdersForCountry 
+@country AS NVARCHAR(15) 
+AS 
+
+SELECT orderid, custid, empid, orderdate, shipcountry, freight 
+FROM Sales.Orders
+WHERE shipcountry = @country; 
+GO 
+
+-- Insert result of procedure 
+SET IDENTITY_INSERT Sales.MyOrders ON; 
+
+INSERT INTO Sales.MyOrders(orderid, custid, empid, orderdate, shipcountry, freight)
+	EXEC Sales.OrdersForCountry 
+	@country = N'Portugal'; 
+
+SET IDENTITY_INSERT Sales.MyOrders OFF; 
+
+SELECT * 
+FROM Sales.MyOrders; 
 ---------------------------------------------------------------------
 -- SELECT INTO
 ---------------------------------------------------------------------
@@ -169,6 +196,38 @@ FROM Sales.MyOrders;
 IF OBJECT_ID(N'Sales.MyOrders', N'U') IS NOT NULL
   DROP TABLE Sales.MyOrders;
 
+
+-- Select Into Exercise 
+IF OBJECT_ID(N'Sales.MyOrders', N'U') IS NOT NULL DROP TABLE Sales.MyOrders; 
+
+SELECT orderid, custid, orderdate, shipcountry, freight 
+INTO Sales.MyOrders 
+FROM Sales.Orders
+WHERE shipcountry = N'Norway'; 
+
+IF OBJECT_ID(N'Sales.MyOrders', N'U') IS NOT NULL DROP TABLE Sales.MyOrders; 
+
+SELECT 
+	ISNULL(orderid + 0, -1) AS orderid, 
+	ISNULL(custid, -1) AS custid, 
+	empid, 
+	ISNULL(CAST(orderdate AS DATE), '19000101') AS orderdate,
+	shipcountry, freight 
+INTO Sales.MyOrders 
+FROM Sales.Orders
+WHERE shipcountry = N'Norway'; 
+
+-- check table 
+SELECT * 
+FROM Sales.MyOrders; 
+
+-- Create constraints 
+ALTER TABLE Sales.MyOrders 
+	ADD CONSTRAINT PK_MyOrders PRIMARY KEY(orderid); 
+
+-- look into table again 
+SELECT * 
+FROM Sales.MyOrders; 
 ---------------------------------------------------------------------
 -- Lesson 02 - Updating Data
 ---------------------------------------------------------------------
