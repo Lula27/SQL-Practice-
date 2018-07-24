@@ -12,6 +12,8 @@ USE TSQL2012;
 IF OBJECT_ID(N'Sales.MyOrders', N'U') IS NOT NULL DROP TABLE Sales.MyOrders;
 GO
 
+IF OBJECT_ID(N'Sales.MyOrders', N'U') IS NOT NULL DROP TABLE Sales.MyOrders; 
+
 CREATE TABLE Sales.MyOrders
 (
   orderid INT NOT NULL IDENTITY(1, 1)
@@ -24,6 +26,17 @@ CREATE TABLE Sales.MyOrders
   freight MONEY NOT NULL
 );
 
+CREATE TABLE Sales.MyOrders 
+(
+	orderid INT NOT NULL IDENTITY(1,1) 
+		CONSTRAINT PK_MyOrders_orderid PRIMARY KEY, 
+	custid	INT NOT NULL, 
+	empid	INT NOT NULL, 
+	orderdate	DATE NOT NULL 
+		CONSTRAINT DFT_MyOrders_orderdate DEFAULT(CAST(SYSDATETIME() AS DATE)), 
+	shipcountry NVARCHAR(15) NOT NULL, 
+	freight MONEY NOT NULL 
+); 
 ---------------------------------------------------------------------
 -- INSERT VALUES
 ---------------------------------------------------------------------
@@ -45,9 +58,17 @@ INSERT INTO Sales.MyOrders(custid, empid, orderdate, shipcountry, freight) VALUE
   (5, 13, '20120620', N'USA', 40.00),
   (7, 17, '20120620', N'USA', 45.00);
 
+INSERT INTO Sales.MyOrders(custid, empid, orderdate, shipcountry, freight) VALUES 
+	(2, 11, '20120620', N'USA', 50.00), 
+	(5, 13, '20120620', N'USA', 40.00), 
+	(7, 17, '20120620', N'USA', 45.00); 
+
 -- query the table
 SELECT *
 FROM Sales.MyOrders;
+
+SELECT * 
+FROM Sales.MyOrders; 
 
 ---------------------------------------------------------------------
 -- INSERT SELECT
@@ -66,6 +87,18 @@ SET IDENTITY_INSERT Sales.MyOrders OFF;
 SELECT *
 FROM Sales.MyOrders;
 
+-- My turn 
+SET IDENTITY_INSERT Sales.MyOrders ON; 
+
+INSERT INTO Sales.MyOrders(orderid, custid, empid, orderdate, shipcountry, freight)
+	SELECT orderid, custid, empid, orderdate, shipcountry, freight
+	FROM Sales.Orders
+	WHERE shipcountry = N'Norway'; 
+
+SET IDENTITY_INSERT Sales.MyOrders OFF; 
+
+SELECT * 
+FROM Sales.MyOrders; 
 
 ---------------------------------------------------------------------
 -- INSERT EXEC
