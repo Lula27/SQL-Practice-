@@ -68,6 +68,11 @@ DECLARE @message AS NVARCHAR(1000) = N'Error in % stored procedure';
 SELECT @message = FORMATMESSAGE (@message, N'usp_InsertCategories');
 THROW 50000, @message, 0;
 
+GO 
+DECLARE @message AS NVARCHAR(1000) = N'Error in % stored procedure';  
+SELECT @message = FORMATMESSAGE (@message, N'usp_InsertCategories'); 
+THROW 50000, @message, 0; 
+
 -- There are some additional important differences between THROW and RAISERROR:
 -- RAISERROR does not normally terminate a batch:
 RAISERROR ('Hi there', 16, 0);
@@ -101,6 +106,22 @@ BEGIN CATCH
 		, ERROR_STATE() AS errorstate;
 END CATCH;
 
+BEGIN CATCH 
+-- Error handling 
+	SELECT ERROR_NUMBER() AS errornumber 
+	, ERROR_MESSAGE() AS errormessage 
+	, ERROR_LINE() AS errorline 
+	, ERROR_SEVERITY() AS errorseverity 
+	, ERROR_STATE() AS errorstate; 
+END CATCH; 
+
+
+-- TRY_CONVERT & TRY_PARSE 
+SELECT TRY_CONVERT(DATETIME, '1752-12-31'); 
+SELECT TRY_CONVERT(DATETIME, '2007-03-17'); 
+
+SELECT TRY_PARSE('1' AS INTEGER); 
+SELECT TRY_PARSE('B' AS INTEGER); 
 ---------------------------------------------------------------------
 -- Lesson 03 - Lesson 3: Using Dynamic SQL
 ---------------------------------------------------------------------
@@ -111,17 +132,28 @@ USE TSQL2012;
 GO
 SELECT COUNT(*) AS ProductRowCount  FROM [Production].[Products];
 
+SELECT COUNT(*) AS ProductRowCount FROM [Production].[Products]; 
+
 -- Now suppose you want to substitute a variable for the table and schema name:
 USE TSQL2012;
 GO
 DECLARE @tablename  AS NVARCHAR(261) = N'[Production].[Products]';
 SELECT COUNT(*) FROM @tablename;
 
+USE TSQL2012; 
+GO 
+DECLARE @tablename AS NVARCHAR(261) = N'[Production].[Products]'; 
+SELECT COUNT(*) FROM @tablename; 
+
+
 -- But concatenate that variable with a string literal, and you can print out the command:
 USE TSQL2012;
 GO
 DECLARE @tablename AS NVARCHAR(261) = N'[Production].[Products]';
 PRINT N'SELECT COUNT(*) FROM ' + @tablename;
+
+DECLARE @tablename AS NVARCHAR(261) = N'[Production].[Products]'; 
+PRINT N'SELECT COUNT(*) FROM ' + @tablename; 
 
 -- Or you can use the SELECT statement to get the same effect but in a result set:
 DECLARE @tablename AS NVARCHAR(261) = N'[Production].[Products]';
@@ -154,10 +186,17 @@ WHERE address = N'5678 rue de l''Abbaye';
 -- Using a PRINT statement
 PRINT N'SELECT custid, companyname, contactname, contacttitle, address
 FROM [Sales].[Customers]
-WHERE address = N''5678 rue de l''''Abbaye'';';
+WHERE address = N''5678 rue de l''''Abbaye'';'; 
+
+PRINT N'SELECT custid, companyname, contactname, contacttitle, address 
+FROM [Sales].[Customers] 
+WHERE address = N''5678 rue de l''''Abbaye'';';  
+
 
 -- An alternative is to use the QUOTENAME function
 PRINT QUOTENAME(N'5678 rue de l''Abbaye', '''');
+
+PRINT QUOTENAME(N'5678 rue de l''Abbaye', ''''); 
 
 -- Using the EXECUTE command:
 -- Executing a string variable:
@@ -168,6 +207,7 @@ DECLARE @SQLString AS NVARCHAR(4000)
 SET @SQLString = N'SELECT COUNT(*) AS TableRowCount FROM ' + @tablename;
 EXEC(@SQLString);
 
+
 -- Executing concatenated variables.
 USE TSQL2012;
 GO
@@ -175,6 +215,11 @@ DECLARE @SQLString AS NVARCHAR(MAX)
 	, @tablename AS NVARCHAR(261) = '[Production].[Products]';
 SET @SQLString = N'SELECT COUNT(*) AS TableRowCount FROM ' 
 EXEC(@SQLString + @tablename);
+
+DECLARE @SQLString AS NVARCHAR(MAX) 
+	, @tablename AS NVARCHAR(261) = '[Production].[Products]'; 
+SET @SQLString = N'SELECT COUNT(*) AS TableRowCount FROM '
+EXEC(@SQLString + @tablename); 
 
 -- Using sp_executesql
 -- Sending the input in as a parameter
@@ -191,3 +236,24 @@ EXEC sp_executesql
 	, @params = N'@address NVARCHAR(60)'
 	, @address = @address;
 
+DECLARE @SQLString AS NVARCHAR(4000), @address AS NVARCHAR(60); 
+SET @SQLString = N'
+SELECT custid, companyname, contactname, contacttitle, address 
+FROM [Sales].[Customers]
+WHERE address = @address'; 
+SET @address = N'5678 rue de l''Abbaye'; 
+EXEC sp_executesql
+	@statement = @SQLString 
+	, @params = N'@address NVARCHAR(60)'
+	, @address = @address; 
+
+DECLARE @SQLString AS NVARCHAR(4000), @address AS NVARCHAR(60); 
+SET @SQLString = N'
+SELECT custid, companyname, contactname, contacttitle, address 
+FROM [Sales].[Customers]
+WHERE address = @address'; 
+SET @address = N'5678 rue de l''Abbaye'; 
+EXEC sp_executesql 
+	@statement = @SQLString 
+	, @params = N'@address NVARCHAR(60)'
+	, @address = @address; 
