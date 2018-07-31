@@ -21,6 +21,14 @@ WHERE custid = 37
 	AND orderdate < '2007-07-01'; 
 -- This query is limited because it has literal values in the WHERE clause. Let's make the code a little more general by using variables in place of those literals values:
 
+
+SELECT orderid, custid, shipperid, orderdate, requireddate, shippeddate 
+FROM Sales.Orders 
+WHERE custid = 37	-- not generalizable enough 
+	AND orderdate >= '2007-04-01'
+	AND orderdate < '2007-07-01'; 
+
+-- more generalizable code 
 USE TSQL2012;
 GO
 DECLARE	@custid   AS INT,
@@ -34,6 +42,19 @@ FROM Sales.Orders
 WHERE custid = @custid
 	AND orderdate >= @orderdatefrom
 	AND orderdate < @orderdateto;
+GO 
+
+DECLARE @custid AS INT, 
+	@orderdatefrom AS DATETIME, 
+	@orderdateto AS DATETIME; 
+SET @custid = 37; 
+SET @orderdatefrom = '2007-04-01';
+SET @orderdateto = '2007-07-01'; 
+SELECT orderid, custid, shipperid, orderdate, requireddate, shippeddate 
+FROM Sales.Orders
+WHERE custid = @custid 
+	AND orderdate >= @orderdatefrom
+	AND orderdate < @orderdateto; 
 GO 
 
 IF OBJECT_ID('Sales.GetCustomerOrders', 'P') IS NOT NULL
