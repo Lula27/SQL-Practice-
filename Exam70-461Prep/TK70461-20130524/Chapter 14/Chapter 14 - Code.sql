@@ -107,6 +107,15 @@ GROUP BY C.custid
 HAVING COUNT(*) > 6;
 GO
 
+SELECT C.custid, MIN(C.companyname) AS companyname, 
+	COUNT(*) AS numorders 
+FROM Sales.Customers AS C
+	INNER JOIN Sales.Orders AS O 
+	ON C.custid = O.custid
+WHERE O.custid < 5 
+GROUP BY C.custid
+HAVING COUNT(*) > 6; 
+GO 
 
 ---------------------------------------------------------------------
 -- Lesson 03 - Using Dynamic Management Objects
