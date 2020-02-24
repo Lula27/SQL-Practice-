@@ -1,0 +1,24 @@
+-- Create Test Table
+
+--CREATE TABLE test (
+--    a INTEGER, 
+--    b TEXT
+--);
+
+-- Create customer demographic table 
+-- Include name, age, race, gender 
+CREATE TABLE customer_dem (
+    id SMALL INT,
+    name VARCHAR, 
+    age INT,
+    race TEXT,
+   gender BINARY 
+);
+
+
+
+-- Insert into table customer data
+INSERT into customer_dem VALUES (1, '
+
+--INSERT INTO customer VALUES ('Veronica Mars', 27, 'white', 'F'); 
+

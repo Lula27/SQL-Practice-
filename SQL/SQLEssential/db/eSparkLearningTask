@@ -1,0 +1,10 @@
+-- Create Database for schools & add school name
+
+CREATE DATABASE IF NOT EXISTS school_CPS; 
+USE schools_CPS; 
+
+CREATE TABLE schoolNames (
+   SchoolId INT NOT NULL AUTO_INCREMENT, 
+   SchoolName VARCHAR (500) NOT NULL, 
+   Address VARCHAR (     
+);

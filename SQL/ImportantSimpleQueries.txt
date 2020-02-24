@@ -1,0 +1,745 @@
+# Question 1 
+
+# a) Show list of databases 
+SHOW DATABASES; 
+
+# b) select sakila database 
+USE sakila;
+
+# c) Show all tables 
+SHOW TABLES; 
+
+#d) Show each of the columns along with their data types for the actor table.
+DESCRIBE actor; 
+
+# e) total number of records in actor table 
+SELECT COUNT(*) FROM actor; 
+
+
+# f) first & last name of all actors in actor table 
+SELECT CONCAT_WS(" ", first_name, last_name) AS full_name
+FROM actor; 
+
+
+# g) insert first name & middle initial 
+INSERT INTO actor (first_name, last_name)
+VALUES ('LORETTA', 'A'); 
+
+ 
+SELECT first_name, last_name 
+FROM sakila.actor; 
+
+# h) update middle initial with last name 
+UPDATE actor 
+	SET last_name = ''
+WHERE last_name = ''; 
+
+# i) delete record from actor table 
+SET SQL_SAFE_UPDATES = 0; 
+
+DELETE FROM actor 
+WHERE first_name = '';
+
+SELECT first_name, last_name 
+FROM actor; 
+
+# j) create new table called payment_type 
+ 
+ CREATE TABLE `Payment_type` ( 
+	`payment_type_id` INT(11) NOT NULL, 
+    `Type` VARCHAR(15), 
+    PRIMARY KEY(`payment_type_id`) 
+) ENGINE=INNODB DEFAULT CHARSET=LATIN1; 
+
+INSERT INTO sakila.payment_type(payment_type_id, Type)
+VALUES
+(1, "Credit Card"), 
+(2, "Cash"), 
+(3, "Paypal"), 
+(4, "Cheque");  
+
+# k) rename table payment_type to payment_types 
+RENAME TABLE Payment_type TO payment_types;  
+
+# l) delete payment_types table 
+DROP TABLE payment_types; 
+
+
+
+
+# Question 2 
+
+
+# a) All movies rated PG-13 
+SELECT title, description 
+FROM film
+WHERE rating = 'PG-13'; 
+
+
+# b) All movies that are either PG or PG-13 
+SELECT title
+FROM sakila.film 
+WHERE rating IN ('PG', 'PG-13');
+
+
+# c) All payments greater than and equal to $2 & less than/equal to $7
+SELECT payment_id, amount
+FROM sakila.payment
+WHERE amount BETWEEN 2 AND 7; 
+
+SELECT payment_id, amount
+FROM sakila.payment
+WHERE amount >= 2 AND amount <= 7; 
+
+
+# d) List all addresses that have phone number containg 589 
+SELECT address, phone 
+FROM sakila.address 
+WHERE phone LIKE '%589%'; 
+
+
+# All addresses that have pn starting with 140 
+SELECT address
+FROM sakila.address
+WHERE phone LIKE '140%'; 
+
+# All addresses with phone numbers that end with 589 
+SELECT address
+FROM sakila.address 
+WHERE phone LIKE '%589';  
+
+# e) List all staff members whose password is NULL
+SELECT first_name,last_name, email 
+FROM sakila.staff 
+WHERE password IS NULL; 
+
+# f) Films that have title names like Zoo and rental duration greater than or equal to 4
+SELECT title 
+FROM sakila.film
+WHERE title LIKE N'%zoo%' AND rental_duration >= 4; 
+
+# g) Cost of renting movie Academy Dinosaur for 2 weeks
+SELECT title, rental_rate * 14 AS rental_cost
+FROM sakila.film 
+WHERE title = N'academy dinosaur';
+
+# h)  List unique districts where customers (table2), staff (table3) & stores (table4) are located; table 1 = address
+# assumption: customers, staff & stores addresses stored in address table 
+SELECT DISTINCT district
+FROM address 
+WHERE address IS NOT NULL; 
+
+
+# i) List top 10 newest customers accross all stores 
+# join using store_id 
+SELECT CONCAT_WS(" ", first_name, last_name) AS full_name
+FROM customer 
+ORDER BY create_date DESC
+LIMIT 10; 
+
+
+# Question 3 
+
+# a) Total nubmer of movies 
+SELECT COUNT(film_id) AS Total_Number_Movies
+FROM film;
+
+# b) Min & max payment received across all transactions 
+SELECT MIN(amount) AS minimum_payment, MAX(amount) AS maximum_payment
+FROM payment; 
+
+# c) Number of customers who rented movies btw. Feb-2005 & May-2005 
+SELECT COUNT(customer_id) 
+FROM payment
+WHERE payment_date BETWEEN '2005-02-01' AND '2005-05-31'; 
+
+
+# d) Movies where replacement_cost > $15 or rental_duration btw. 6 & 10 days 
+SELECT film_id, title 
+FROM film
+WHERE replacement_cost > 15.00 OR rental_duration BETWEEN 6 AND 10; 
+
+# e) Total amount spent by customers for movies in year 2005 
+SELECT SUM(amount) AS Total_Customer_Spend 
+FROM payment
+WHERE YEAR(payment_date) = 2005;  
+
+# f) Average replacement cost accross all movies 
+SELECT ROUND(AVG(replacement_cost), 2) AS avg_replacement_cost
+FROM film; 
+
+# g) Standard deviation of rental rate across all movies 
+SELECT ROUND(STD(rental_rate), 3) AS sd_rental_rate
+FROM film; 
+
+# h) Midrange of rental duration for all movies 
+SELECT ROUND(((MAX(rental_duration) - MIN(rental_duration)) / 2),2) AS mid_range_rental_duration
+FROM film; 
+
+# Question 4 
+
+# a) Customers sorted by first & last name in ascending order 
+SELECT first_name, last_name 
+FROM customer 
+ORDER BY first_name, last_name ASC; 
+
+# b) Count movies that are either G/NC-17/PG-13/PG/R grouped by rating 
+SELECT rating, COUNT(film_id) AS Number_of_Movies  
+FROM film
+WHERE rating IN('G', 'NC-17', 'PG-13', 'PG', 'R')
+GROUP BY rating; 
+
+#c)  Number of addresses in each district
+SELECT district, COUNT(address) AS Number_of_Addresses_per_District
+FROM address 
+GROUP BY district; 
+
+#d) Movies where rental rate > $1 & order result set by desc order
+SELECT title
+FROM film 
+WHERE rental_rate > 1 
+ORDER BY rental_rate DESC; 
+
+# e) Top 2 movies rated R w/ highest replacement cost 
+SELECT title, replacement_cost
+FROM film
+WHERE rating = 'R' 
+ORDER BY replacement_cost DESC 
+LIMIT 2; 
+
+# f) Most frequently occuring rental rate across products 
+SELECT rental_rate AS most_frequent_rental_rate
+FROM film 
+GROUP BY rental_rate 
+ORDER BY COUNT(rental_rate) DESC
+LIMIT 1; 
+
+# g) Top 2 movies w/ movie length > 50mins & commentaries as special features 
+SELECT title
+FROM film
+WHERE length > 50 AND special_features = N'Commentaries'
+order by length DESC 
+LIMIT 2; 
+
+# h) Years where more than 2 movies released 
+# assumption - all movies released in 2006 
+SELECT release_year 
+FROM (SELECT release_year, COUNT(release_year) > 2 
+    FROM film) AS rel_yr;
+
+# assumption verification for empty table
+SELECT title, release_year 
+FROM film; 
+
+
+# Part C: Combinging Data, Nested Queries, Views & Indexes, Transforming Data 
+
+
+# a) List actors who acted in 25+ movies 
+# create derived table and check condition on derived table 
+SELECT tab.first_name, tab.last_name FROM
+(SELECT COUNT(fa.film_id) > 25 AS filmcount, a.first_name, a.last_name 
+FROM actor AS a 
+	 JOIN film_actor AS fa
+		ON a.actor_id = fa.actor_id
+GROUP BY a.actor_id) as tab WHERE tab.filmcount>=1; 
+
+
+# b) Actors who worked in German language movies 
+# German = language_id # 6 
+SET SQL_SAFE_UPDATES=0;
+UPDATE film SET language_id=6 WHERE title LIKE "%ACADEMY%";
+
+SELECT DISTINCT a.first_name, a.last_name 
+FROM actor AS a 
+	JOIN film_actor AS fa
+		ON a.actor_id = fa.actor_id 
+	JOIN film AS f 
+		ON fa.film_id = f.film_id
+WHERE f.language_id = 6; 
+
+# c) Actors who acted in horror movies 
+SELECT DISTINCT a.first_name, a.last_name
+FROM actor AS a 
+	JOIN film_actor AS fa 
+		ON a.actor_id = fa.actor_id
+	JOIN film_category AS fc 
+		ON fa.film_id = fc.film_id
+WHERE fc.category_id = 11; 
+
+# category_id = 11 (horror) 
+
+# d) All customers who rented 3+ horror movies 
+# count of films in horror (category_id = 11) 
+SELECT count_horror.first_name, count_horror.last_name
+FROM 
+(SELECT DISTINCT c.customer_id, c.first_name, c.last_name, COUNT(r.customer_id) AS cust_count
+FROM customer AS c 
+	JOIN rental AS r 
+		ON c.customer_id = r.customer_id 
+	JOIN inventory AS i 
+		ON r.inventory_id = i.inventory_id
+	JOIN film_category AS fc 
+		ON fc.film_id = i.film_id
+WHERE fc.category_id = 11
+GROUP BY c.customer_id) AS count_horror
+WHERE count_horror.cust_count > 3; 
+
+
+# count of all horror films = 248 
+SELECT COUNT(i.film_id), fc.category_id 
+FROM film_category AS fc
+	JOIN inventory AS i 
+		ON fc.film_id = i.film_id
+WHERE fc.category_id = 11; 
+
+
+# e) All customers who rented movie starring Scarlett Bening 
+# customer: customer_id, first_name, last_name 
+# rental: rental_id, customer_id, inventory_id 
+# inventory: inventory_id, film_id 
+# film_actor: film_id, actor_id 
+# actor: actor_id = 124 (Scarlett Bening) 
+
+SELECT DISTINCT c.first_name, c.last_name 
+FROM customer AS c 
+	JOIN rental AS r 
+		ON c.customer_id = r.customer_id
+	JOIN inventory AS i 
+		ON r.inventory_id = i.inventory_id
+	JOIN film_actor AS fa 
+		ON i.film_id = fa.film_id
+	JOIN actor AS a 
+		ON fa.actor_id = a.actor_id 
+WHERE a.actor_id = 124; 
+
+# movies staring SB 
+SELECT film_id
+FROM film_actor AS fa 
+	JOIN actor AS a 
+		ON fa.actor_id = a.actor_id 
+WHERE a.actor_id = 124; 
+
+# Scarlett Bening id = 124 
+SELECT actor_id, first_name, last_name 
+FROM actor 
+WHERE first_name = N'Scarlett'; 
+
+# f) Which customers residing at postal code 62703 rented documentaries 
+# customer: first_name, last_name, customer_id, address_id
+## rental: customer_id, rental_id, inventory_id 
+##  inventory: inventory_id = 6, film_id 
+# address: address_id, postal_code 
+# film_category: film_id, category_id 
+# category: category_id, name 
+
+# customers living at postal code 62703
+# assumption: only Andy Vanhorn lives at 62703 so he's the only one who rented a documentary 
+SELECT c.first_name, c.last_name, c.customer_id, a.postal_code 
+FROM customer AS c 
+	JOIN address AS a 
+		ON c.address_id = a.address_id 
+WHERE a.postal_code = 62703;  
+
+# All customers who rented documentaries
+# customer_id = 587, 597, 44, 252, 554  
+SELECT r.customer_id 
+FROM rental AS r 
+	JOIN inventory AS i 
+		ON r.inventory_id = i.inventory_id 
+WHERE i.inventory_id = 6; 
+
+# find id for documentary: category_id = 6 
+SELECT category_id, name 
+FROM category
+WHERE name = N'Documentary';
+
+# all film_ids that are documentaries: combine film & inventory where c_id = 6
+SELECT DISTINCT i.film_id
+FROM inventory AS i 
+	JOIN film_category AS fc 
+		ON i.film_id = fc.film_id
+WHERE fc.category_id = 6; 
+
+
+# g) All addresses where second address line is not empty 
+# return  second addresses sorted 
+# assumption: Address2 field left empty purposefully 
+
+SELECT address 
+FROM address 
+WHERE address2 IS NOT NULL
+ORDER BY address2 ASC; 
+
+
+# h) Number of films involving a "Crocodile" & "Shark" based on film description 
+# Assumption - film involves both a crocodile & a shark 
+SELECT COUNT(film_id) 
+FROM film 
+WHERE description LIKE '%Crocodile%' 
+	AND description LIKE '%Shark%';
+
+# i) All actors featured in film involving "Crocodile" & "Shark" along with release year
+# sort by actors' last names 
+# actor: actor_id, first_name, last_name 
+# film_actor: actor_id, film_id
+# film: film_id, description 
+SELECT DISTINCT a.actor_id, a.first_name, a.last_name,f.release_year 
+FROM actor AS a 
+	JOIN film_actor AS fa 
+		ON a.actor_id = fa.actor_id
+	JOIN film AS f 
+		ON fa.film_id = f.film_id
+WHERE description LIKE '%crocodile%'
+	AND description LIKE '%shark%'
+ORDER BY a.last_name ASC; 
+  
+
+ # j) All film categories btw 55-65 films
+ # return category name & number of films per category (count film_id grouped by category)  
+ # sort from highest to lowest number of films 
+ # category: category_id, name 
+ # film_category: film_id, category_id 
+SELECT COUNT(fc.film_id), c.name 
+FROM category AS c 
+	JOIN film_category AS fc 
+		ON c.category_id = fc.category_id
+GROUP BY c.name
+HAVING COUNT(fc.film_id) > 55 
+
+UNION 
+
+SELECT COUNT(fc.film_id), c.name 
+FROM category AS c 
+	JOIN film_category AS fc 
+		ON c.category_id = fc.category_id
+GROUP BY c.name
+HAVING COUNT(fc.film_id) < 65; 
+ 
+ # k) Categories where average diff. btw. film replacement cost & rental rate > $17 
+ # category: category_id, name
+ # film: rental_rate, replacement_cost, film_id 
+ # film_category: film_id, category_id 
+
+SELECT c.name
+FROM category AS c 
+	JOIN film_category AS fc 
+		ON c.category_id = fc.category_id
+	JOIN film AS f 
+		ON f.film_id = fc.category_id
+WHERE (f.replacement_cost - f.rental_rate > 17)
+GROUP BY c.name; 
+ 
+ # l) create list of daily overdue rentals 
+ # search rental table for films w/ NULL return date and where the rental date is further in the past than the rental duration specified in the film table.
+ # produce the name of the film along with the customer name and phone number
+ # customer: customer_id, first_name, last_name, address_id
+ # address: address_id, phone 
+ # rental: customer_id, inventory_id, return_date  
+ # inventory: inventory_id, film_id, store_id  
+ # film: film_id, title, rental_duration  
+ 
+ 
+ # select films & customer name & number who have yet to return rentals  
+ SELECT DISTINCT f.title, c.first_name, c.last_name, a.phone 
+ FROM customer AS c 
+	JOIN address AS a 
+		ON c.address_id = a.address_id
+	JOIN rental AS r 
+		ON c.customer_id = r.customer_id
+	JOIN inventory AS i 
+		ON r.inventory_id = i.inventory_id
+	JOIN film AS f 
+		ON i.film_id = f.film_id
+WHERE r.return_date IS NULL; 
+
+## use date diff 
+# attempt to convert the incompatible types for comparrison - got null values :-( 
+ DESCRIBE rental; 
+ 
+ SELECT CAST(f.rental_duration AS DATETIME), f.rental_duration, r.rental_date, r.return_date
+ FROM rental AS r 
+	JOIN inventory AS i
+		ON r.inventory_id = i.inventory_id
+	JOIN film AS f 
+		ON i.film_id = f.film_id
+ WHERE r.return_date IS NULL
+	AND r.return_date < f.rental_duration; 
+
+# join process... 
+SELECT * 
+FROM customer AS c
+    JOIN rental AS r 
+		ON c.customer_id = r.rental_id; 
+        
+SELECT * 
+FROM rental AS r 
+	JOIN inventory AS i 
+		ON r.inventory_id = i.inventory_id; 
+
+SELECT f.title, c.first_name, c.last_name, a.phone 
+FROM film AS f 
+	JOIN inventory AS i 
+		ON f.film_id = i.film_id
+	JOIN store AS s 
+		ON i.store_id = s.store_id 
+	JOIN address AS a 
+		ON a.address_id = s.address_id 
+	JOIN customer AS c 
+		ON a.address_id = c.address_id; 
+
+
+ # m) List of all customers & staff given store id 
+ # customer: first_name, last_name, customer_id, store_id 
+ SELECT first_name, last_name
+ FROM customer
+ WHERE store_id IS NOT NULL
+ 
+ UNION ALL 
+ 
+ SELECT first_name, last_name  
+ FROM staff
+ WHERE store_id IS NOT NULL; 
+ 
+ 
+ 
+ 
+ 
+ # Question 2
+ 
+ # a) All actors & customers whose first name is same as first name of actor with ID 8 (Matthew) 
+ SELECT first_name, last_name 
+ FROM customer
+ WHERE first_name = N'Matthew' 
+ 
+ UNION 
+ 
+ SELECT first_name, last_name 
+ FROM actor
+ WHERE first_name = N'Matthew'; 
+ 
+# Actor with id = 8: First name = Matthew 
+ SELECT * 
+ FROM actor 
+ WHERE actor_id = 8; 
+ 
+ # b) Customers & payment amounts w/ payments > avg(payment amount) 
+ # customer: customer_id, first_name, last_name 
+ # payment: customer_id, amount 
+SELECT DISTINCT c.first_name, c.last_name, p.amount 
+FROM customer AS c 
+	JOIN payment AS p 
+		ON c.customer_id = p.customer_id
+WHERE p.amount > 4.20; 
+   
+# average payment amount = 4.20 
+SELECT ROUND(AVG(amount), 2) 
+FROM payment; 
+
+# c) Customers who rented movies at least once
+# rental: rental_id, customer_id  
+# customer: customer_id, first_name, last_name 
+SELECT c.first_name, c.last_name 
+FROM customer AS c 
+	JOIN rental AS r 
+		ON c.customer_id = r.customer_id
+WHERE c.customer_id IN (SELECT customer_id
+						FROM rental 
+						GROUP BY customer_id 
+						HAVING COUNT(customer_id) > 1)
+GROUP BY(c.customer_id); 
+        
+# d) Floor of maximum, minimum, & avg payment amount 
+SELECT FLOOR(MAX(amount)) AS Floor_Max, FLOOR(MIN(amount)) AS Floor_Min, FLOOR(AVG(amount)) AS Floor_Avg
+FROM payment; 
+
+
+
+# Question 3 
+
+# a) Create view called actors_portfolio to give info about actors & films 
+# include title & category 
+# actor: actor_id, first_name, last_name 
+# film_actor: actor_id, film_id 
+# film: film_id, title, rating 
+# film_category: category_id, film_id 
+# category: category_id, name 
+
+DROP VIEW sakila.actors_portfolio; 
+
+CREATE VIEW sakila.actors_portfolio 
+ AS 
+SELECT a.actor_id, a.first_name, a.last_name, f.title, f.rating, c.name AS genre
+FROM actor AS a 
+	JOIN film_actor AS fa 
+		ON a.actor_id = fa.actor_id 
+	JOIN film AS f 
+		ON fa.film_id = f.film_id
+	JOIN film_category AS fc 
+		ON f.film_id = fc.film_id 
+	JOIN category AS c 
+		ON fc.category_id = c.category_id; 
+        
+        
+# select from view 
+SELECT * 
+FROM sakila.actors_portfolio; 
+
+# b) describe view's structure
+ SHOW CREATE VIEW sakila.actors_portfolio; 
+ 
+# get info on actor Adam Grant 
+SELECT * 
+FROM sakila.actors_portfolio
+WHERE first_name = N'Adam'
+AND last_name = N'Grant'; 
+
+# c) insert movie titled "Data Hero"w/ Sci-Fi (genre) starring Adam Grant 
+INSERT INTO sakila.actors_portfolio (first_name, last_name) VALUES ('ADAM', 'GRANT'); 
+
+# error code 1393 
+INSERT INTO sakila.actors_portfolio (title, genre) VALUES ('Data Hero', 'Sci-Fi'); 
+
+# Not possible to insert mulitple values into this view because it was created using multiple joins.
+# It's possible to insert values into a view when all the columns are in the base table. 
+
+
+
+
+# Question 4
+
+# a) extract street number (characters 1-4) from customer addressLine1 
+SELECT SUBSTRING(a.address, 1, 4) AS Street_Number
+FROM address AS a 
+	JOIN customer AS c 
+		ON a.address_id = c.address_id; 
+	
+
+# b) Actor whose last name starts with character A, B, or C 
+SELECT first_name, last_name 
+FROM actor 
+WHERE last_name LIKE 'A%'
+	OR last_name LIKE 'B%'
+    OR last_name LIKE 'C%'; 
+    
+# c) Film titles that contain exactly 10 characters 
+SELECT title 
+FROM film
+WHERE CHAR_LENGTH(title) = 10;
+
+# d) Format payment_date using format "22/1/2016"
+SELECT DATE_FORMAT(payment_date, '%d/%m/%Y') AS '%d/%m/%Y'
+FROM payment; 
+
+# e) number of days between two date values: rental_date & return date
+SELECT rental_date, return_date, 
+DATEDIFF(return_date, rental_date) AS NumberOfDays
+FROM rental
+ORDER BY numberOfDays DESC; 
+
+
+
+# Question 5 
+
+# 1) Business use case: Store information on customers who have not returned their rentals for future follow up. 
+# This data will be saved in a newly created table called "Outstanding_Rentals".
+ 
+ CREATE TABLE `Outstanding_Rentals` ( 
+	`customer_id` INT(15) NOT NULL, 
+	`first_name` VARCHAR(45) NOT NULL, 
+    `last_name` VARCHAR(45) NOT NULL, 
+    `email` VARCHAR (50) NOT NULL, 
+    `phone` VARCHAR(20) NOT NULL,
+    PRIMARY KEY(`customer_id`) 
+) ENGINE=INNODB DEFAULT CHARSET=LATIN1; 
+
+# 2) Business use case: A rental store wants to know the number of films it owns in each genre category. 
+# Since it already has tables created, use filters to collect the number of films per genre. 
+ # count of films all categories 
+SELECT COUNT(fc.film_id) AS totalFilms, c.name AS genre 
+FROM category AS c 
+	JOIN film_category AS fc 
+		ON c.category_id = fc.category_id
+GROUP BY c.name; 
+
+# 3) Business use case: As Haloween approaches, a movie rental company wants to know which customers have previously rented horror films. 
+# This will help them with a direct targeted marketing campaign for promoting newly released horror films.
+# The information required inclued the customer id, first & last name and email. 
+# Analysis of tables previously stored in their database shows that horror films are categorized as #11. 
+
+# all customers who rented horror film 
+SELECT DISTINCT c.customer_id, c.first_name, c.last_name, c.email
+FROM customer AS c 
+	JOIN rental AS r 
+		ON c.customer_id = r.rental_id
+	JOIN inventory AS i 
+		ON r.inventory_id = i.inventory_id
+	JOIN film_category AS fc 
+		ON fc.film_id = i.film_id
+WHERE fc.category_id = 11; 
+
+DESCRIBE category; 
+
+SELECT * 
+FROM category; 
+
+# 4)  Business Use Case: Determine which customers least service renal store. In other words, if the business wants to know 
+# which customers are inactive, they can use a stored proceedure to determine the customer's activity status. 
+DELIMITER //
+CREATE PROCEDURE cust_activity_status(
+ IN customer_id INT,
+ OUT active INT,
+ OUT inactive INT)
+BEGIN
+	 -- active customers 
+	SELECT
+		COUNT(*)
+	INTO active FROM
+		customer
+	WHERE
+		active = 1;
+	 -- inactive customers 
+	SELECT
+		COUNT(*)
+	INTO active FROM
+		customer
+	WHERE
+		active = 0;
+ 
+END //
+DELIMITER ;
+
+# find activity status for customer 141
+CALL cust_activity_status(50, @inactive,@active);
+SELECT @inactive,@active;
+SELECT 
+    *
+FROM
+    customer
+    WHERE customer_id = 360; 
+
+# Drop stored procedure
+DROP PROCEDURE cust_activity_status;
+
+
+
+# 5) Business Use Case: Data was collected on customers registered at a local movie rental store.
+# In order to optimize searches and to make the database search process faster thereby improving performance, data for customers was stored in hash partitioned table.
+# Data for the customer table was distributed among a predefined number of partitions on a column value. In this case, 8. 
+# Not only did this process increase manageability but it also reduced the cost of storing large sets of customer data. 
+# Information on customers who registered over 5 years ago and are no longer active can be easily removed from the database. 
+DESCRIBE customer; 
+
+# Create table using hash partitioning 
+CREATE TABLE customer_hashpartition (
+  `customer_id` SMALLINT(5) NOT NULL,
+  `store_id` TINYINT(3) NOT NULL,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(50),
+  `address_id` SMALLINT(5) NOT NULL,
+  `active` TINYINT(1) NOT NULL,
+  `create_date` DATETIME NOT NULL,
+  `last_update` TIMESTAMP DEFAULT NULL,
+  PRIMARY KEY (`customer_id`)
+) PARTITION BY HASH (customer_id) PARTITIONS 8; 
