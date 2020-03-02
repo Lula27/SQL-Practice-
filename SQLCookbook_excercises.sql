@@ -56,7 +56,57 @@ SELECT ename AS [employee name], deptno AS [department name], sal AS salary
 FROM emp;
 
 
-SELECT ename AS [Employee Name], comm AS Commission, sal AS Salary
+SELECT ename AS [Employee Name], sal AS Salary, comm AS Commission
 FROM emp;
 
 
+-- 1.6: Use inline view to reference an Aliased Column in WHERE clause 
+-- Inline view (aliased as x) to select salary and commission where Salary > 5000
+SELECT * 
+	FROM (
+SELECT sal AS Salary, comm AS Commission 
+	FROM emp
+	) x
+WHERE Salary < 5000; 
+
+
+-- Inline view to select name, Salary, Commission where commission less than or equal to 500
+SELECT * 
+	FROM (
+SELECT ename AS [Employee Name], sal AS Salary, comm AS Comission
+	FROM emp
+	) x 
+WHERE Comission <= 500;
+
+
+-- 1.7 Concatenating Column Values 
+
+SELECT ename, job
+FROM emp
+WHERE deptno = 10; 
+
+-- Concat to print out name and works as a 
+
+-- MySQL database supports CONCAT function 
+SELECT CONCAT(ename, ' WORKS AS A ', job) as [Message about title]
+FROM emp 
+WHERE deptno = 10;
+
+
+-- SQL Server supports + operator 
+SELECT ename + ' ROLE IN THIS COMPANY IS THE ' + job AS [Employee's Role in Company]
+FROM emp
+WHERE deptno = 10; 
+
+
+-- 1.8: CASE expression: Conditional Logic in SELECT statement
+-- Return message of UNDERPAID if employee is paid $2000 or less
+-- Return message of OVERPAID if employee is paid $4000 or more
+-- Return ADEQUATEPAY if employee makes between $2000 and $4000
+
+SELECT ename, sal,
+	CASE WHEN sal <= 2000 THEN 'UNDERPAID'
+		 WHEN sal >= 4000 THEN 'OVERPAID'
+		 ELSE 'ADEQUATELY PAID'
+	END AS Status -- CASE expression aliased as Status 
+FROM emp; 
