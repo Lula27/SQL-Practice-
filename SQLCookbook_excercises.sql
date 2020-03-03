@@ -110,3 +110,86 @@ SELECT ename, sal,
 		 ELSE 'ADEQUATELY PAID'
 	END AS Status -- CASE expression aliased as Status 
 FROM emp; 
+
+
+-- Print out high/low deptno (low if deptno = 10) / high if deptno > 20; if = 20, mid level 
+SELECT ename, job, deptno,
+	CASE WHEN deptno = 10 THEN 'LOW LEVEL'
+		WHEN deptno > 20 THEN 'HIGH LEVEL'
+		ELSE 'MID LEVEL'
+	END AS Status 
+FROM emp; 
+
+
+-- Selection and print out based on mgr id 
+SELECT ename, job, mgr,
+	CASE WHEN deptno < 7788 THEN 'ENTRY LEVEL MANAGER'
+		 WHEN deptno = 7839 THEN 'MID LEVEL MANAGER'
+		 ELSE 'HIGH LEVEL MANAGER'
+	END AS Status 
+FROM emp;
+
+
+
+-- 1.9 Limit Number of Rows Returned
+
+SELECT TOP 5 *
+FROM emp; 
+
+SELECT TOP 10 ename, hiredate, sal,
+	CASE WHEN sal < 1250.00 THEN 'LOW SALARY'
+		ELSE 'HIGH SALARY'
+	END AS STATUS 
+FROM emp;
+
+
+-- 1.10 Return n Random Records from Table
+
+SELECT TOP 5 ename, job 
+FROM emp
+ORDER BY newid(); 
+
+
+
+-- 1.11 Find Null Values 
+-- Can't use = or != when searching for nulls cus null isn't a value 
+
+SELECT * 
+FROM emp 
+WHERE comm IS NULL; 
+
+
+-- 1.12 Transform Nulls into Real Values
+-- Using coalesce doesn't change new values 
+
+SELECT COALESCE(comm, 0)
+FROM emp;
+
+SELECT ename, mgr, COALESCE(comm, 1000)
+FROM emp; 
+
+
+-- Replace null using case 
+SELECT CASE 
+	WHEN comm IS NOT NULL THEN comm 
+	ELSE 0 
+	END 
+FROM emp; 
+
+
+-- 1.13 Searching for Patterns
+SELECT ename, job
+FROM emp 
+WHERE deptno IN (10,20); 
+
+
+SELECT TOP 5 ename, job, sal
+FROM emp 
+WHERE deptno IN (20, 30); 
+
+
+-- When searching for text, use wildcard (%) operator
+SELECT ename, job 
+FROM emp 
+WHERE deptno in (20, 30) 
+	AND (ename LIKE '%I%' OR job LIKE '%ER'); 
