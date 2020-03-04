@@ -193,3 +193,133 @@ SELECT ename, job
 FROM emp 
 WHERE deptno in (20, 30) 
 	AND (ename LIKE '%I%' OR job LIKE '%ER'); 
+
+
+
+-- Chapter 2: Sorting Query Results 
+-- Order results in set using Order By 
+-- Display names, jobs and salaries (from lowest to highest) of employees in department 10 
+-- In order based on their salary (lowest to highest) 
+-- By default Order By: asc - ascending order; use desc for descending order
+Select ename, job, sal
+From emp
+Where deptno = 10
+Order by sal asc;  
+
+Select ename, job, sal
+From emp 
+Where deptno = 10 
+Order by sal desc; 
+
+
+-- Select name, job, sal, dept ordering results by hiredate - most recent to earlies
+
+Select hiredate, ename, job, sal, deptno
+From emp
+Order by hiredate desc; 
+
+
+-- Using position of column to order by 
+Select ename, job, sal
+From emp
+Where deptno = 10 
+Order by 3 desc; 
+
+
+-- Get average salary by deptno 
+Select deptno, avg(sal) As [Average Salary]
+From emp 
+Group by deptno;
+
+
+-- 2.2 Sorting by Multiple Fields 
+-- Sort rows from emp first by deptno ascending
+-- Then sort by salary descending 
+
+Select empno, deptno, sal, ename, job 
+From emp
+Order by deptno asc, sal desc; 
+
+
+-- 2.3 Sorting by Substrings
+-- Return employee names and jobs from emp table 
+-- Sort by last two characters in job field 
+ 
+Select ename, job
+From emp 
+Order by substring(job, len(job)-1, 2)
+
+Select ename, job
+From emp 
+Order by substring(job, len(job)-1, 3)
+
+-- Try by name 
+Select ename, job
+from emp 
+Order by substring(ename, len(ename)-1, 2) 
+
+
+-- 2.4 Dealing with Nulls When Sorting
+-- Sort results from emp by Comm (nullable) - specify nulls sort last or first 
+
+-- Sort nulls first 
+Select ename, sal, comm
+From emp
+Order by comm; 
+
+
+-- Sort nulls last 
+Select ename, sal, comm
+From emp 
+Order by comm desc; 
+
+
+-- Use CASE expression to flag when value is null
+-- Sort by nulls last 
+Select ename, sal, comm
+From (
+Select ename, sal, comm, 
+	Case When comm is null Then 0 Else 1 End As is_null
+From emp
+) x 
+Order by is_null desc, comm
+
+
+-- Sort by nulls first 
+Select ename, sal, comm
+From (
+Select ename, sal, comm, 
+	Case When comm is null Then 0 Else 1 End As is_null
+From emp
+) x 
+Order by is_null asc, comm
+
+
+
+-- Include is null binary 
+Select ename, sal, comm, 
+	Case When comm Is Null Then 0 Else 1 End As is_null
+From emp; 
+
+
+-- 2.6: Sorting on Data Dependent Key 
+
+
+-- Produce column that gives 1 if salesperson, 0 otherwise
+Select ename, sal, job, comm, 
+	Case When job = 'SALESMAN' Then 1 Else 0 End As is_SalesPerson
+From emp; 
+
+-- Goal: Sort on comm if job is 'Salesman'
+-- Otherwise: Sort by sal 
+Select ename, sal, job, comm 
+From emp 
+Order by Case When job = 'SALESMAN' Then comm Else sal End; 
+
+
+-- Use Case Expression to dynamically change how results are sorted 
+
+Select ename, sal, job, comm, 
+	Case When job = 'SALESMAN' Then comm Else sal End AS ordered 
+From emp 
+Order by 5;
