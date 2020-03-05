@@ -408,3 +408,101 @@ Select e.empno, e.ename, e.job, e.sal, e.deptno
 		And e.job = v.job 
 		And e.sal = v.sal); 
 
+
+-- 3.4: Retreive Values from One Table that Don't Exist in Another
+Select deptno 
+	From dept 
+Where deptno not in (select deptno from emp); 
+
+
+-- Use correlated subquery 
+Select d.deptno 
+	From dept d 
+Where Not Exists ( 
+	Select 1 
+		From emp e 
+		Where d.deptno = e.deptno
+); 
+
+
+-- 3.5: Retrieving Rows 
+Select e.ename, e.deptno as emp_deptno, d.*
+	From dept d Left Join emp e 
+	On (d.deptno = e.deptno); 
+
+
+-- Adding Joins in Query Without Interfering with Other Joins
+
+Select e.ename, d.loc
+	From emp e, dept d
+Where e.deptno = d.deptno; 
+
+
+-- Don't have employee bonus table so can't run 
+
+Select e.ename, d.loc, eb.received 
+	From emp e, dept d, emp_bonus eb 
+Where e.deptno = d.deptno
+And e.empno = eb.empno; 
+
+
+-- Determine Whether 2 Tables Have Same Data 
+
+Select Count(*)
+	From emp 
+Union 
+Select Count(*)
+	From dept; 
+
+
+-- Using Union All (pg 48) 
+
+
+-- 3.8 Identifying and Avoiding Cartesian Products 
+-- Large set 
+Select e.ename, d.loc
+	From emp e, dept d 
+Where e.deptno = 10; 
+
+
+-- Reduce set (incorrect b/c dept 10 is in NY)
+Select e.ename, d.loc
+	From emp e, dept d 
+Where e.deptno = 10 
+	And d.deptno = e.deptno; 
+
+Select * From dept;
+
+
+-- 3.10: Performing Outer Joins When Using Aggregates
+-- Don't have bonus table...
+
+-- 3.11 Returning Missing Data from Multiple TAbles
+
+Select d.deptno, d.dname, e.ename
+	From dept d Left Outer Join emp e 
+	On (d.deptno = e.deptno); 
+
+
+-- Return previous result set + row for employees having no department 
+Insert Into emp (empno, ename, job, mgr, hiredate, sal, comm, deptno)
+Select 1111, 'YODA', 'JEDI', null, hiredate, sal, comm, null 
+	From emp 
+Where ename = 'KING'; 
+
+-- This right outer join didn't return operations (see Yoda's dname)
+Select d.deptno, d.dname, e.ename 
+	From dept d Right Outer Join emp e 
+	On (d.deptno = e.deptno); 
+
+
+-- Doesn't return Yoda 
+Select d.deptno, d.dname, e.ename 
+	From dept d Left Outer Join emp e 
+	On (d.deptno = e.deptno); 
+
+
+-- Returns rows from EMP and any matching rows from dept table if any 
+Select d.deptno, d.dname, e.ename
+	From dept d Right Outer Join emp e 
+	On (d.deptno = e.deptno); 
