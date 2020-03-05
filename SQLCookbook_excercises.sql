@@ -323,3 +323,88 @@ Select ename, sal, job, comm,
 	Case When job = 'SALESMAN' Then comm Else sal End AS ordered 
 From emp 
 Order by 5;
+
+
+
+-- Chapter 3: Working with Multiple Tables (Joins, Set Operations, etc.) 
+
+-- 3.1: Stacking One Rowset Atop Another 
+-- Union All: Return data stored in more than 1 table w/o key
+-- Union All: combines rows from multiple row sources into 1 result set 
+
+-- Not working...
+Select ename as ename_and_dname, deptno
+From emp
+Where deptno = 10 
+Union all 
+
+-- Try again...
+
+-- Use Union (no duplicates) to combine sets from emp & dept 
+Select deptno
+	From emp 
+Union 
+Select deptno
+	From dept 
+
+-- Union All (duplicates) 
+Select deptno
+	From emp 
+Union All 
+Select deptno 
+	From dept; 
+
+
+-- 3.2: Combine Related Rows 
+-- Return rows from multiple tables by joining on known column 
+
+-- Example below = equi-join (type of inner join) 
+Select e.ename, d.loc 
+	From emp e, dept d 
+Where e.deptno = d.deptno
+	And e.deptno = 10; 
+
+
+-- Cartesian product (all possible combinations of rows) 
+-- Don't do for large datasets (too computationally expensive) 
+Select e.ename, d.loc, 
+	e.deptno as emp_deptno, 
+	d.deptno as dept_deptno 
+From emp e, dept d 
+Where e.deptno = 10; 
+
+
+-- Alternative with explicit join 
+Select e.ename, d.loc
+	From emp e inner join dept d 
+		On (e.deptno = d.deptno)
+	Where e.deptno = 10; 
+
+
+-- 3.3 Finding Rows in Common Between Two Tables 
+-- Example view: 
+
+Create View V 
+As 
+Select ename, job, sal 
+	From emp 
+Where job = 'CLERK'; 
+
+Select * From V; 
+
+
+-- Return empno, ename, job, sal & deptno of all employees in emp that match rows from view V
+
+Select e.empno, e.ename, e.job, e.sal, e.deptno 
+	From emp e, V
+Where e.ename = v.ename
+	And e.job = v.job 
+	And e.sal = v.sal 
+
+-- Performs same join with Join clause 
+Select e.empno, e.ename, e.job, e.sal, e.deptno 
+	From emp e join V 
+	On ( e.ename = v.ename 
+		And e.job = v.job 
+		And e.sal = v.sal); 
+
