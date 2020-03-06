@@ -506,3 +506,151 @@ Select d.deptno, d.dname, e.ename
 Select d.deptno, d.dname, e.ename
 	From dept d Right Outer Join emp e 
 	On (d.deptno = e.deptno); 
+
+
+
+-- Chapter 4: Inserting, Updating, Deleting 
+
+-- Insert: possible to omit column list but know what info you're entering
+Select * From dept;
+
+-- Insert new set into dept table 
+Insert into dept(deptno, dname, loc)
+Values (50, 'PROGRAMMING', 'BALTIMORE'); 
+
+-- Or - omitted 
+Insert into dept
+Values (50
+
+Insert into dept(deptno, dname, loc)
+Values (10, 'ACCOUNTING', 'PHILADELPHIA'); 
+
+Insert into dept(deptno, dname, loc) 
+Values (20, 'RESEARCH', 'PITTSBURGH');
+
+-- Insert multiple values 
+Insert into dept(deptno, dname, loc) 
+Values (30, 'SALES', 'AUSTIN'), 
+	   (20, 'RESEARCH', 'SAN DIEGO'),
+	   (30, 'SALES', 'EDISON'); 
+
+
+-- 4.3: Overriding Default Value with Null 
+-- Explicitly specify NULL into values list 
+-- Insert into d(id, foo) Values (Null, 'Brighten');
+
+
+-- 4.4 Copying Rows from One Table into Another 
+
+Create Table dept_east (
+	deptno decimal(2,0) default NULL, 
+	dname varchar(14) default NULL,
+	loc varchar(13) default NULL
+);
+
+-- Transfer data from dept table to dept east based on condition
+Insert into dept_east
+Select deptno, dname, loc 
+	From dept 
+Where loc in ('NEW YORK', 'BOSTON'); 
+
+Select * From dept_east;
+
+
+-- 4.5: Copying a Table Definition 
+-- Create copy of dept table (called dept_2) 
+-- Copy column structure of table, not the rows 
+-- Not working??
+
+Create Table dept_2 
+As 
+Select * 
+	From dept 
+Where 1 = 0; 
+
+
+Select * 
+	Into dept_2
+	From dept 
+Where 1 = 0; 
+
+-- 4.6: Inserting into Multiple Tables at Once (pg 68/ 100)
+
+
+-- 4.7: Blocking Inserts into Certain Columns
+-- Prevent users/errant software applications from inserting values into certain table columns
+-- Solution: Create view on table exposing only those columns you wish to expose 
+-- Allow users to populate only 3 fields 
+
+Create View new_emps As 
+Select empno, ename, job 
+	From emp; 
+
+Select * From new_emps;
+
+Insert Into new_emps(empno, ename, job) 
+Values (7777, 'AGYEMANG', 'ENGINEER'); 
+
+
+CREATE TABLE emp (
+	empno decimal (4,0) NOT NULL,
+	ename varchar(10) default NULL,
+	job varchar(9) default NULL,
+	mgr decimal(4,0) default NULL,
+	hiredate date default NULL,
+	sal decimal(7,2) default NULL,
+	comm decimal(7,2) default NULL,
+	deptno decimal(2,0) default NULL
+);
+
+
+-- 4.8: Modifying Records in Table 
+-- Example: Increase salaries of everyone in
+
+-- Select all from emp where deptno = 20 
+Select deptno, ename, sal 
+From emp 
+Where deptno = 20 
+Order by deptno, sal;  
+
+-- Bump up salaries by 10%
+Update emp 
+	Set sal = sal * 1.10 
+Where deptno = 20; 
+
+-- Create View mirroring emp table (only with individuals from dept 20) 
+
+Create View emp_copy AS 
+Select * From emp 
+Where deptno = 20; 
+
+
+-- Insert into view everyone in department 20 
+Insert into emp_copy
+Select * From emp 
+Where deptno = 20; 
+
+
+-- Update view to increase sal values by 10% 
+Update emp_copy
+	Set sal = sal + 100; 
+
+
+Select * 
+From emp_copy;
+
+
+Select * 
+From emp
+Where deptno = 20; 
+
+Select AVG(sal) As AvgSalary
+From emp_copy; 
+
+Select AVG(sal) AS AvgSalary 
+From emp; 
+
+
+
+-- Precursor (on pg 73) 
+ 
